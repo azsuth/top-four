@@ -12,9 +12,15 @@ const GameMode = ({ gameMode, setGameMode }) => {
         <span class="game-mode__header--title">How do you want to play?</span>
         <div class="game-mode__header--coachmark">
           <Coachmark eventLabel="game_mode">
-            Confused on what to choose? We recommend playing as individuals if
-            you’re not in the same location. We recommend playing as teams if
-            you are in the same location and are playing with 6 or more people.
+            Confused on what to choose?
+            <br />
+            <br />
+            We recommend playing as individuals if you’re not in the same
+            location.
+            <br />
+            <br />
+            We recommend playing as teams if you are in the same location and
+            are playing with 6 or more people.
           </Coachmark>
         </div>
       </div>
