@@ -6,7 +6,8 @@ import sampleSize from 'lodash/sampleSize';
 import compose from 'utilities/compose';
 import {
   topicsToPlayerTopics,
-  toAvailableAndRankingTopicsCount
+  toAvailableAndRankingTopicsCount,
+  toAllActivePlayers
 } from 'utilities/state_mapping';
 import { withAction, withState } from '@state';
 import { addTopic, getTopicPacks } from '@actions';
@@ -18,15 +19,15 @@ import Topic from 'components/add_topics/topic';
 
 const AddTopics = ({
   addTopic,
-  numTopics = 0,
   playerTopics,
   routes: [toGame],
   gameId,
   topicExample,
-  onTopicAdded
+  onTopicAdded,
+  remainingTopics,
+  numPlayers
 }) => {
   const [topic, setTopic] = useState('');
-  const numRounds = Math.floor(numTopics / 4);
 
   const handleAddTopic = () => {
     addTopic(topic);
@@ -75,7 +76,7 @@ const AddTopics = ({
         >
           <div class="add-topics__input">
             <TextField
-              label="Trivial topic"
+              label="Trivial yet polarizing thing"
               placeholder={topicExample ? `e.g. ${topicExample}` : null}
               value={topic}
               onInput={({ target: { value } }) => setTopic(value)}
@@ -95,24 +96,24 @@ const AddTopics = ({
           </Button>
         </form>
         <div class="add-topics__topics">
-          {playerTopics.map(topic => (
+          {[...playerTopics].reverse().map(topic => (
             <Topic topic={topic} />
           ))}
         </div>
         <div class="add-topics__footer">
-          <span name="numTopics" class="add-topics__total-topics">
-            {numRounds === 0
-              ? 'Not enough topics'
-              : `Enough topics for ${numRounds} turn${
-                  numRounds > 1 ? 's' : ''
-                }`}
+          <span name="remainingTopics" class="add-topics__remaining-topics">
+            {remainingTopics > 0
+              ? `Add ${remainingTopics} topic${
+                  remainingTopics > 1 ? 's' : ''
+                } to play a full round`
+              : `Enough topics for ${numPlayers} players`}
           </span>
           <Button
             variant="contained"
             color="primary"
             onClick={toGame}
             name="done"
-            disabled={numTopics < 4}
+            disabled={remainingTopics > 0}
           >
             Done!
           </Button>
@@ -137,6 +138,11 @@ const withPlayerTopicsState = withState(
   'playerTopics',
   topicsToPlayerTopics
 );
+const withPlayersState = withState(
+  'game.players',
+  'players',
+  toAllActivePlayers
+);
 const withGameIdState = withState('gameId');
 const withTopicPacksState = withState('topicPacks');
 
@@ -150,14 +156,11 @@ const randomTopicFromTopicPacks = topicPacks => {
     );
 
     if (randomTopicsPack) {
-      const randomTopics = Object.keys(randomTopicsPack.topics).map(
-        topicUid => randomTopicsPack.topics[topicUid].topic
-      );
+      const randomTopics = Object.keys(randomTopicsPack.topics)
+        .map(topicUid => randomTopicsPack.topics[topicUid].topic)
+        .filter(topic => topic.length < 18);
 
-      const randomTopic = sampleSize(randomTopics, 1);
-      return randomTopic.length < 20
-        ? randomTopic
-        : randomTopicFromTopicPacks(topicPacks);
+      return sampleSize(randomTopics, 1);
     }
   }
 };
@@ -191,15 +194,33 @@ const withTopicExampleProp = WrappedComponent => {
   };
 };
 
+const withProps = WrappedComponent => {
+  return props => {
+    const { players, numTopics = 0 } = props;
+
+    const remainingTopics = Math.max(players.length * 4 - numTopics);
+
+    return (
+      <WrappedComponent
+        {...props}
+        numPlayers={players.length}
+        remainingTopics={remainingTopics}
+      />
+    );
+  };
+};
+
 const wrappers = compose(
   withAddTopicAction,
   withGetTopicPacksAction,
   withTopicsState,
   withPlayerTopicsState,
+  withPlayersState,
   withGameIdState,
   withTopicPacksState,
   withRoutes,
-  withTopicExampleProp
+  withTopicExampleProp,
+  withProps
 );
 
 export { AddTopics };

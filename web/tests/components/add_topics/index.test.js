@@ -80,19 +80,34 @@ describe('<AddTopics />', () => {
     expect(wrapper.find(Topic)).toHaveLength(2);
   });
 
-  it('renders the total number of topics', () => {
+  it('renders the remaining topics', () => {
     const wrapper = shallow(
-      <AddTopics playerTopics={[]} numTopics={13} routes={[]} />
+      <AddTopics playerTopics={[]} remainingTopics={13} routes={[]} />
     );
 
-    expect(wrapper.find('span[name="numTopics"]').text()).toBe(
-      'Enough topics for 3 turns'
+    expect(wrapper.find('span[name="remainingTopics"]').text()).toBe(
+      'Add 13 topics to play a full round'
     );
   });
 
-  it('disables the done button when there are less than 4 topics', () => {
+  it('renders the number of players when there are enough topics', () => {
     const wrapper = shallow(
-      <AddTopics playerTopics={[]} numTopics={3} routes={[]} />
+      <AddTopics
+        playerTopics={[]}
+        remainingTopics={0}
+        numPlayers={4}
+        routes={[]}
+      />
+    );
+
+    expect(wrapper.find('span[name="remainingTopics"]').text()).toBe(
+      'Enough topics for 4 players'
+    );
+  });
+
+  it('disables the done button when there are any remaining topics', () => {
+    const wrapper = shallow(
+      <AddTopics playerTopics={[]} remainingTopics={2} routes={[]} />
     );
 
     expect(wrapper.find(Button).filter({ name: 'done' }).props().disabled).toBe(
