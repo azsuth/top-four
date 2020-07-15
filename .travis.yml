@@ -13,11 +13,11 @@ script:
 
 deploy:
   - provider: script
-    script: deploy/production.sh
+    script: deploy_production.sh
     on:
       branch: master
   - provider: script
-    script: deploy/dev.sh
+    script: deploy_dev.sh
     on:
       all_branches: true
       condition: $TRAVIS_BRANCH =~ dev/[A-Za-z0-9]+
