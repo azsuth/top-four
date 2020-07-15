@@ -16,8 +16,10 @@ deploy:
     script: bash deploy_production.sh
     on:
       branch: master
+    skip_cleanup: true
   - provider: script
     script: bash deploy_dev.sh
     on:
       all_branches: true
       condition: $TRAVIS_BRANCH =~ dev/[A-Za-z0-9]+
+    skip_cleanup: true
