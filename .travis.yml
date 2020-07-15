@@ -11,5 +11,13 @@ script:
   - npm run test-ci
   - npm run build
 
-after_success:
-  - firebase deploy --token "$FIREBASE_TOKEN"
+deploy:
+  - provider: script
+    script: deploy/production.sh
+    on:
+      branch: master
+  - provider: script
+    script: deploy/dev.sh
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH != master
