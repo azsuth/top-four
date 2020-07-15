@@ -12,6 +12,8 @@ body {
   color: $color-dark-gray;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+  overflow: hidden;
 }
 
 body {
