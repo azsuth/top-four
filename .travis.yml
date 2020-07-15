@@ -20,4 +20,4 @@ deploy:
     script: deploy/dev.sh
     on:
       all_branches: true
-      condition: $TRAVIS_BRANCH != master
+      condition: $TRAVIS_BRANCH =~ dev/[A-Za-z0-9]+

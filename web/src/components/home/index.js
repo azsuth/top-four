@@ -33,7 +33,7 @@ const Home = ({ clearState, routes: [toJoin, toCreate], showCoachmark }) => {
           disableElevation
           onClick={toJoin}
         >
-          Join an existing game
+          Join an existing gamezz
         </Button>
         <span class="home__separator">or</span>
         <Button
