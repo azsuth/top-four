@@ -1,0 +1,73 @@
+@import '../../variables';
+
+// reset
+
+input[type='text'] {
+  background-color: inherit;
+  border: initial;
+  color: inherit;
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+  appearance: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// basic
+
+.text-input__group {
+  position: relative;
+}
+
+input[type='text'] {
+  border: 2px solid $color-primary;
+  border-radius: $size-xxs;
+  padding: $size-s $size-base;
+  font-size: $size-base;
+  font-weight: 600;
+  transition: all $timing-fast;
+
+  &::placeholder {
+    color: transparent;
+    font-weight: normal;
+  }
+
+  &:focus {
+    &::placeholder {
+      color: $color-gray-light;
+    }
+
+    background-color: rgba($color: $color-primary, $alpha: 0.1);
+  }
+
+  &:focus,
+  &:not(:placeholder-shown) {
+    + .text-input__label {
+      color: $color-primary;
+      font-weight: 600;
+      transform: translate(-$size-base + $size-xxs, -$size-xlarge) scale(0.78);
+    }
+  }
+
+  &.with-placeholder {
+    &::placeholder {
+      color: $color-gray-light;
+    }
+  }
+}
+
+.text-input__label {
+  color: $color-gray-light;
+  display: block;
+  font-size: $size-base;
+  margin-left: $size-base;
+  margin-top: -$size-base / 2;
+  position: absolute;
+  top: 50%;
+  transform-origin: 0 0;
+  transition: all $timing-fast;
+}
