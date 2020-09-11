@@ -1,3 +1,5 @@
+@import 'variables';
+
 .visibility--hidden {
   visibility: hidden;
 }
@@ -5,6 +7,8 @@
 .display--none {
   display: none;
 }
+
+// width
 
 .width--25-pct {
   width: 25%;
@@ -20,4 +24,120 @@
 
 .width--50-pct {
   width: 50%;
+}
+
+// height
+
+.height--100-pct {
+  height: 100%;
+}
+
+// margin
+
+.margin--base {
+  margin: $size-base;
+}
+
+// padding
+
+.padding--s {
+  padding: $size-s;
+}
+
+.padding--base {
+  padding: $size-base;
+}
+
+.padding--large {
+  padding: $size-large;
+}
+
+.padding--xlarge {
+  padding: $size-xlarge;
+}
+
+.padding-v--s {
+  padding-top: $size-s;
+  padding-bottom: $size-s;
+}
+
+.padding-v--base {
+  padding-top: $size-base;
+  padding-bottom: $size-base;
+}
+
+.padding-v--large {
+  padding-top: $size-large;
+  padding-bottom: $size-large;
+}
+
+.padding-v--xlarge {
+  padding-top: $size-xlarge;
+  padding-bottom: $size-xlarge;
+}
+
+.padding-h--s {
+  padding-left: $size-s;
+  padding-right: $size-s;
+}
+
+.padding-h--base {
+  padding-left: $size-base;
+  padding-right: $size-base;
+}
+
+.padding-h--large {
+  padding-left: $size-large;
+  padding-right: $size-large;
+}
+
+.padding-h--xlarge {
+  padding-left: $size-xlarge;
+  padding-right: $size-xlarge;
+}
+
+// flex
+
+.flex {
+  display: flex;
+}
+
+.direction--column {
+  flex-direction: column;
+}
+
+// background color
+
+.bg-color--primary {
+  background-color: $color-primary;
+}
+
+// color
+
+.color--dark-gray {
+  color: $color-dark-gray;
+}
+
+// font
+
+.font-size--large {
+  font-size: $size-large;
+}
+
+.font-size--xlarge {
+  font-size: $size-xlarge;
+}
+
+.font-weight--bold {
+  font-weight: bold;
+}
+
+// overflow
+
+.overflow-y--auto {
+  overflow-y: auto;
+}
+
+.overflow--hidden {
+  overflow: hidden;
 }

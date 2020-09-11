@@ -20,6 +20,7 @@ import Share from 'routes/share';
 import Teams from 'routes/teams';
 import AddTopics from 'routes/add_topics';
 import Game from 'routes/game';
+import Storybook from 'routes/storybook';
 
 import CoachmarkContent from 'components/shared/coachmark_content';
 
@@ -43,6 +44,7 @@ const App = ({ coachmark }) => {
             <Teams path="/:routeGameId/teams" />
             <AddTopics path="/:routeGameId/topics" />
             <Game path="/:routeGameId/game" />
+            <Storybook path="/storybook" />
           </Router>
         </div>
         {show && <CoachmarkContent content={content} />}

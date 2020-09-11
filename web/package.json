@@ -66,6 +66,8 @@
       "^@services(.*)$": "<rootDir>/src/services$1",
       "^state(.*)$": "<rootDir>/src/state$1",
       "^@state(.*)$": "<rootDir>/src/state$1",
+      "^storybook(.*)$": "<rootDir>/src/storybook$1",
+      "^@storybook(.*)$": "<rootDir>/src/storybook$1",
       "^utilities(.*)$": "<rootDir>/src/utilities$1"
     },
     "transform": {
