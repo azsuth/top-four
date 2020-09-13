@@ -1,4 +1,5 @@
 @import '../../variables';
+@import '../../themes';
 
 input[type='radio'] {
   font-size: inherit;
@@ -20,7 +21,9 @@ input[type='radio'] {
 
   & ~ .radio-input__field {
     background-clip: content-box;
-    border: 2px solid $color-primary;
+    @include themify() {
+      border: 2px solid themed('color-primary');
+    }
     border-radius: 50%;
     display: block;
     flex-shrink: 0;
@@ -32,8 +35,10 @@ input[type='radio'] {
   }
 
   &:checked ~ .radio-input__field {
-    background-color: $color-primary;
-    border-color: $color-primary;
+    @include themify() {
+      background-color: themed('color-primary');
+      border-color: themed('color-primary');
+    }
     padding: 0.188em;
   }
 
@@ -45,6 +50,8 @@ input[type='radio'] {
   }
 
   &:disabled ~ .radio-input__field {
-    border-color: rgba($color: $color-primary, $alpha: 0.4);
+    @include themify() {
+      border-color: rgba($color: themed('color-primary'), $alpha: 0.4);
+    }
   }
 }

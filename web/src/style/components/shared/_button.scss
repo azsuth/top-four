@@ -1,4 +1,5 @@
 @import '../../variables';
+@import '../../themes';
 
 // reset
 
@@ -33,76 +34,86 @@
 // primary
 
 .btn.btn--primary {
-  background-color: $color-primary;
+  @include themify() {
+    background-color: themed('color-primary');
 
-  &:active {
-    background-color: $color-primary-dark;
-  }
+    &:active {
+      background-color: themed('color-primary-dark');
+    }
 
-  &[disabled] {
-    background-color: rgba($color: $color-primary, $alpha: 0.4);
-    color: rgba($color: $color-white, $alpha: 0.6);
+    &[disabled] {
+      background-color: rgba($color: themed('color-primary'), $alpha: 0.4);
+      color: rgba($color: $color-white, $alpha: 0.6);
+    }
   }
 }
 
 // primary invert
 
 .btn.btn--primary-invert {
-  background-color: $color-white;
-  color: $color-primary-dark;
+  @include themify() {
+    background-color: $color-white;
+    color: themed('color-primary-dark');
 
-  &:active {
-    background-color: rgba($color: $color-white, $alpha: 0.9);
-  }
+    &:active {
+      background-color: rgba($color: $color-white, $alpha: 0.9);
+    }
 
-  &[disabled] {
-    background-color: rgba($color: $color-white, $alpha: 0.6);
-    color: rgba($color: $color-primary-dark, $alpha: 0.4);
+    &[disabled] {
+      background-color: rgba($color: $color-white, $alpha: 0.6);
+      color: rgba($color: themed('color-primary-dark'), $alpha: 0.4);
+    }
   }
 }
 
 // secondary
 
 .btn.btn--secondary {
-  background-color: $color-white;
-  border: 2px solid $color-primary;
-  color: $color-primary-dark;
+  @include themify() {
+    background-color: $color-white;
+    border: 2px solid themed('color-primary');
+    color: themed('color-primary-dark');
 
-  &:active {
-    background-color: rgba($color: $color-primary, $alpha: 0.1);
-  }
+    &:active {
+      background-color: rgba($color: themed('color-primary'), $alpha: 0.1);
+    }
 
-  &[disabled] {
-    border: 2px solid rgba($color: $color-primary, $alpha: 0.4);
-    color: rgba($color: $color-primary-dark, $alpha: 0.4);
+    &[disabled] {
+      border: 2px solid rgba($color: themed('color-primary'), $alpha: 0.4);
+      color: rgba($color: themed('color-primary-dark'), $alpha: 0.4);
+    }
   }
 }
 
 // secondary invert
 
 .btn.btn--secondary-invert {
-  background-color: $color-primary;
-  border: 2px solid $color-white;
-  color: $color-white;
+  @include themify() {
+    background-color: themed('color-primary');
+    border: 2px solid $color-white;
+    color: $color-white;
 
-  &:active {
-    background-color: $color-primary-dark;
-  }
+    &:active {
+      background-color: themed('color-primary-dark');
+    }
 
-  &[disabled] {
-    opacity: 0.4;
+    &[disabled] {
+      opacity: 0.4;
+    }
   }
 }
 
 // text
 
 .btn.btn--text {
-  color: $color-primary-dark;
-  padding: 0;
-  text-align: start;
+  @include themify() {
+    color: themed('color-primary-dark');
+    padding: 0;
+    text-align: start;
 
-  &[disabled] {
-    color: rgba($color: $color-primary-dark, $alpha: 0.4);
+    &[disabled] {
+      color: rgba($color: themed('color-primary-dark'), $alpha: 0.4);
+    }
   }
 }
 

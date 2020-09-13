@@ -130,13 +130,37 @@ function renderRadioInputs() {
   );
 }
 
-function Storybook() {
+function renderThemes(setTheme) {
   return (
-    <div class="height--100-pct overflow--hidden">
+    <>
+      <h2 class="color--dark-gray font-size--large font-weight--bold">
+        Themes
+      </h2>
+      <div class="flex justify--between">
+        <Button onClick={() => setTheme('orange')} variant="primary">
+          ORANGE
+        </Button>
+        <Button onClick={() => setTheme('purple')} variant="primary">
+          PURPLE
+        </Button>
+        <Button onClick={() => setTheme('green')} variant="primary">
+          GREEN
+        </Button>
+      </div>
+    </>
+  );
+}
+
+function Storybook() {
+  const [theme, setTheme] = useState('orange');
+
+  return (
+    <div class={`height--100-pct overflow--hidden theme-${theme}`}>
       <div class="storybook flex direction--column height--100-pct padding--base overflow-y--auto">
         <h1 class="color--dark-gray font-size--xlarge font-weight--bold">
           Top Four Components
         </h1>
+        {renderThemes(setTheme)}
         {renderRadioInputs()}
         {renderTextInputs()}
         {renderButtons()}

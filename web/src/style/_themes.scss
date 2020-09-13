@@ -1,0 +1,41 @@
+$themes: (
+  orange: (
+    color-primary: #ff5d28,
+    color-primary-dark: darken(#ff5d28, 14%),
+    color-primary-light: lighten(#ff5d28, 14%)
+  ),
+  purple: (
+    color-primary: #c36be2,
+    color-primary-dark: darken(#c36be2, 14%),
+    color-primary-light: lighten(#c36be2, 14%)
+  ),
+  green: (
+    color-primary: #3cdabd,
+    color-primary-dark: darken(#3cdabd, 14%),
+    color-primary-light: lighten(#3cdabd, 14%)
+  )
+);
+
+@mixin themify() {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value
+          )
+        ) !global;
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
