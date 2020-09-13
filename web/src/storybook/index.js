@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { useState } from 'preact/hooks';
 
 import Button from 'components/shared/button';
+import RadioInput from 'components/shared/radio_input';
 import TextInput from 'components/shared/text_input';
 
 function renderButtons() {
@@ -95,6 +96,40 @@ function renderTextInputs() {
   );
 }
 
+function renderRadioInputs() {
+  const [radioId, setRadioId] = useState('radio1');
+
+  return (
+    <>
+      <h2 class="color--dark-gray font-size--large font-weight--bold">
+        Radio Inputs
+      </h2>
+      <RadioInput
+        checked={radioId === 'radio1'}
+        label="Choice 1"
+        name="radio1"
+        onChange={() => setRadioId('radio1')}
+        value="1"
+      />
+      <RadioInput
+        checked={radioId === 'radio2'}
+        label="Choice 2"
+        name="radio2"
+        onChange={() => setRadioId('radio2')}
+        value="2"
+      />
+      <RadioInput
+        checked={radioId === 'radio3'}
+        disabled
+        label="Disabled Choice"
+        name="radio3"
+        onChange={() => setRadioId('radio3')}
+        value="3"
+      />
+    </>
+  );
+}
+
 function Storybook() {
   return (
     <div class="height--100-pct overflow--hidden">
@@ -102,6 +137,7 @@ function Storybook() {
         <h1 class="color--dark-gray font-size--xlarge font-weight--bold">
           Top Four Components
         </h1>
+        {renderRadioInputs()}
         {renderTextInputs()}
         {renderButtons()}
       </div>
