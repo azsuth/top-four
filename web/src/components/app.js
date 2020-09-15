@@ -27,7 +27,7 @@ import CoachmarkContent from 'components/shared/coachmark_content';
 const App = ({ coachmark }) => {
   const { show, content } = coachmark || {};
 
-  const appContentClass = cx('app-content', {
+  const appContentClass = cx('app-content', 'theme-orange', {
     'app-content--blur-in': !!content,
     'app-content--blur-out': !content
   });
