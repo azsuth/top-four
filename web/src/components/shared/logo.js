@@ -1,10 +1,13 @@
 import { h } from 'preact';
 
-const Logo = ({ size }) => {
+import { withAction } from '@state';
+import { cycleTheme } from '@actions';
+
+const Logo = ({ cycleTheme, size }) => {
   const height = size === 'small' ? 42 * 0.75 : 42;
 
   return (
-    <div class="logo">
+    <div class="logo" onClick={() => cycleTheme()}>
       <svg
         width="336"
         height={height}
@@ -45,4 +48,6 @@ const Logo = ({ size }) => {
   );
 };
 
-export default Logo;
+const withCycleThemeAction = withAction(cycleTheme, 'cycleTheme');
+
+export default withCycleThemeAction(Logo);

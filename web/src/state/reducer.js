@@ -5,7 +5,8 @@ import {
   UPDATE_LOCAL_RANKS,
   CLEAR_STATE,
   SHOW_COACHMARK,
-  HIDE_COACHMARK
+  HIDE_COACHMARK,
+  SET_THEME
 } from '@actions/types';
 
 import { withReducerLogging } from 'utilities/logging';
@@ -26,7 +27,7 @@ const gameStateReducer = (state, { type, payload }) => {
     case TOPIC_PACKS:
       return { ...state, topicPacks: payload };
     case CLEAR_STATE:
-      return {};
+      return { theme: 'orange' };
     case SHOW_COACHMARK:
       return {
         ...state,
@@ -42,6 +43,11 @@ const gameStateReducer = (state, { type, payload }) => {
           show: payload,
           content: null
         }
+      };
+    case SET_THEME:
+      return {
+        ...state,
+        theme: payload
       };
     default:
       return state;

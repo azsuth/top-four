@@ -3,7 +3,6 @@ import { useEffect } from 'preact/hooks';
 import { Router, getCurrentUrl } from 'preact-router';
 
 import { withAction, withState } from '@state';
-import { saveState } from 'utilities/local_storage';
 import compose from 'utilities/compose';
 import resolve from 'utilities/resolve';
 import { subscribeToGameUpdates } from '@actions';
@@ -24,10 +23,10 @@ import Storybook from 'routes/storybook';
 
 import CoachmarkContent from 'components/shared/coachmark_content';
 
-const App = ({ coachmark }) => {
+const App = ({ coachmark, theme }) => {
   const { show, content } = coachmark || {};
 
-  const appContentClass = cx('app-content', 'theme-orange', {
+  const appContentClass = cx('app-content', `theme-${theme || 'orange'}`, {
     'app-content--blur-in': !!content,
     'app-content--blur-out': !content
   });
@@ -53,10 +52,15 @@ const App = ({ coachmark }) => {
   );
 };
 
-const withSubscribeAction = withAction(subscribeToGameUpdates, 'subscribe');
-const withFullState = withState(null, 'fullState');
+// state
 const withCoachmarkContentState = withState('coachmark');
+const withFullState = withState(null, 'fullState');
+const withThemeState = withState('theme');
 
+// actions
+const withSubscribeAction = withAction(subscribeToGameUpdates, 'subscribe');
+
+// effects
 const withSubscribeEffect = WrappedComponent => {
   return props => {
     useEffect(() => {
@@ -73,9 +77,10 @@ const withSubscribeEffect = WrappedComponent => {
 };
 
 const wrappers = compose(
-  withSubscribeAction,
-  withFullState,
   withCoachmarkContentState,
+  withFullState,
+  withThemeState,
+  withSubscribeAction,
   withSubscribeEffect
 );
 

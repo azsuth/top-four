@@ -5,3 +5,4 @@ export const UPDATE_LOCAL_RANKS = 'update_local_ranks';
 export const CLEAR_STATE = 'clear_state';
 export const SHOW_COACHMARK = 'show_coachmark';
 export const HIDE_COACHMARK = 'hide_coachmark';
+export const SET_THEME = 'set_theme';
