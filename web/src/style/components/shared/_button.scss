@@ -25,6 +25,7 @@
   font-size: $size-base;
   font-weight: bold;
   padding: $size-s $size-base;
+  text-transform: uppercase;
 
   &[disabled] {
     pointer-events: none;

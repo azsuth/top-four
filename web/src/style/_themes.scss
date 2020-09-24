@@ -1,18 +1,22 @@
+$color-orange: #ff5d28;
+$color-purple: #c36be2;
+$color-green: #3cdabc;
+
 $themes: (
   orange: (
-    color-primary: #ff5d28,
-    color-primary-dark: darken(#ff5d28, 14%),
-    color-primary-light: lighten(#ff5d28, 14%)
+    color-primary: $color-orange,
+    color-primary-dark: darken($color-orange, 14%),
+    color-primary-light: lighten($color-orange, 14%)
   ),
   purple: (
-    color-primary: #c36be2,
-    color-primary-dark: darken(#c36be2, 14%),
-    color-primary-light: lighten(#c36be2, 14%)
+    color-primary: $color-purple,
+    color-primary-dark: darken($color-purple, 14%),
+    color-primary-light: lighten($color-purple, 14%)
   ),
   green: (
-    color-primary: #3cdabd,
-    color-primary-dark: darken(#3cdabd, 14%),
-    color-primary-light: lighten(#3cdabd, 14%)
+    color-primary: $color-green,
+    color-primary-dark: darken($color-green, 14%),
+    color-primary-light: lighten($color-green, 14%)
   )
 );
 
@@ -38,4 +42,10 @@ $themes: (
 
 @function themed($key) {
   @return map-get($theme-map, $key);
+}
+
+:export {
+  colorOrange: $color-orange;
+  colorPurple: $color-purple;
+  colorGreen: $color-green;
 }

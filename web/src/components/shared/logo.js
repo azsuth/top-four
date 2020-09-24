@@ -4,7 +4,7 @@ import { withAction } from '@state';
 import { cycleTheme } from '@actions';
 
 const Logo = ({ cycleTheme, size }) => {
-  const height = size === 'small' ? 42 * 0.75 : 42;
+  const height = size === 'small' ? 42 * 0.66 : 42;
 
   return (
     <div class="logo" onClick={() => cycleTheme()}>

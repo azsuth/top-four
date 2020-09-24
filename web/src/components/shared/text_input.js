@@ -4,7 +4,8 @@ import cx from 'utilities/cx';
 
 function TextInput({ label, name, onChange, placeholder, value }) {
   const controlClasses = cx('text-input__control', {
-    'with-placeholder': placeholder && !label
+    'with-placeholder': placeholder && !label,
+    'without-placeholder': !placeholder
   });
 
   return (
@@ -14,7 +15,7 @@ function TextInput({ label, name, onChange, placeholder, value }) {
         id={name}
         name={name}
         onChange={({ target: { value } }) => onChange(value)}
-        placeholder={placeholder}
+        placeholder={placeholder || 'placeholder'}
         type="text"
         value={value}
       />

@@ -44,6 +44,12 @@ input[type='text'] {
       color: $color-gray-light;
     }
 
+    &.without-placeholder {
+      &::placeholder {
+        color: transparent;
+      }
+    }
+
     @include themify() {
       background-color: rgba($color: themed('color-primary'), $alpha: 0.1);
     }
