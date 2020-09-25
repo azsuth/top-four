@@ -43,7 +43,9 @@ input[type='radio'] {
   }
 
   & ~ .radio-input__label {
+    color: $color-gray-dark;
     display: block;
+    font-weight: bold;
     margin-bottom: 0;
     padding-left: $size-base;
     position: relative;
@@ -53,5 +55,9 @@ input[type='radio'] {
     @include themify() {
       border-color: rgba($color: themed('color-primary'), $alpha: 0.4);
     }
+  }
+
+  &:disabled ~ .radio-input__label {
+    color: $color-gray-light;
   }
 }

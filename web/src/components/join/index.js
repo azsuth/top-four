@@ -63,7 +63,7 @@ const Join = ({ joinGame }) => {
                   label="What's the Game ID?"
                   name="game-id"
                   onChange={handleGameIdChanged}
-                  placeholder=""
+                  placeholder="A6"
                   value={gameId}
                 />
               </div>
