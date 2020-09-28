@@ -2,7 +2,15 @@ import { h } from 'preact';
 
 import cx from 'utilities/cx';
 
-function TextInput({ label, name, onChange, placeholder, value }) {
+function TextInput({
+  label,
+  name,
+  onBlur,
+  onChange,
+  onFocus,
+  placeholder,
+  value
+}) {
   const controlClasses = cx('text-input__control', {
     'with-placeholder': placeholder && !label,
     'without-placeholder': !placeholder
@@ -14,7 +22,9 @@ function TextInput({ label, name, onChange, placeholder, value }) {
         class={controlClasses}
         id={name}
         name={name}
+        onBlur={onBlur}
         onChange={({ target: { value } }) => onChange(value)}
+        onFocus={onFocus}
         placeholder={placeholder || 'placeholder'}
         type="text"
         value={value}

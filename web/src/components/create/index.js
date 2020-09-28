@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useState, useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import SwipeableViews from 'react-swipeable-views';
 
 import cx from 'utilities/cx';
@@ -31,6 +31,7 @@ const Create = ({ topicPacks, startGame }) => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
+  const [focused, setFocused] = useState(false);
 
   const handleStartGame = () => {
     setLoading(true);
@@ -64,41 +65,46 @@ const Create = ({ topicPacks, startGame }) => {
         <CreateContainer>
           {!loading && (
             <Name
-              name={name}
-              setName={setName}
+              focused={focused}
               loading={loading}
+              name={name}
+              onBlur={() => setFocused(false)}
+              onFocus={() => setFocused(true)}
               onStartGame={handleStartGame}
+              setName={setName}
             />
           )}
           {loading && <Creating />}
         </CreateContainer>
       </SwipeableViews>
-      <div class="flex justify--between margin-h--large margin-b--large">
-        <div
-          class={cx({
-            'visibility--hidden': loading || step === 0
-          })}
-        >
-          <Button
-            onClick={() => setStep(prevStep => prevStep - 1)}
-            variant="text-invert"
+      {!focused && (
+        <div class="flex justify--between margin-h--large margin-b--large">
+          <div
+            class={cx({
+              'visibility--hidden': loading || step === 0
+            })}
           >
-            &lt; Back
-          </Button>
-        </div>
-        <div
-          class={cx({
-            'visibility--hidden': loading || step === 2
-          })}
-        >
-          <Button
-            onClick={() => setStep(prevStep => prevStep + 1)}
-            variant="text-invert"
+            <Button
+              onClick={() => setStep(prevStep => prevStep - 1)}
+              variant="text-invert"
+            >
+              &lt; Back
+            </Button>
+          </div>
+          <div
+            class={cx({
+              'visibility--hidden': loading || step === 2
+            })}
           >
-            Next &gt;
-          </Button>
+            <Button
+              onClick={() => setStep(prevStep => prevStep + 1)}
+              variant="text-invert"
+            >
+              Next &gt;
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
