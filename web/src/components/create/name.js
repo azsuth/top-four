@@ -15,7 +15,9 @@ const Name = ({
   setName
 }) => {
   const disabled = loading || !name;
-  const inputClasses = cx('margin-b--xlarge', { 'flex-grow--1': !focused });
+  const inputClasses = cx('margin-b--xlarge', {
+    'flex-grow--1': !focused && !name
+  });
 
   return (
     <div class="name flex-grow--1 width--100-pct flex direction--column align-items--center">

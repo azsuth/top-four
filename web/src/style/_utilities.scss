@@ -55,6 +55,14 @@
   margin: $size-large;
 }
 
+.margin-b--xs {
+  margin-bottom: $size-xs;
+}
+
+.margin-b--s {
+  margin-bottom: $size-s;
+}
+
 .margin-b--base {
   margin-bottom: $size-base;
 }
@@ -86,6 +94,11 @@
 .margin-h--large {
   margin-left: $size-large;
   margin-right: $size-large;
+}
+
+.margin-h--xlarge {
+  margin-left: $size-xlarge;
+  margin-right: $size-xlarge;
 }
 
 // padding
@@ -223,12 +236,20 @@
 
 // font
 
+.font-size--base {
+  font-size: $size-base;
+}
+
 .font-size--large {
   font-size: $size-large;
 }
 
 .font-size--xlarge {
   font-size: $size-xlarge;
+}
+
+.font-size--huge {
+  font-size: $size-xlarge * 2;
 }
 
 .font-weight--bold {
@@ -243,4 +264,8 @@
 
 .overflow--hidden {
   overflow: hidden;
+}
+
+.text-align--center {
+  text-align: center;
 }

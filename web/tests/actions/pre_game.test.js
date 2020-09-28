@@ -7,7 +7,7 @@ import {
 
 import { subscribeToGameUpdates } from '@actions/subscribe';
 
-import { toShare, toTeams } from 'utilities/router';
+import { toTeams } from 'utilities/router';
 
 jest.mock('@services', () => ({
   addPlayerService: jest.fn(),
@@ -21,7 +21,6 @@ jest.mock('@actions/subscribe', () => ({
 }));
 
 jest.mock('utilities/router', () => ({
-  toShare: jest.fn(),
   toTeams: jest.fn()
 }));
 
@@ -39,8 +38,6 @@ describe('pre game actions', () => {
 
     subscribeToGameUpdates.mockRestore();
 
-    toShare.mockRestore();
-    toShare.mockReturnValue(() => {});
     toTeams.mockRestore();
     toTeams.mockReturnValue(() => {});
   });
@@ -130,9 +127,6 @@ describe('pre game actions', () => {
 
       expect(subscribeToGameUpdates).toHaveBeenCalledTimes(1);
       expect(subscribeToGameUpdates.mock.calls[0][0]).toBe('12345');
-
-      expect(toShare).toHaveBeenCalledTimes(1);
-      expect(toShare.mock.calls[0][0]).toBe('A6');
     });
 
     it('rejects if startGameService fails', () => {

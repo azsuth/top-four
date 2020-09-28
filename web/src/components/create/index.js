@@ -16,6 +16,7 @@ import GameMode from 'components/create/game_mode';
 import Topics from 'components/create/topics';
 import Name from 'components/create/name';
 import Creating from 'components/create/creating';
+import Share from 'components/create/share';
 
 function CreateContainer({ children }) {
   return (
@@ -25,12 +26,12 @@ function CreateContainer({ children }) {
   );
 }
 
-const Create = ({ topicPacks, startGame }) => {
+const Create = ({ gameId, startGame, topicPacks }) => {
   const [gameMode, setGameMode] = useState(INDIVIDUALS);
   const [topicPackUid, setTopicPackUid] = useState(WRITE_OUR_OWN_UID);
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(gameId ? 3 : 0);
   const [focused, setFocused] = useState(false);
 
   const handleStartGame = () => {
@@ -41,6 +42,12 @@ const Create = ({ topicPacks, startGame }) => {
     });
   };
 
+  useEffect(() => {
+    if (gameId) {
+      setStep(3);
+    }
+  }, [gameId]);
+
   return (
     <div class="create flex direction--column height--100-pct bg-color--primary">
       <div class="margin-t--xlarge">
@@ -48,7 +55,9 @@ const Create = ({ topicPacks, startGame }) => {
       </div>
       <SwipeableViews
         containerStyle={{ flexGrow: 1 }}
+        disabled={!!gameId || loading}
         index={step}
+        onChangeIndex={setStep}
         slideStyle={{ display: 'flex', flexDirection: 'column' }}
         style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }}
       >
@@ -76,12 +85,17 @@ const Create = ({ topicPacks, startGame }) => {
           )}
           {loading && <Creating />}
         </CreateContainer>
+        {gameId && (
+          <CreateContainer>
+            <Share gameId={gameId} />
+          </CreateContainer>
+        )}
       </SwipeableViews>
       {!focused && (
         <div class="flex justify--between margin-h--large margin-b--large">
           <div
             class={cx({
-              'visibility--hidden': loading || step === 0
+              'visibility--hidden': loading || gameId || step === 0
             })}
           >
             <Button
@@ -93,7 +107,7 @@ const Create = ({ topicPacks, startGame }) => {
           </div>
           <div
             class={cx({
-              'visibility--hidden': loading || step === 2
+              'visibility--hidden': loading || gameId || step === 2
             })}
           >
             <Button
@@ -111,6 +125,7 @@ const Create = ({ topicPacks, startGame }) => {
 
 // state
 const withTopicPacksState = withState('topicPacks');
+const withGameIdState = withState('gameId');
 
 // actions
 const withStartGameAction = withAction(startGame, 'startGame');
@@ -133,6 +148,7 @@ const wrappers = compose(
   withStartGameAction,
   withGetTopicPacksAction,
   withTopicPacksState,
+  withGameIdState,
   withEffect
 );
 

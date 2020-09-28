@@ -45,9 +45,7 @@ const startGame = async (
     payload: { gameId, gameUid, playerUid, name }
   });
 
-  subscribeToGameUpdates(gameUid, null, { dispatch }).then(() =>
-    toShare(gameId)()
-  );
+  subscribeToGameUpdates(gameUid, null, { dispatch });
 
   if (state && state.topicPacks) {
     const topicPack = state.topicPacks.find(({ uid }) => uid === topicPackUid);
