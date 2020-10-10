@@ -3,6 +3,7 @@ import { h } from 'preact';
 import cx from 'utilities/cx';
 
 function TextInput({
+  getRef,
   label,
   name,
   onBlur,
@@ -26,6 +27,7 @@ function TextInput({
         onChange={({ target: { value } }) => onChange(value)}
         onFocus={onFocus}
         placeholder={placeholder || 'placeholder'}
+        ref={getRef}
         type="text"
         value={value}
       />

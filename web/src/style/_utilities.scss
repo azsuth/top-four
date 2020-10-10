@@ -41,6 +41,10 @@
 
 // height
 
+.min-height--huge {
+  min-height: $size-xlarge * 4;
+}
+
 .height--100-pct {
   height: 100%;
 }
@@ -73,6 +77,14 @@
 
 .margin-b--xlarge {
   margin-bottom: $size-xlarge;
+}
+
+.margin-r--s {
+  margin-right: $size-s;
+}
+
+.margin-t--none {
+  margin-top: 0;
 }
 
 .margin-t--s {
@@ -214,6 +226,14 @@
   flex-grow: 1;
 }
 
+.flex-shrink--0 {
+  flex-shrink: 0;
+}
+
+.flex-shrink--1 {
+  flex-shrink: 1;
+}
+
 // background color
 
 .bg-color--primary {
@@ -232,6 +252,10 @@
   @include themify() {
     color: themed('color-primary');
   }
+}
+
+.color--white {
+  color: $color-white;
 }
 
 // font

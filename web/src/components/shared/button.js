@@ -2,11 +2,11 @@ import { h } from 'preact';
 
 import cx from 'utilities/cx';
 
-function Button({ children, disabled, fullWidth, onClick, variant }) {
+function Button({ children, disabled, fullWidth, name, onClick, variant }) {
   const classes = cx('btn', `btn--${variant}`, { 'width--100-pct': fullWidth });
 
   return (
-    <button class={classes} disabled={disabled} onClick={onClick}>
+    <button class={classes} disabled={disabled} name={name} onClick={onClick}>
       {children}
     </button>
   );

@@ -39,3 +39,13 @@ p {
   font-weight: normal;
   margin: 0;
 }
+
+hr {
+  border-color: $color-gray-lighter;
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 1px;
+  color: $color-gray-lighter;
+  margin-top: $size-base;
+  margin-bottom: $size-base;
+}

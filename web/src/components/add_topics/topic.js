@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { DeleteOutline } from '@material-ui/icons';
+import IconDelete from 'components/shared/icon/IconDelete';
 
 import { withAction } from '@state';
 import { deleteTopic } from '@actions';
@@ -19,11 +19,11 @@ const Topic = ({ topic: topicObj, deleteTopic }) => {
   };
 
   return (
-    <div class="topic">
+    <div class="topic flex justify--between align-items--center">
       <span>{topic}</span>
-      <span class="topic__delete-button">
-        <DeleteOutline color="secondary" onClick={handleDeleteTopic} />
-      </span>
+      <div onClick={handleDeleteTopic}>
+        <IconDelete color="secondary" />
+      </div>
     </div>
   );
 };

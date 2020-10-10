@@ -1,8 +1,8 @@
 import { h } from 'preact';
-import { useCallback, useEffect, useState } from 'preact/hooks';
-import { Button, TextField } from '@material-ui/core';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import sampleSize from 'lodash/sampleSize';
 
+import cx from 'utilities/cx';
 import compose from 'utilities/compose';
 import {
   topicsToPlayerTopics,
@@ -13,8 +13,11 @@ import { withAction, withState } from '@state';
 import { addTopic, getTopicPacks } from '@actions';
 import withRouter, { toGame } from 'utilities/router';
 
-import Coachmark from 'components/shared/coachmark';
+import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
+import TextInput from 'components/shared/text_input';
+
+import AddTopicsCoachmark from './coachmark';
 import Topic from 'components/add_topics/topic';
 
 const AddTopics = ({
@@ -28,94 +31,80 @@ const AddTopics = ({
   numPlayers
 }) => {
   const [topic, setTopic] = useState('');
+  const topicInputRef = useRef();
 
   const handleAddTopic = () => {
     addTopic(topic);
     setTopic('');
+
+    if (topicInputRef.current) {
+      topicInputRef.current.focus();
+    }
+
     onTopicAdded && onTopicAdded();
   };
 
   return (
-    <div class="add-topics">
-      <div class="add-topics__logo">
-        <Logo size="small" />
+    <div class="add-topics flex direction--column height--100-pct bg-color--primary">
+      <div class="flex-shrink--0 flex align-items--center margin-t--xlarge padding-h--base">
+        <span class="color--white font-weight--bold">{gameId}</span>
+        <span class="flex-grow--1">
+          <Logo size="small" />
+        </span>
+        <AddTopicsCoachmark />
       </div>
-      <div class="add-topics__container">
-        <div class="add-topics__header">
-          <span class="add-topics__header--game-id">{gameId}</span>
-          <h2 class="add-topics__header--title">Add Topics</h2>
-          <div class="add-topics__header--coachmark">
-            <Coachmark eventLabel="add_topics">
-              Topics are people, places and things that you’ll be asked to rank
-              throughout the game. Good topics are things that are trivial yet
-              polarizing. Here are a few examples of potential topics:
-              <ul>
-                <li>Las Vegas</li>
-                <li>Dave Matthews Band</li>
-                <li>The Bachelor</li>
-                <li>Going to the movies alone</li>
-              </ul>
-              Here are some things to avoid:
-              <ul>
-                <li>
-                  "Either/ors" like "cats or dogs". That’s an entirely different
-                  game. Just enter "cats!" Better yet, enter "Cats! The Musical"
-                </li>
-                <li>
-                  Broad categories like "airlines" or "music". It’s fun to get
-                  specific. Instead, try "Delta Airlines" or "Jazz"
-                </li>
-              </ul>
-            </Coachmark>
-          </div>
-        </div>
+      <div class="container flex direction--column align-items--center flex-grow--1 margin--large padding-v--large padding-b--s overflow--hidden">
+        <h1 class="modal-header color--primary margin-b--large">
+          {remainingTopics > 1 && `${remainingTopics} More Topics Needed`}
+          {remainingTopics === 1 && '1 More Topic Needed'}
+          {remainingTopics <= 0 && 'Enough Topics Added'}
+        </h1>
         <form
-          class="add-topics__form"
           autoComplete="off"
+          class="flex-shrink--0 flex padding-h--base"
           onSubmit={handleAddTopic}
         >
-          <div class="add-topics__input">
-            <TextField
-              label="Polarizing thing"
+          <div class="margin-r--s">
+            <TextInput
+              getRef={topicInputRef}
+              label="Polarizing Topic"
+              name="topic"
+              onChange={setTopic}
               placeholder={topicExample ? `e.g. ${topicExample}` : null}
               value={topic}
-              onInput={({ target: { value } }) => setTopic(value)}
-              InputLabelProps={{
-                shrink: true
-              }}
             />
           </div>
           <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddTopic}
-            name="add"
             disabled={!topic}
+            name="add"
+            onClick={handleAddTopic}
+            variant="primary"
           >
             Add
           </Button>
         </form>
-        <div class="add-topics__topics">
-          {[...playerTopics].reverse().map(topic => (
-            <Topic topic={topic} />
+        <div class="flex-grow--1 min-height--huge flex direction--column margin-t--xlarge padding-h--base overflow-y--auto width--100-pct">
+          {[...playerTopics].reverse().map((topic, index, arr) => (
+            <div>
+              <div class="margin-b--base">
+                <Topic topic={topic} />
+              </div>
+              {index < arr.length - 1 && <hr class="margin-t--none" />}
+            </div>
           ))}
         </div>
-        <div class="add-topics__footer">
-          <span name="remainingTopics" class="add-topics__remaining-topics">
-            {remainingTopics > 0
-              ? `Add ${remainingTopics} topic${
-                  remainingTopics > 1 ? 's' : ''
-                } to play a full round`
-              : `Enough topics for ${numPlayers} players`}
+        <hr class="margin-t--none width--100-pct" />
+        <div class="flex-shrink--0 flex direction--column align-items--center">
+          <span class="font-weight--bold margin-b--base">
+            1 round | {`${numPlayers} players`}
           </span>
           <Button
-            variant="contained"
-            color="primary"
-            onClick={toGame}
-            name="done"
             disabled={remainingTopics > 0}
+            name="done"
+            onClick={toGame}
+            variant="primary"
           >
-            Done!
+            Start Game
           </Button>
         </div>
       </div>

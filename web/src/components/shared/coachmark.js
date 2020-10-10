@@ -1,12 +1,14 @@
 import { h } from 'preact';
 
+import cx from 'utilities/cx';
+
 import { withAction } from '@state';
 import { showCoachmark } from '@actions';
 import { logEvent } from '@services/logger';
 
 import IconCircleI from 'components/shared/icon/IconCircleI';
 
-const Coachmark = ({ children, showCoachmark, eventLabel }) => {
+const Coachmark = ({ children, showCoachmark, eventLabel, white }) => {
   const handleShowCoachmark = () => {
     showCoachmark(children);
 
@@ -15,7 +17,7 @@ const Coachmark = ({ children, showCoachmark, eventLabel }) => {
 
   return (
     <div class="coachmark" onClick={handleShowCoachmark}>
-      <IconCircleI />
+      <IconCircleI white={white} />
     </div>
   );
 };

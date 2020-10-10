@@ -9,7 +9,6 @@ const Logo = ({ cycleTheme, size }) => {
   return (
     <div class="logo" onClick={() => cycleTheme()}>
       <svg
-        width="336"
         height={height}
         viewBox={`0 0 336 42`}
         fill="none"
