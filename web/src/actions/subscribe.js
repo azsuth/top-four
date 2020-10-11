@@ -1,5 +1,8 @@
 import { toRoot } from 'utilities/router';
-import { subscribeToGameUpdatesService } from '@services';
+import {
+  subscribeToGameUpdatesService,
+  unsubscribeFromGameUpdatesService
+} from '@services';
 import { GAME_UPDATE } from '@actions/types';
 
 let previousGame;
@@ -31,6 +34,10 @@ const subscribeToGameUpdates = (
   });
 };
 
+const unsubscribeFromGameUpdates = gameUid => {
+  unsubscribeFromGameUpdatesService(gameUid);
+};
+
 const getLocalRanks = (game, previousGame) => {
   const { state: previousState } = previousGame || {};
   const { state: nextState, topics } = game;
@@ -54,4 +61,4 @@ const defaultLocalRanks = topics =>
       {}
     );
 
-export { subscribeToGameUpdates };
+export { subscribeToGameUpdates, unsubscribeFromGameUpdates };

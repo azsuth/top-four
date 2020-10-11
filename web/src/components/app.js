@@ -5,7 +5,7 @@ import { Router, getCurrentUrl } from 'preact-router';
 import { withAction, withState } from '@state';
 import compose from 'utilities/compose';
 import resolve from 'utilities/resolve';
-import { subscribeToGameUpdates } from '@actions';
+import { subscribeToGameUpdates, unsubscribeFromGameUpdates } from '@actions';
 import { IN_PROGRESS_URL_REGEX } from 'utilities/constants';
 import cx from 'utilities/cx';
 
@@ -70,6 +70,10 @@ const withSubscribeEffect = WrappedComponent => {
       if (uid && getCurrentUrl().match(IN_PROGRESS_URL_REGEX)) {
         props.subscribe(uid, previousGame);
       }
+
+      return () => {
+        unsubscribeFromGameUpdates(uid);
+      };
     }, []);
 
     return <WrappedComponent {...props} />;

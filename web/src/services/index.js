@@ -63,6 +63,10 @@ const subscribeToGameUpdatesService = (gameUid, on) => {
     .on('value', snapshot => on(snapshot.val()));
 };
 
+const unsubscribeFromGameUpdatesService = gameUid => {
+  firebase.database().ref(`/games/${gameUid}`).off('value');
+};
+
 const joinTeamService = ({ teamUid, playerUid, gameUid }) => {
   firebase
     .database()
@@ -112,6 +116,7 @@ export {
   addPlayerService,
   getGameUidService,
   subscribeToGameUpdatesService,
+  unsubscribeFromGameUpdatesService,
   joinTeamService,
   addTopicService,
   deleteTopicService,
