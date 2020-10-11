@@ -44,8 +44,9 @@ describe('game state helpers', () => {
         </div>
       );
 
-      expect(wrapper.containsMatchingElement(<span />)).toBe(true);
-      expect(wrapper.text()).toBe('Tell Andrew to start the next round!');
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        'Tell Andrew to start the next round!'
+      );
     });
 
     it('prompts for more topics between rounds when there are not enough for another round', () => {
@@ -97,8 +98,9 @@ describe('game state helpers', () => {
         </div>
       );
 
-      expect(wrapper.containsMatchingElement(<span />)).toBe(true);
-      expect(wrapper.text()).toBe(`Everyone's locked in!`);
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        `Everyone's locked in!`
+      );
     });
 
     it('returns a message when only one player is not locked in', () => {
@@ -113,8 +115,9 @@ describe('game state helpers', () => {
         </div>
       );
 
-      expect(wrapper.containsMatchingElement(<span />)).toBe(true);
-      expect(wrapper.text()).toBe('Waiting on Emily to lock in!');
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        'Waiting on Emily to lock in!'
+      );
     });
 
     it('returns a message when more than one player is not locked in', () => {
@@ -129,8 +132,9 @@ describe('game state helpers', () => {
         </div>
       );
 
-      expect(wrapper.containsMatchingElement(<span />)).toBe(true);
-      expect(wrapper.text()).toBe('Waiting on 2 players to lock in!');
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        'Waiting on 2 players to lock in!'
+      );
     });
   });
 });

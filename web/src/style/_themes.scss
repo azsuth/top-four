@@ -6,17 +6,20 @@ $themes: (
   orange: (
     color-primary: $color-orange,
     color-primary-dark: darken($color-orange, 14%),
-    color-primary-light: lighten($color-orange, 14%)
+    color-primary-light: lighten($color-orange, 14%),
+    color-primary-lightest: lighten($color-orange, 25%)
   ),
   purple: (
     color-primary: $color-purple,
     color-primary-dark: darken($color-purple, 14%),
-    color-primary-light: lighten($color-purple, 14%)
+    color-primary-light: lighten($color-purple, 14%),
+    color-primary-lightest: lighten($color-purple, 25%)
   ),
   green: (
     color-primary: $color-green,
     color-primary-dark: darken($color-green, 14%),
-    color-primary-light: lighten($color-green, 14%)
+    color-primary-light: lighten($color-green, 14%),
+    color-primary-lightest: lighten($color-green, 25%)
   )
 );
 

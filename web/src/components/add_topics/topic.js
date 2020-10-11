@@ -1,5 +1,6 @@
 import { h } from 'preact';
-import IconDelete from 'components/shared/icon/IconDelete';
+
+import IconDelete from 'components/shared/icon/icon_delete';
 
 import { withAction } from '@state';
 import { deleteTopic } from '@actions';

@@ -1,7 +1,5 @@
 // compat
 
-$size-xs: 0.1em;
-$color-black: #000;
 $color-green: #00ff00;
 $color-gray: #00ff00;
 $color-orange: #00ff00;
@@ -11,6 +9,7 @@ $color-secondary: #00ff00;
 // size
 
 $size-xxs: 0.375em;
+$size-xs: 0.5em;
 $size-s: 0.875em;
 $size-base: 1.125em;
 $size-large: 1.5em;
@@ -31,7 +30,8 @@ $color-primary-light: #ffbea9;
 $color-gray-dark: #2e2e2e;
 $color-gray-light: #969696;
 $color-gray-lighter: #dedede;
-$color-white: #ffffff;
+$color-white: #fff;
+$color-black: #000;
 
 :export {
   colorPrimary: $color-primary;

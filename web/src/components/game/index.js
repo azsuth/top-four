@@ -1,68 +1,23 @@
 import { h } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { Drawer, Slide, Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 
 import { withState } from '@state';
 import { toAllPlayersWithScores } from 'utilities/state_mapping';
 import compose from 'utilities/compose';
 import { GAME_STATE } from 'utilities/constants';
-import { logErrorMessage, logEvent } from '@services/logger';
+import { logErrorMessage } from '@services/logger';
 
-import Header from 'components/game/header';
-import Body from 'components/game/body';
-import Footer from 'components/game/footer';
-import Scores from 'components/game/scores';
+import Info from 'components/game/info';
+import GameTopics from 'components/game/game_topics';
 import withGameState from 'components/game/with_game_state';
 
-const SlideTransition = props => <Slide {...props} />;
-
 const Game = ({ closeSnackbar, gameState, snackbarOpen, winner }) => {
-  const [showScores, setShowScores] = useState(false);
-
-  const handleClickScores = () => {
-    setShowScores(true);
-
-    logEvent('in_game', 'show_scores');
-  };
-
-  const handleClickSnackbar = () => {
-    closeSnackbar();
-    setShowScores(true);
-
-    logEvent('in_game', 'click_snackbar');
-  };
+  const [showInfo, setShowInfo] = useState(false);
 
   return (
-    <div class="game">
-      <Header gameState={gameState} onClickScores={handleClickScores} />
-      <Body gameState={gameState} />
-      <Footer gameState={gameState} />
-
-      <Drawer
-        classes={{ paper: 'game__drawer' }}
-        anchor="right"
-        open={showScores}
-        onClose={() => setShowScores(false)}
-      >
-        <Scores />
-      </Drawer>
-
-      <Snackbar
-        onClick={handleClickSnackbar}
-        open={snackbarOpen}
-        onClose={closeSnackbar}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        TransitionComponent={SlideTransition}
-        classes={{
-          root: 'game__winner-wrapper'
-        }}
-      >
-        <Alert icon={false} elevation={3} classes={{ root: 'game__winner' }}>
-          <span>{winner}</span>
-        </Alert>
-      </Snackbar>
+    <div class="game height--100-pct">
+      <Info toggleShowInfo={() => setShowInfo(show => !show)} />
+      <GameTopics gameState={gameState} showInfo={showInfo} />
     </div>
   );
 };

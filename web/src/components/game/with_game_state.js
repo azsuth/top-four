@@ -9,7 +9,6 @@ import {
 } from 'utilities/state_mapping';
 import compose from 'utilities/compose';
 import { GAME_STATE } from 'utilities/constants';
-import { logErrorMessage } from '@services/logger';
 
 const getGameState = ({
   remoteGameState,
@@ -19,10 +18,6 @@ const getGameState = ({
   players,
   availableTopicsCount
 }) => {
-  if (!player) {
-    logErrorMessage('missing player in getGameState');
-  }
-
   const { uid: playerUid, lockedIn } = player;
   const ranker = playerUid === rankingPlayerUid;
 
@@ -32,22 +27,19 @@ const getGameState = ({
     );
     const nextRanker = players[(currentRankerPosition + 1) % players.length];
 
-    if (!nextRanker) {
-      logErrorMessage('missing nextRanker in getGameState');
-    }
-
     nextRanker.isThisPlayer = nextRanker && playerUid === nextRanker.uid;
 
     return {
       state: GAME_STATE.BETWEEN_ROUNDS,
       ranker,
+      unlockedInPlayers,
       nextRanker,
       availableTopicsCount
     };
   }
 
   if (remoteGameState === 'ranking' && !lockedIn)
-    return { state: GAME_STATE.RANKING, ranker };
+    return { state: GAME_STATE.RANKING, ranker, unlockedInPlayers };
 
   if (remoteGameState === 'ranking' && lockedIn)
     return { state: GAME_STATE.LOCKED_IN, ranker, unlockedInPlayers };

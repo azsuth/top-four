@@ -11,6 +11,10 @@
 
 // width
 
+.width--10-pct {
+  width: 10%;
+}
+
 .width--25-pct {
   width: 25%;
 }
@@ -85,6 +89,10 @@
 
 .margin-t--none {
   margin-top: 0;
+}
+
+.margin-t--xs {
+  margin-top: $size-xs;
 }
 
 .margin-t--s {
@@ -196,6 +204,10 @@
   padding-right: $size-xlarge;
 }
 
+.padding-r--base {
+  padding-right: $size-base;
+}
+
 // flex
 
 .flex {
@@ -204,6 +216,10 @@
 
 .direction--column {
   flex-direction: column;
+}
+
+.justify--around {
+  justify-content: space-around;
 }
 
 .justify--between {
@@ -240,6 +256,10 @@
   @include themify() {
     background-color: themed('color-primary');
   }
+}
+
+.bg-color--white {
+  background-color: $color-white;
 }
 
 // color
@@ -298,4 +318,33 @@
 
 .text-align--center {
   text-align: center;
+}
+
+// border
+
+.border {
+  border-width: 2px;
+  border-style: solid;
+}
+
+.b-color--primary {
+  @include themify() {
+    border-color: themed('color-primary');
+  }
+}
+
+.rounded {
+  border-radius: $size-s;
+}
+
+// position
+
+.position--relative {
+  position: relative;
+}
+
+// opacity
+
+.opacity--50-pct {
+  opacity: 0.5;
 }

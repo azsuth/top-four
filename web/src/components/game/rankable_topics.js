@@ -9,12 +9,19 @@ import { GAME_STATE } from 'utilities/constants';
 
 import RankableTopic from 'components/game/rankable_topic';
 
-const RankableTopics = ({ activeTopics, updateLocalRanks, gameState }) => {
+const RankableTopics = ({
+  activeTopics,
+  gameState,
+  guessesByTopic,
+  localRanks,
+  updateLocalRanks
+}) => {
   const handleDragEnd = drag => {
     const {
       source: { index: sourceIndex },
       destination: { index: destinationIndex }
     } = drag;
+
     updateLocalRanks(activeTopics, sourceIndex, destinationIndex);
   };
 
@@ -33,14 +40,17 @@ const RankableTopics = ({ activeTopics, updateLocalRanks, gameState }) => {
                 >
                   {(provided, snapshot) => (
                     <div
-                      class="rankable-topics__topic"
+                      class="margin-t--base"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
                       <RankableTopic
-                        topic={topic}
+                        activeTopics={activeTopics}
                         gameState={gameState}
+                        guessesByTopic={guessesByTopic}
+                        localRanks={localRanks}
+                        topic={topic}
                         dragging={snapshot.isDragging}
                       />
                     </div>
@@ -77,36 +87,12 @@ const withUpdateLocalRanksAction = withAction(
 
 const withProps = WrappedComponent => {
   return props => {
-    const { activeTopics, localRanks, guessesByTopic } = props;
+    const { activeTopics, localRanks } = props;
 
-    const sortedByLocalRank = activeTopics
-      .sort(({ uid: uidA }, { uid: uidB }) =>
+    const sortedByLocalRank = activeTopics.sort(
+      ({ uid: uidA }, { uid: uidB }) =>
         localRanks ? localRanks[uidA] - localRanks[uidB] : 1
-      )
-      .map((topic, index, topics) => {
-        const correctTopic = topics.find(({ rank }) => rank === index);
-        const topicGuesses = correctTopic && guessesByTopic[correctTopic.uid];
-
-        const correctGuesses =
-          topicGuesses &&
-          topicGuesses.filter(guess => guess === correctTopic.rank).length;
-        const totalGuesses =
-          correctTopic && topicGuesses && topicGuesses.length;
-
-        let correctPercent;
-        if (correctGuesses !== undefined && totalGuesses !== undefined) {
-          correctPercent = `${Math.round(
-            (correctGuesses / totalGuesses) * 100
-          )}%`;
-        }
-
-        return {
-          ...topic,
-          localRank: index,
-          correctTopic,
-          correctPercent
-        };
-      });
+    );
 
     return <WrappedComponent {...props} activeTopics={sortedByLocalRank} />;
   };

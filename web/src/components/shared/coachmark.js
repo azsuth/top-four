@@ -1,12 +1,10 @@
 import { h } from 'preact';
 
-import cx from 'utilities/cx';
-
 import { withAction } from '@state';
 import { showCoachmark } from '@actions';
 import { logEvent } from '@services/logger';
 
-import IconCircleI from 'components/shared/icon/IconCircleI';
+import IconCircleI from 'components/shared/icon/icon_circle_i';
 
 const Coachmark = ({ children, showCoachmark, eventLabel, white }) => {
   const handleShowCoachmark = () => {
