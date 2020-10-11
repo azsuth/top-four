@@ -9,7 +9,7 @@ import Button from 'components/shared/button';
 function Share({ gameId, nextButton }) {
   return (
     <div class="flex flex-grow--1 direction--column align-items--center">
-      <h1 class="modal-header color--primary margin-b--large">Success!</h1>
+      <h1 class="modal-header color--primary-dark margin-b--large">Success!</h1>
       <h2 class="modal-header margin-b--xs">Your Game ID is</h2>
       <span class="font-weight--bold color--primary font-size--huge margin-b--xs">
         {gameId}

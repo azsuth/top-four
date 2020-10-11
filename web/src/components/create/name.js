@@ -21,7 +21,7 @@ const Name = ({
 
   return (
     <div class="name flex-grow--1 width--100-pct flex direction--column align-items--center">
-      <h1 class="modal-header color--primary margin-b--large">
+      <h1 class="modal-header color--primary-dark margin-b--large">
         What's your name?
       </h1>
       <form autoComplete="off" class="flex direction--column flex-grow--1">

@@ -8,7 +8,7 @@ import RadioInput from 'components/shared/radio_input';
 const GameMode = ({ gameMode, setGameMode }) => {
   return (
     <div class="game-mode flex-grow--1 width--100-pct flex direction--column align-items--center">
-      <h1 class="modal-header color--primary margin-b--large">
+      <h1 class="modal-header color--primary-dark margin-b--large">
         How do you want to play?
       </h1>
       <div class="flex-grow--1">

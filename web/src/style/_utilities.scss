@@ -254,6 +254,12 @@
   }
 }
 
+.color--primary-dark {
+  @include themify() {
+    color: themed('color-primary-dark');
+  }
+}
+
 .color--white {
   color: $color-white;
 }

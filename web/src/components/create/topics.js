@@ -6,7 +6,7 @@ import RadioInput from 'components/shared/radio_input';
 const Topics = ({ topicPacks, topicPackUid, setTopicPackUid }) => {
   return (
     <div class="topics flex-grow--1 width--100-pct flex direction--column align-items--center">
-      <h1 class="modal-header color--primary margin-b--large">
+      <h1 class="modal-header color--primary-dark margin-b--large">
         What topics do you want to play with?
       </h1>
       <div class="flex-grow--1">

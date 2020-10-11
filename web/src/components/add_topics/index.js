@@ -54,7 +54,7 @@ const AddTopics = ({
         <AddTopicsCoachmark />
       </div>
       <div class="container flex direction--column align-items--center flex-grow--1 margin--large padding-v--large padding-b--s overflow--hidden">
-        <h1 class="modal-header color--primary margin-b--large">
+        <h1 class="modal-header color--primary-dark margin-b--large">
           {remainingTopics > 1 && `${remainingTopics} More Topics Needed`}
           {remainingTopics === 1 && '1 More Topic Needed'}
           {remainingTopics <= 0 && 'Enough Topics Added'}

@@ -39,7 +39,7 @@ const Join = ({ joinGame }) => {
         <Logo size="small" />
       </div>
       <div class="join__container container flex direction--column align-items--center flex-grow--1 margin--large padding-t--large padding-h--s padding-b--s">
-        <h1 class="modal-header color--primary margin-b--large">
+        <h1 class="modal-header color--primary-dark margin-b--large">
           {!loading && 'Join an Exising Game'}
           {loading && 'Joining...'}
         </h1>
