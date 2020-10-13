@@ -13,11 +13,22 @@ import withGameState from 'components/game/with_game_state';
 
 const Game = ({ closeSnackbar, gameState, snackbarOpen, winner }) => {
   const [showInfo, setShowInfo] = useState(false);
+  const [topicsTop, setTopicsTop] = useState(null);
 
   return (
     <div class="game height--100-pct">
-      <Info toggleShowInfo={() => setShowInfo(show => !show)} />
-      <GameTopics gameState={gameState} showInfo={showInfo} />
+      <Info
+        setTopicsTop={setTopicsTop}
+        showInfo={showInfo}
+        toggleShowInfo={() => setShowInfo(show => !show)}
+        topicsTop={topicsTop}
+      />
+      <GameTopics
+        gameState={gameState}
+        hideInfo={() => setShowInfo(false)}
+        showInfo={showInfo}
+        topicsTop={topicsTop}
+      />
     </div>
   );
 };

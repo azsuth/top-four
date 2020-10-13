@@ -3,14 +3,13 @@
 
 .game-topics {
   position: absolute;
-  top: 12%;
   right: 0;
   bottom: 0;
   left: 0;
   transition: all $timing-fast;
 
   &--hidden {
-    top: 95%;
+    top: calc(100% - 2.5em);
   }
 }
 

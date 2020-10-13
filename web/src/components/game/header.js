@@ -6,9 +6,16 @@ import { withState } from '@state';
 
 import { headerState } from 'components/game/game_state_helpers';
 
-const Header = ({ header, subheader }) => {
+import IconChevronUp from 'components/shared/icon/icon_chevron_up';
+
+const Header = ({ header, hideInfo, showInfo, subheader }) => {
   return (
     <div class="game-header text-align--center">
+      {showInfo && (
+        <div onClick={hideInfo}>
+          <IconChevronUp />
+        </div>
+      )}
       <h1 class="modal-header color--primary-dark margin-b--xs">{header}</h1>
       <span class="font-weight--bold">{subheader}</span>
     </div>

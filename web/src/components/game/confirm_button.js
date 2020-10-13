@@ -5,7 +5,7 @@ import cx from 'utilities/cx';
 
 import Button from 'components/shared/button';
 import IconCheck from 'components/shared/icon/icon_check';
-import IconX from 'components/shared/icon/icon_x';
+import IconOutlineX from 'components/shared/icon/icon_outline_x';
 
 const ConfirmButton = ({ confirmText, confirmAction, helperText }) => {
   const [confirming, setConfirming] = useState(false);
@@ -32,7 +32,7 @@ const ConfirmButton = ({ confirmText, confirmAction, helperText }) => {
       <div class={actionsClasses}>
         {confirming && (
           <span onClick={() => setConfirming(false)}>
-            <IconX />
+            <IconOutlineX />
           </span>
         )}
 

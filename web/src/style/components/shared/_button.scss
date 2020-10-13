@@ -16,6 +16,15 @@
   -webkit-appearance: none;
 }
 
+a.btn {
+  border-bottom: none;
+  text-align: center;
+
+  &:hover {
+    border-bottom: none;
+  }
+}
+
 // basic
 
 .btn {
