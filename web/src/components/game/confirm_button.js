@@ -27,7 +27,7 @@ const ConfirmButton = ({ confirmText, confirmAction, helperText }) => {
   };
 
   return (
-    <div class="flex direction--column align-items--center">
+    <div class="flex direction--column align-items--center width--100-pct">
       <span class={helperTextClasses}>{helperText || 'hidden_text'}</span>
       <div class={actionsClasses}>
         {confirming && (

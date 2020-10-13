@@ -15,12 +15,8 @@ function GameTopics({ gameState, showInfo }) {
   return (
     <div class={gameTopicsClasses}>
       <Header gameState={gameState} />
-      <div class="flex-grow--1 width--100-pct">
-        <RankableTopics gameState={gameState} />
-      </div>
-      <div class="width--100-pct">
-        <Footer gameState={gameState} />
-      </div>
+      <RankableTopics gameState={gameState} />
+      <Footer gameState={gameState} />
     </div>
   );
 }
