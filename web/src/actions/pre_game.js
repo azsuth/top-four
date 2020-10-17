@@ -18,14 +18,15 @@ import { subscribeToGameUpdates } from '@actions/subscribe';
 import { STARTED_GAME, CLEAR_STATE } from '@actions/types';
 
 const startGame = async (
-  { name, gameMode, topicPackUid },
+  { name, gameMode, topicPackUid, numRounds },
   { dispatch, state }
 ) => {
   const numberOfTeams = gameMode === TEAMS ? 2 : 0;
 
   const data = await startGameService({
     numberOfTeams,
-    topicPackUid: topicPackUid !== WRITE_OUR_OWN_UID ? topicPackUid : null
+    topicPackUid: topicPackUid !== WRITE_OUR_OWN_UID ? topicPackUid : null,
+    numRounds
   }).catch(tagLogger('startGameService failed'));
 
   if (!data || !data.gameId || !data.gameUid) {
