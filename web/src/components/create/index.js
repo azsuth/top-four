@@ -17,6 +17,7 @@ import Topics from 'components/create/topics';
 import Name from 'components/create/name';
 import Creating from 'components/create/creating';
 import Share from 'components/create/share';
+import Rounds from 'components/create/rounds';
 
 function CreateContainer({ children }) {
   return (
@@ -28,6 +29,7 @@ function CreateContainer({ children }) {
 
 const Create = ({ gameId, startGame, topicPacks }) => {
   const [gameMode, setGameMode] = useState(INDIVIDUALS);
+  const [numRounds, setNumRounds] = useState(1);
   const [topicPackUid, setTopicPackUid] = useState(WRITE_OUR_OWN_UID);
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,7 +39,7 @@ const Create = ({ gameId, startGame, topicPacks }) => {
   const handleStartGame = () => {
     setLoading(true);
 
-    startGame({ name, gameMode, topicPackUid }).catch(() => {
+    startGame({ name, gameMode, topicPackUid, numRounds }).catch(() => {
       setLoading(false);
     });
   };
@@ -61,8 +63,13 @@ const Create = ({ gameId, startGame, topicPacks }) => {
         slideStyle={{ display: 'flex', flexDirection: 'column' }}
         style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }}
       >
+        {false && (
+          <CreateContainer>
+            <GameMode gameMode={gameMode} setGameMode={setGameMode} />
+          </CreateContainer>
+        )}
         <CreateContainer>
-          <GameMode gameMode={gameMode} setGameMode={setGameMode} />
+          <Rounds numRounds={numRounds} setNumRounds={setNumRounds} />
         </CreateContainer>
         <CreateContainer>
           <Topics

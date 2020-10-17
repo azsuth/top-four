@@ -129,6 +129,16 @@
   margin-top: $size-xlarge;
 }
 
+.margin-h--s {
+  margin-left: $size-s;
+  margin-right: $size-s;
+}
+
+.margin-h--base {
+  margin-left: $size-base;
+  margin-right: $size-base;
+}
+
 .margin-h--large {
   margin-left: $size-large;
   margin-right: $size-large;
@@ -175,6 +185,10 @@
 
 .padding-t--large {
   padding-top: $size-large;
+}
+
+.padding-b--xxs {
+  padding-bottom: $size-xxs;
 }
 
 .padding-b--xs {
@@ -302,6 +316,14 @@
 
 // color
 
+.color--black {
+  color: $color-black;
+}
+
+.color--light-gray {
+  color: $color-gray-light;
+}
+
 .color--dark-gray {
   color: $color-gray-dark;
 }
@@ -365,10 +387,19 @@
   border-style: solid;
 }
 
+.border--bottom {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
 .b-color--primary {
   @include themify() {
     border-color: themed('color-primary');
   }
+}
+
+.b-color--transparent {
+  border-color: transparent;
 }
 
 .rounded {
