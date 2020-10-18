@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
 import compose from 'utilities/compose';
-import { toGameRound, toRemainingRounds } from 'utilities/state_mapping';
+import { toGameTurn, toRemainingTurns } from 'utilities/state_mapping';
 import { withState } from '@state';
 
 import Button from 'components/shared/button';
@@ -74,11 +74,11 @@ function Info({
 }
 
 const withGameIdState = withState('gameId');
-const withGameTurnState = withState('game.topics', 'gameTurn', toGameRound);
+const withGameTurnState = withState('game.topics', 'gameTurn', toGameTurn);
 const withRemainingTurnsState = withState(
   'game.topics',
   'remainingTurns',
-  toRemainingRounds
+  toRemainingTurns
 );
 
 const wrappers = compose(

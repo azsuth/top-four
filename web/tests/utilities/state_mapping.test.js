@@ -5,9 +5,9 @@ import {
   topicsToPlayerTopics,
   playersToPlayersByTeam,
   toPlayer,
-  toGameRound,
-  toTotalRounds,
-  toRemainingRounds,
+  toGameTurn,
+  toTotalTurns,
+  toRemainingTurns,
   toRankingPlayer,
   toUnlockedInPlayers,
   toGuessesByTopic,
@@ -18,8 +18,8 @@ describe('state mapping functions', () => {
   describe('teamsToArray', () => {
     it('takes an object of teams by ID and returns an array', () => {
       const teamsById = {
-        '12345': { name: 'Team 1' },
-        '23456': { name: 'Team 2' }
+        12345: { name: 'Team 1' },
+        23456: { name: 'Team 2' }
       };
 
       const teams = teamsToArray(teamsById);
@@ -34,8 +34,8 @@ describe('state mapping functions', () => {
   describe('topicsToArray', () => {
     it('takes an object of topics by ID and returns an array', () => {
       const topicsById = {
-        '12345': { topic: 'road trips', rank: 1 },
-        '23456': { topic: 'sex on the beach', rank: 2 }
+        12345: { topic: 'road trips', rank: 1 },
+        23456: { topic: 'sex on the beach', rank: 2 }
       };
 
       const topics = topicsToArray(topicsById);
@@ -50,9 +50,9 @@ describe('state mapping functions', () => {
   describe('availableTopicsToCount', () => {
     it('takes an object of topics by ID and returns the number of topics', () => {
       const topicsById = {
-        '12345': { topic: 'road trips', rank: 1, status: 'available' },
-        '23456': { topic: 'sex on the beach', rank: 2, status: 'available' },
-        '34567': { topic: 'socks with sandals', rank: 3, status: 'unavailable' }
+        12345: { topic: 'road trips', rank: 1, status: 'available' },
+        23456: { topic: 'sex on the beach', rank: 2, status: 'available' },
+        34567: { topic: 'socks with sandals', rank: 3, status: 'unavailable' }
       };
 
       const numTopics = availableTopicsToCount(topicsById);
@@ -64,10 +64,10 @@ describe('state mapping functions', () => {
   describe('topicsToPlayerTopics', () => {
     it('takes state and returns the current players topics as an array', () => {
       const topicsById = {
-        '12345': { topic: 'topic a', playerUid: 'abcde', status: 'available' },
-        '23456': { topic: 'topic b', playerUid: 'bcdef', status: 'available' },
-        '34567': { topic: 'topic c', playerUid: 'abcde', status: 'available' },
-        '45678': { topic: 'topic c', playerUid: 'abcde', status: 'unavailable' }
+        12345: { topic: 'topic a', playerUid: 'abcde', status: 'available' },
+        23456: { topic: 'topic b', playerUid: 'bcdef', status: 'available' },
+        34567: { topic: 'topic c', playerUid: 'abcde', status: 'available' },
+        45678: { topic: 'topic c', playerUid: 'abcde', status: 'unavailable' }
       };
 
       const playerTopics = topicsToPlayerTopics({
@@ -95,10 +95,10 @@ describe('state mapping functions', () => {
   describe('playersToPlayersByTeam', () => {
     it('takes an object of players by ID and returns an object of teams by ID with players', () => {
       const players = {
-        '12345': { name: 'Andrew', teamUid: 'abcde' },
-        '23456': { name: 'Emily', teamUid: 'bcdef' },
-        '34567': { name: 'Harrison', teamUid: 'cdefg' },
-        '45678': { name: 'Lauren', teamUid: 'bcdef' }
+        12345: { name: 'Andrew', teamUid: 'abcde' },
+        23456: { name: 'Emily', teamUid: 'bcdef' },
+        34567: { name: 'Harrison', teamUid: 'cdefg' },
+        45678: { name: 'Lauren', teamUid: 'bcdef' }
       };
 
       const playersByTeam = playersToPlayersByTeam(players);
@@ -119,7 +119,7 @@ describe('state mapping functions', () => {
       const state = {
         playerUid: '12345',
         game: {
-          players: { '23456': { name: 'Andrew' }, '12345': { name: 'Emily' } }
+          players: { 23456: { name: 'Andrew' }, 12345: { name: 'Emily' } }
         }
       };
 
@@ -129,56 +129,56 @@ describe('state mapping functions', () => {
     });
   });
 
-  describe('toGameRound', () => {
-    it('takes an object of topics by ID and returns the current game round', () => {
+  describe('toGameTurn', () => {
+    it('takes an object of topics by ID and returns the current game turn', () => {
       const topicsById = {
-        '12345': { status: 'unavailable' },
-        '23456': { status: 'available' },
-        '34567': { status: 'unavailable' },
-        '45678': { status: 'unavailable' },
-        '56789': { status: 'unavailable' }
+        12345: { status: 'unavailable' },
+        23456: { status: 'available' },
+        34567: { status: 'unavailable' },
+        45678: { status: 'unavailable' },
+        56789: { status: 'unavailable' }
       };
 
-      expect(toGameRound(topicsById)).toBe(2);
+      expect(toGameTurn(topicsById)).toBe(2);
     });
   });
 
-  describe('toTotalRounds', () => {
+  describe('toTotalTurns', () => {
     it('takes an object of topics by ID and returns the total possible rounds', () => {
       expect(
-        toTotalRounds({
-          '1': {},
-          '2': {},
-          '3': {},
-          '4': {},
-          '5': {},
-          '6': {},
-          '7': {},
-          '8': {},
-          '9': {},
-          '10': {}
+        toTotalTurns({
+          1: {},
+          2: {},
+          3: {},
+          4: {},
+          5: {},
+          6: {},
+          7: {},
+          8: {},
+          9: {},
+          10: {}
         })
       ).toBe(2);
     });
   });
 
-  describe('toRemainingRounds', () => {
-    it('takes an object of topics by ID and returns the number of remaining rounds', () => {
+  describe('toRemainingTurns', () => {
+    it('takes an object of topics by ID and returns the number of remaining turns', () => {
       const topicsById = {
-        '12345': { status: 'unavailable' },
-        '23456': { status: 'available' },
-        '34567': { status: 'available' },
-        '45678': { status: 'available' },
-        '56789': { status: 'available' },
-        '67890': { status: 'unavailable' },
-        '78901': { status: 'available' },
-        '89012': { status: 'available' },
-        '90123': { status: 'available' },
-        '11234': { status: 'available' },
-        '22345': { status: 'available' }
+        12345: { status: 'unavailable' },
+        23456: { status: 'available' },
+        34567: { status: 'available' },
+        45678: { status: 'available' },
+        56789: { status: 'available' },
+        67890: { status: 'unavailable' },
+        78901: { status: 'available' },
+        89012: { status: 'available' },
+        90123: { status: 'available' },
+        11234: { status: 'available' },
+        22345: { status: 'available' }
       };
 
-      expect(toRemainingRounds(topicsById)).toBe(2);
+      expect(toRemainingTurns(topicsById)).toBe(2);
     });
   });
 
@@ -187,8 +187,8 @@ describe('state mapping functions', () => {
       const game = {
         rankingPlayerUid: '23456',
         players: {
-          '12345': { name: 'Andrew' },
-          '23456': { name: 'Harrison' }
+          12345: { name: 'Andrew' },
+          23456: { name: 'Harrison' }
         }
       };
 
@@ -199,11 +199,11 @@ describe('state mapping functions', () => {
   describe('toUnlockedInPlayers', () => {
     it('takes an object of players by ID and returns all active players who are not locked in', () => {
       const players = {
-        '12345': { lockedIn: false, active: true },
-        '23456': { lockedIn: true, active: true },
-        '34567': { lockedIn: false, active: true },
-        '45678': { lockedIn: false, active: false },
-        '56789': { lockedIn: true, active: false }
+        12345: { lockedIn: false, active: true },
+        23456: { lockedIn: true, active: true },
+        34567: { lockedIn: false, active: true },
+        45678: { lockedIn: false, active: false },
+        56789: { lockedIn: true, active: false }
       };
 
       expect(toUnlockedInPlayers(players)).toEqual([

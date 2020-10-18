@@ -28,7 +28,8 @@ const AddTopics = ({
   topicExample,
   onTopicAdded,
   remainingTopics,
-  numPlayers
+  numPlayers,
+  numRounds
 }) => {
   const [topic, setTopic] = useState('');
   const topicInputRef = useRef();
@@ -96,7 +97,7 @@ const AddTopics = ({
         <hr class="margin-t--none width--100-pct" />
         <div class="flex-shrink--0 flex direction--column align-items--center">
           <span class="font-weight--bold margin-b--base">
-            1 round | {`${numPlayers} players`}
+            {numRounds} round{numRounds > 1 && 's'} | {`${numPlayers} players`}
           </span>
           <Button
             disabled={remainingTopics > 0}
@@ -134,6 +135,7 @@ const withPlayersState = withState(
 );
 const withGameIdState = withState('gameId');
 const withTopicPacksState = withState('topicPacks');
+const withNumRoundsState = withState('game.numRounds', 'numRounds');
 
 // routes
 const withRoutes = withRouter(toGame);
@@ -185,9 +187,11 @@ const withTopicExampleProp = WrappedComponent => {
 
 const withProps = WrappedComponent => {
   return props => {
-    const { players, numTopics = 0 } = props;
+    const { players, numTopics = 0, numRounds } = props;
 
-    const remainingTopics = Math.max(players.length * 4 - numTopics);
+    const remainingTopics = Math.max(
+      players.length * 4 * numRounds - numTopics
+    );
 
     return (
       <WrappedComponent
@@ -207,6 +211,7 @@ const wrappers = compose(
   withPlayersState,
   withGameIdState,
   withTopicPacksState,
+  withNumRoundsState,
   withRoutes,
   withTopicExampleProp,
   withProps

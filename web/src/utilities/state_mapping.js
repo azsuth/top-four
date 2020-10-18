@@ -32,16 +32,16 @@ const toPlayer = ({ playerUid, game: { players } }) => ({
   uid: playerUid
 });
 
-const toGameRound = topics =>
+const toGameTurn = topics =>
   1 +
   Math.ceil(
     topicsToArray(topics).filter(({ status }) => status === 'unavailable')
       .length / 4
   );
 
-const toTotalRounds = topics => Math.floor(topicsToArray(topics).length / 4);
+const toTotalTurns = topics => Math.floor(topicsToArray(topics).length / 4);
 
-const toRemainingRounds = topics =>
+const toRemainingTurns = topics =>
   Math.floor(
     topicsToArray(topics).filter(({ status }) => status === 'available')
       .length / 4
@@ -122,13 +122,13 @@ export {
   topicsToPlayerTopics,
   playersToPlayersByTeam,
   toPlayer,
-  toGameRound,
-  toTotalRounds,
+  toGameTurn,
+  toTotalTurns,
   toRankingPlayer,
   toActiveTopics,
   toUnlockedInPlayers,
   toGuessesByTopic,
-  toRemainingRounds,
+  toRemainingTurns,
   toAllPlayersWithScores,
   toAllActivePlayers,
   toAvailableAndRankingTopicsCount
