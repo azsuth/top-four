@@ -149,6 +149,26 @@
   margin-right: $size-xlarge;
 }
 
+.margin-v--s {
+  margin-top: $size-s;
+  margin-bottom: $size-s;
+}
+
+.margin-v--base {
+  margin-top: $size-base;
+  margin-bottom: $size-base;
+}
+
+.margin-v--large {
+  margin-top: $size-large;
+  margin-bottom: $size-large;
+}
+
+.margin-v--xlarge {
+  margin-top: $size-xlarge;
+  margin-bottom: $size-xlarge;
+}
+
 // padding
 
 .padding--xs {

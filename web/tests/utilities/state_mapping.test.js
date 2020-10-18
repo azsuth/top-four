@@ -11,7 +11,8 @@ import {
   toRankingPlayer,
   toUnlockedInPlayers,
   toGuessesByTopic,
-  toAllPlayersWithScores
+  toAllPlayersWithScores,
+  toActivePlayerTurns
 } from 'utilities/state_mapping';
 
 describe('state mapping functions', () => {
@@ -286,6 +287,81 @@ describe('state mapping functions', () => {
         { uid: 'player_2', score: 0, name: 'Player 2' },
         { uid: 'player_4', score: 0, name: 'Player 4' }
       ]);
+    });
+  });
+
+  describe('toActivePlayerTurns', () => {
+    it('takes guesses and players and returns an object of turns played by player UID', () => {
+      const guesses = {
+        player_1: {
+          topic_1: 3,
+          topic_2: 2,
+          topic_3: 0,
+          topic_4: 1,
+          topic_5: 'active',
+          topic_6: 'active',
+          topic_7: 'active',
+          topic_8: 'active',
+          topic_9: 1,
+          topic_10: 2,
+          topic_11: 3,
+          topic_12: 4
+        },
+        player_2: {
+          topic_1: 'active',
+          topic_2: 'active',
+          topic_3: 'active',
+          topic_4: 'active',
+          topic_5: 1,
+          topic_6: 2,
+          topic_7: 3,
+          topic_8: 4,
+          topic_9: 'active',
+          topic_10: 'active',
+          topic_11: 'active',
+          topic_12: 'active'
+        },
+        player_3: {
+          topic_1: 0,
+          topic_2: 1,
+          topic_3: 2,
+          topic_4: 3,
+          topic_5: 1,
+          topic_6: 2,
+          topic_7: 3,
+          topic_8: 4,
+          topic_9: 1,
+          topic_10: 2,
+          topic_11: 3,
+          topic_12: 4
+        },
+        player_4: {
+          topic_1: 0,
+          topic_2: 1,
+          topic_3: 2,
+          topic_4: 3,
+          topic_5: 1,
+          topic_6: 2,
+          topic_7: 3,
+          topic_8: 4,
+          topic_9: 1,
+          topic_10: 2,
+          topic_11: 3,
+          topic_12: 4
+        }
+      };
+      const players = {
+        player_1: { active: true },
+        player_2: { active: true },
+        player_3: { active: false },
+        player_4: { active: true }
+      };
+
+      expect(toActivePlayerTurns({ guesses, players })).toEqual({
+        player_1: 1,
+        player_2: 2,
+        player_4: 0
+      });
     });
   });
 });

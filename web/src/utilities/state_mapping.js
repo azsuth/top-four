@@ -115,6 +115,17 @@ const toAvailableAndRankingTopicsCount = topics =>
     ({ status }) => status === 'available' || status === 'active'
   ).length;
 
+const toActivePlayerTurns = ({ guesses = {}, players }) =>
+  toAllActivePlayers(players).reduce(
+    (playerTurns, player) => ({
+      ...playerTurns,
+      [player.uid]:
+        Object.values(guesses[player.uid] || []).filter(val => val === 'active')
+          .length / 4
+    }),
+    {}
+  );
+
 export {
   teamsToArray,
   topicsToArray,
@@ -131,5 +142,6 @@ export {
   toRemainingTurns,
   toAllPlayersWithScores,
   toAllActivePlayers,
-  toAvailableAndRankingTopicsCount
+  toAvailableAndRankingTopicsCount,
+  toActivePlayerTurns
 };

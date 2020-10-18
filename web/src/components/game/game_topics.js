@@ -21,9 +21,17 @@ function GameTopics({ gameState, hideInfo, showInfo, topicsTop }) {
       class={gameTopicsClasses}
       style={{ top: showInfo ? undefined : topicsTop }}
     >
-      <Header gameState={gameState} hideInfo={hideInfo} showInfo={showInfo} />
-      <RankableTopics gameState={gameState} />
-      <Footer gameState={gameState} />
+      {gameState && (
+        <>
+          <Header
+            gameState={gameState}
+            hideInfo={hideInfo}
+            showInfo={showInfo}
+          />
+          <RankableTopics gameState={gameState} />
+          <Footer gameState={gameState} />
+        </>
+      )}
     </div>
   );
 }

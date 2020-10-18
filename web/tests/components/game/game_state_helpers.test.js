@@ -17,8 +17,7 @@ describe('game state helpers', () => {
           {footerContentForState({
             gameState: {
               state: GAME_STATE.BETWEEN_ROUNDS,
-              nextRanker: { isThisPlayer: true },
-              availableTopicsCount: 5
+              nextRanker: { isThisPlayer: true }
             },
             startRound
           })}
@@ -37,8 +36,7 @@ describe('game state helpers', () => {
           {footerContentForState({
             gameState: {
               state: GAME_STATE.BETWEEN_ROUNDS,
-              nextRanker: { isThisPlayer: false, name: 'Andrew' },
-              availableTopicsCount: 5
+              nextRanker: { isThisPlayer: false, name: 'Andrew' }
             }
           })}
         </div>
@@ -46,27 +44,6 @@ describe('game state helpers', () => {
 
       expect(wrapper.find(ConfirmButton).props().helperText).toBe(
         'Tell Andrew to start the next round!'
-      );
-    });
-
-    it('prompts for more topics between rounds when there are not enough for another round', () => {
-      const addMoreTopics = jest.fn();
-
-      const wrapper = shallow(
-        <div>
-          {footerContentForState({
-            gameState: {
-              state: GAME_STATE.BETWEEN_ROUNDS,
-              availableTopicsCount: 3
-            },
-            addMoreTopics
-          })}
-        </div>
-      );
-
-      expect(wrapper.containsMatchingElement(<ConfirmButton />)).toBe(true);
-      expect(wrapper.find(ConfirmButton).props().confirmAction).toEqual(
-        addMoreTopics
       );
     });
 
@@ -134,6 +111,40 @@ describe('game state helpers', () => {
 
       expect(wrapper.find(ConfirmButton).props().helperText).toBe(
         'Waiting on 2 players to lock in!'
+      );
+    });
+
+    it('returns a message when the game is over and this is not the active player', () => {
+      const wrapper = shallow(
+        <div>
+          {footerContentForState({
+            gameState: {
+              state: GAME_STATE.END_GAME,
+              nextRanker: { isThisPlayer: false, name: 'Emily' }
+            }
+          })}
+        </div>
+      );
+
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        'Tell Emily to end the game!'
+      );
+    });
+
+    it('returns an end game button for the active player', () => {
+      const wrapper = shallow(
+        <div>
+          {footerContentForState({
+            gameState: {
+              state: GAME_STATE.END_GAME,
+              nextRanker: { isThisPlayer: true, name: 'Emily' }
+            }
+          })}
+        </div>
+      );
+
+      expect(wrapper.find(ConfirmButton).props().confirmText).toBe(
+        'End the game?'
       );
     });
   });

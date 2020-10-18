@@ -2,28 +2,29 @@ import { h } from 'preact';
 import compose from 'utilities/compose';
 
 import { withAction } from '@state';
-import { startRound, lockIn } from '@actions';
-import withRouter, { toAddTopics } from 'utilities/router';
+import { startRound, lockIn, endGame } from '@actions';
 
 import { footerContentForState } from 'components/game/game_state_helpers';
 
-const Footer = ({ gameState, startRound, lockIn, routes: [toAddTopics] }) => {
+const Footer = ({ gameState, startRound, lockIn, endGame }) => {
   return footerContentForState({
     gameState,
     startRound,
     lockIn,
-    addMoreTopics: toAddTopics
+    endGame
   });
 };
 
 // actions
 const withStartRoundAction = withAction(startRound, 'startRound');
 const withLockInAction = withAction(lockIn, 'lockIn');
+const withEndGameAction = withAction(endGame, 'endGame');
 
-// routes
-const withRoutes = withRouter(toAddTopics);
-
-const wrappers = compose(withStartRoundAction, withLockInAction, withRoutes);
+const wrappers = compose(
+  withStartRoundAction,
+  withLockInAction,
+  withEndGameAction
+);
 
 export { Footer };
 export default wrappers(Footer);

@@ -2,12 +2,14 @@ import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { Router, getCurrentUrl } from 'preact-router';
 
-import { withAction, withState } from '@state';
+import { GAME_STATE, IN_PROGRESS_URL_REGEX } from 'utilities/constants';
 import compose from 'utilities/compose';
 import resolve from 'utilities/resolve';
-import { subscribeToGameUpdates, unsubscribeFromGameUpdates } from '@actions';
-import { IN_PROGRESS_URL_REGEX } from 'utilities/constants';
 import cx from 'utilities/cx';
+import withRouter, { toAddTopics, toEnd } from 'utilities/router';
+
+import { withAction, withState } from '@state';
+import { subscribeToGameUpdates, unsubscribeFromGameUpdates } from '@actions';
 
 import ErrorBoundary from 'components/error_boundary';
 
@@ -19,6 +21,7 @@ import Share from 'routes/share';
 import Teams from 'routes/teams';
 import AddTopics from 'routes/add_topics';
 import Game from 'routes/game';
+import End from 'routes/end';
 import Storybook from 'routes/storybook';
 
 import CoachmarkContent from 'components/shared/coachmark_content';
@@ -43,6 +46,7 @@ const App = ({ coachmark, theme }) => {
             <Teams path="/:routeGameId/teams" />
             <AddTopics path="/:routeGameId/topics" />
             <Game path="/:routeGameId/game" />
+            <End path="/:routeGameId/end" />
             <Storybook path="/storybook" />
           </Router>
         </div>
@@ -59,6 +63,9 @@ const withThemeState = withState('theme');
 
 // actions
 const withSubscribeAction = withAction(subscribeToGameUpdates, 'subscribe');
+
+// routes
+const withRoutes = withRouter(toEnd, toAddTopics);
 
 // effects
 const withSubscribeEffect = WrappedComponent => {
@@ -80,12 +87,43 @@ const withSubscribeEffect = WrappedComponent => {
   };
 };
 
+const withAutoRouterEffect = WrappedComponent => {
+  return props => {
+    const {
+      routes: [toEnd, toAddTopics]
+    } = props;
+    const gameState = resolve('fullState.game.state', props);
+    const currentUrl = getCurrentUrl();
+
+    useEffect(() => {
+      if (
+        gameState === GAME_STATE.END_GAME &&
+        !currentUrl.endsWith('/end') &&
+        currentUrl !== '/'
+      ) {
+        toEnd();
+      }
+
+      if (
+        gameState === GAME_STATE.ADD_MORE_TOPICS &&
+        currentUrl.endsWith('/end')
+      ) {
+        toAddTopics();
+      }
+    }, [currentUrl, gameState, toEnd]);
+
+    return <WrappedComponent {...props} />;
+  };
+};
+
 const wrappers = compose(
   withCoachmarkContentState,
   withFullState,
   withThemeState,
   withSubscribeAction,
-  withSubscribeEffect
+  withRoutes,
+  withSubscribeEffect,
+  withAutoRouterEffect
 );
 
 export { App };

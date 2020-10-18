@@ -11,7 +11,7 @@ import Info from 'components/game/info';
 import GameTopics from 'components/game/game_topics';
 import withGameState from 'components/game/with_game_state';
 
-const Game = ({ closeSnackbar, gameState, snackbarOpen, winner }) => {
+const Game = ({ gameState }) => {
   const [showInfo, setShowInfo] = useState(false);
   const [topicsTop, setTopicsTop] = useState(null);
 
@@ -99,9 +99,7 @@ const withEffect = WrappedComponent => {
 const wrappers = compose(
   withPlayerScoresState,
   withPlayerUidState,
-  withGameState,
-  withProps,
-  withEffect
+  withGameState
 );
 
 export { Game };

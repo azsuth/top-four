@@ -5,22 +5,26 @@ import { GAME_STATE } from 'utilities/constants';
 import ConfirmButton from 'components/game/confirm_button';
 
 const footerContentForState = ({
-  gameState: { state, unlockedInPlayers, nextRanker, availableTopicsCount },
+  gameState: { state, unlockedInPlayers, nextRanker },
   startRound,
   lockIn,
-  addMoreTopics
+  endGame
 }) => {
   switch (state) {
-    case GAME_STATE.BETWEEN_ROUNDS:
-      if (availableTopicsCount < 4)
+    case GAME_STATE.END_GAME:
+      if (nextRanker.isThisPlayer) {
         return (
-          <ConfirmButton
-            confirmText="Add More?"
-            confirmAction={addMoreTopics}
-          />
+          <ConfirmButton confirmText="End the game?" confirmAction={endGame} />
         );
+      }
 
-      if (nextRanker.isThisPlayer)
+      return (
+        <ConfirmButton
+          helperText={`Tell ${nextRanker.name} to end the game!`}
+        />
+      );
+    case GAME_STATE.BETWEEN_ROUNDS:
+      if (nextRanker.isThisPlayer) {
         return (
           <ConfirmButton
             confirmText="Start"
@@ -28,6 +32,7 @@ const footerContentForState = ({
             helperText="Hey, it's your turn!"
           />
         );
+      }
 
       return (
         <ConfirmButton
@@ -59,6 +64,11 @@ const footerContentForState = ({
 
 const headerState = ({ gameState: { state, ranker }, rankingPlayer }) => {
   switch (state) {
+    case GAME_STATE.END_GAME:
+      return {
+        header: 'Game Over!',
+        subheader: 'Wanna play another round?'
+      };
     case GAME_STATE.BETWEEN_ROUNDS:
       return {
         header: 'Waiting',
