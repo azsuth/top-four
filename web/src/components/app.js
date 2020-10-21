@@ -17,8 +17,6 @@ import ErrorBoundary from 'components/error_boundary';
 import Home from 'routes/home';
 import Join from 'routes/join';
 import Create from 'routes/create';
-import Share from 'routes/share';
-import Teams from 'routes/teams';
 import AddTopics from 'routes/add_topics';
 import Game from 'routes/game';
 import End from 'routes/end';
@@ -42,8 +40,6 @@ const App = ({ coachmark, theme }) => {
             <Home path="/" />
             <Join path="/join" />
             <Create path="/create" />
-            <Share path="/:routeGameId/share" />
-            <Teams path="/:routeGameId/teams" />
             <AddTopics path="/:routeGameId/topics" />
             <Game path="/:routeGameId/game" />
             <End path="/:routeGameId/end" />

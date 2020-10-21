@@ -1,6 +1,5 @@
 import { h } from 'preact';
 import { shallow } from 'enzyme';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
 import { GAME_STATE } from 'utilities/constants';
 
@@ -21,7 +20,6 @@ describe('<RankableTopic />', () => {
       />
     );
 
-    expect(wrapper.containsMatchingElement(<DragIndicatorIcon />)).toBe(false);
     expect(wrapper.find(Button).filter({ name: 'reveal' })).toHaveLength(1);
   });
 
