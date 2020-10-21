@@ -47,4 +47,8 @@
   &--dragging {
     box-shadow: 0 4px 10px rgba($color: $color-black, $alpha: 0.25);
   }
+
+  &:focus {
+    outline: 0;
+  }
 }
