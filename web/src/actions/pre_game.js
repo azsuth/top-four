@@ -6,7 +6,8 @@ import {
   addPlayerService,
   joinTeamService,
   addTopicService,
-  deleteTopicService
+  deleteTopicService,
+  unsubscribeFromGameUpdatesService
 } from '@services';
 
 import { logEvent } from '@services/logger';
@@ -115,6 +116,8 @@ const deleteTopic = (topicUid, { state: { gameUid } }) => {
 };
 
 const clearState = ({ dispatch }) => {
+  unsubscribeFromGameUpdatesService();
+
   dispatch({ type: CLEAR_STATE });
 };
 

@@ -9,7 +9,7 @@ import cx from 'utilities/cx';
 import withRouter, { toAddTopics, toEnd, toGame } from 'utilities/router';
 
 import { withAction, withState } from '@state';
-import { subscribeToGameUpdates, unsubscribeFromGameUpdates } from '@actions';
+import { subscribeToGameUpdates } from '@actions';
 
 import ErrorBoundary from 'components/error_boundary';
 
@@ -77,10 +77,6 @@ const withSubscribeEffect = WrappedComponent => {
       if (uid && getCurrentUrl().match(IN_PROGRESS_URL_REGEX)) {
         props.subscribe(uid, previousGame);
       }
-
-      return () => {
-        unsubscribeFromGameUpdates(uid);
-      };
     }, []);
 
     return <WrappedComponent {...props} />;

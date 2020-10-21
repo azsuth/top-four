@@ -56,15 +56,24 @@ const getGameUidService = async gameId => {
     .find(game => game.gameId === gameId);
 };
 
+let subscribedGameUid = null;
 const subscribeToGameUpdatesService = (gameUid, on) => {
+  unsubscribeFromGameUpdatesService();
+
+  subscribedGameUid = gameUid;
+
   firebase
     .database()
     .ref(`/games/${gameUid}`)
     .on('value', snapshot => on(snapshot.val()));
 };
 
-const unsubscribeFromGameUpdatesService = gameUid => {
-  firebase.database().ref(`/games/${gameUid}`).off('value');
+const unsubscribeFromGameUpdatesService = () => {
+  if (subscribedGameUid) {
+    firebase.database().ref(`/games/${subscribedGameUid}`).off('value');
+
+    subscribedGameUid = null;
+  }
 };
 
 const joinTeamService = ({ teamUid, playerUid, gameUid }) => {
