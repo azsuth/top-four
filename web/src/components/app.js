@@ -29,14 +29,14 @@ import CoachmarkContent from 'components/shared/coachmark_content';
 const App = ({ coachmark, theme }) => {
   const { show, content } = coachmark || {};
 
-  const appContentClass = cx('app-content', `theme-${theme || 'orange'}`, {
+  const appContentClass = cx('app-content', {
     'app-content--blur-in': !!content,
     'app-content--blur-out': !content
   });
 
   return (
-    <ErrorBoundary>
-      <div id="app">
+    <div id="app" class={`theme-${theme || 'orange'}`}>
+      <ErrorBoundary>
         <div class={appContentClass}>
           <Router>
             <Home path="/" />
@@ -51,8 +51,8 @@ const App = ({ coachmark, theme }) => {
           </Router>
         </div>
         {show && <CoachmarkContent content={content} />}
-      </div>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </div>
   );
 };
 
