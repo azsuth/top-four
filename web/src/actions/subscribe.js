@@ -1,3 +1,4 @@
+import { GAME_STATE } from 'utilities/constants';
 import { toRoot } from 'utilities/router';
 import {
   subscribeToGameUpdatesService,
@@ -42,7 +43,12 @@ const getLocalRanks = (game, previousGame) => {
   const { state: previousState } = previousGame || {};
   const { state: nextState, topics } = game;
 
-  if (!previousState && nextState === 'ranking') {
+  if (
+    (!previousState ||
+      previousState === GAME_STATE.ADD_MORE_TOPICS ||
+      previousState === GAME_STATE.ANOTHER_ROUND) &&
+    nextState === 'ranking'
+  ) {
     return defaultLocalRanks(topics);
   }
 

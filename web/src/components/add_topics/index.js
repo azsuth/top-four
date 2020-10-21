@@ -7,7 +7,8 @@ import compose from 'utilities/compose';
 import {
   topicsToPlayerTopics,
   toAvailableAndRankingTopicsCount,
-  toAllActivePlayers
+  toAllActivePlayers,
+  toActivePlayerTurns
 } from 'utilities/state_mapping';
 import { withAction, withState } from '@state';
 import { addTopic, getTopicPacks } from '@actions';
@@ -136,6 +137,11 @@ const withPlayersState = withState(
 const withGameIdState = withState('gameId');
 const withTopicPacksState = withState('topicPacks');
 const withNumRoundsState = withState('game.numRounds', 'numRounds');
+const withPlayerTurnsState = withState(
+  'game',
+  'playerTurns',
+  toActivePlayerTurns
+);
 
 // routes
 const withRoutes = withRouter(toGame);
@@ -187,10 +193,13 @@ const withTopicExampleProp = WrappedComponent => {
 
 const withProps = WrappedComponent => {
   return props => {
-    const { players, numTopics = 0, numRounds } = props;
+    const { numRounds, numTopics = 0, players, playerTurns } = props;
+
+    const roundsPlayed = playerTurns[players[players.length - 1].uid] || 0;
+    const remainingRounds = numRounds - roundsPlayed;
 
     const remainingTopics = Math.max(
-      players.length * 4 * numRounds - numTopics
+      players.length * 4 * remainingRounds - numTopics
     );
 
     return (
@@ -212,6 +221,7 @@ const wrappers = compose(
   withGameIdState,
   withTopicPacksState,
   withNumRoundsState,
+  withPlayerTurnsState,
   withRoutes,
   withTopicExampleProp,
   withProps

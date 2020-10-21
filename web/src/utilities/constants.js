@@ -10,5 +10,6 @@ export const GAME_STATE = {
   LOCKED_IN: 'locked_in',
   END_GAME: 'end_game',
   WINNERS_REVEALED: 'winners_revealed',
-  ADD_MORE_TOPICS: 'add_more_topics'
+  ADD_MORE_TOPICS: 'add_more_topics',
+  ANOTHER_ROUND: 'another_round'
 };

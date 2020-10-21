@@ -6,7 +6,7 @@ import { GAME_STATE, IN_PROGRESS_URL_REGEX } from 'utilities/constants';
 import compose from 'utilities/compose';
 import resolve from 'utilities/resolve';
 import cx from 'utilities/cx';
-import withRouter, { toAddTopics, toEnd } from 'utilities/router';
+import withRouter, { toAddTopics, toEnd, toGame } from 'utilities/router';
 
 import { withAction, withState } from '@state';
 import { subscribeToGameUpdates, unsubscribeFromGameUpdates } from '@actions';
@@ -65,7 +65,7 @@ const withThemeState = withState('theme');
 const withSubscribeAction = withAction(subscribeToGameUpdates, 'subscribe');
 
 // routes
-const withRoutes = withRouter(toEnd, toAddTopics);
+const withRoutes = withRouter(toEnd, toAddTopics, toGame);
 
 // effects
 const withSubscribeEffect = WrappedComponent => {
@@ -90,7 +90,7 @@ const withSubscribeEffect = WrappedComponent => {
 const withAutoRouterEffect = WrappedComponent => {
   return props => {
     const {
-      routes: [toEnd, toAddTopics]
+      routes: [toEnd, toAddTopics, toGame]
     } = props;
     const gameState = resolve('fullState.game.state', props);
     const currentUrl = getCurrentUrl();
@@ -109,6 +109,13 @@ const withAutoRouterEffect = WrappedComponent => {
         currentUrl.endsWith('/end')
       ) {
         toAddTopics();
+      }
+
+      if (
+        gameState === GAME_STATE.ANOTHER_ROUND &&
+        currentUrl.endsWith('/end')
+      ) {
+        toGame();
       }
     }, [currentUrl, gameState, toEnd]);
 

@@ -60,7 +60,7 @@ function End({
                 <span class="font-size--base font-weight--bold margin-v--s">
                   or
                 </span>
-                <Button disabled fullWidth onClick={() => playAnotherRound()}>
+                <Button fullWidth onClick={() => playAnotherRound()}>
                   Play Another Round
                 </Button>
               </>
