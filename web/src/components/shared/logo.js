@@ -7,7 +7,10 @@ const Logo = ({ cycleTheme, size }) => {
   const height = size === 'small' ? 42 * 0.66 : 42;
 
   return (
-    <div class="logo" onClick={() => cycleTheme()}>
+    <div
+      class="height--100-pct flex justify--center align-items--center"
+      onClick={() => cycleTheme()}
+    >
       <svg
         height={height}
         viewBox={`0 0 336 42`}

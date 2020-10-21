@@ -1,7 +1,6 @@
 import { h } from 'preact';
 
 import variables from '../../style/_themes.scss';
-// import variables from 'style/_themes';
 import { withState } from '@state';
 
 function withThemeColor(WrappedComponent) {
