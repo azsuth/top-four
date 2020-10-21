@@ -119,6 +119,21 @@ const setPlayerActiveService = (playerUid, active, gameUid) => {
     .update({ active });
 };
 
+const logErrorMessage = (message, env) => {
+  const date = new Date();
+
+  const yyyy = date.getFullYear();
+  const m = date.getMonth() + 1;
+  const d = date.getDate();
+
+  const mm = `${m > 9 ? '' : '0'}${m}`;
+  const dd = `${d > 9 ? '' : '0'}${d}`;
+
+  const errorDate = `${yyyy}-${mm}-${dd}`;
+
+  firebase.database().ref(`/error/${env}/${errorDate}`).push(message);
+};
+
 export {
   startGameService,
   getTopicPacksService,
@@ -131,5 +146,6 @@ export {
   deleteTopicService,
   updateGameService,
   lockInService,
-  setPlayerActiveService
+  setPlayerActiveService,
+  logErrorMessage
 };
