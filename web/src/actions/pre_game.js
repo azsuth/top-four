@@ -1,4 +1,4 @@
-import { toShare, toTeams, toAddTopics, toGame } from 'utilities/router';
+import { toTeams, toAddTopics, toGame } from 'utilities/router';
 
 import {
   startGameService,
@@ -9,8 +9,6 @@ import {
   deleteTopicService,
   unsubscribeFromGameUpdatesService
 } from '@services';
-
-import { logEvent } from '@services/logger';
 
 import { TEAMS, WRITE_OUR_OWN_UID } from 'utilities/constants';
 import { tagLogger } from 'utilities/logging';
@@ -48,14 +46,6 @@ const startGame = async (
   });
 
   subscribeToGameUpdates(gameUid, null, { dispatch });
-
-  if (state && state.topicPacks) {
-    const topicPack = state.topicPacks.find(({ uid }) => uid === topicPackUid);
-
-    if (topicPack) {
-      logEvent('start_game', 'topic_pack', topicPack.rawName);
-    }
-  }
 };
 
 const joinGame = async ({ name, gameId }, { dispatch }) => {

@@ -26,7 +26,7 @@ function Rounds({ numRounds, setNumRounds }) {
         ))}
       </div>
       <div class="align-self--end">
-        <Coachmark eventLabel="rounds">
+        <Coachmark>
           @harrison &amp; @emily
           <br />
           <br />

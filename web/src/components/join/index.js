@@ -79,7 +79,7 @@ const Join = ({ joinGame }) => {
               </div>
             </form>
             <div class="align-self--end">
-              <Coachmark eventLabel="join_game">
+              <Coachmark>
                 Don't have a game code? Make sure one player in the group
                 chooses START A NEW GAME on the previous screen. They'll get a
                 code to share with everyone.

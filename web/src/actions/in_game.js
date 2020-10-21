@@ -6,7 +6,6 @@ import {
   setPlayerActiveService
 } from '@services';
 import { UPDATE_LOCAL_RANKS } from '@actions/types';
-import { logEvent } from '@services/logger';
 
 const startRound = ({
   state: {
@@ -133,12 +132,6 @@ const togglePlayerActive = (
   }
 ) => {
   const currentlyActive = players[playerUid].active;
-
-  logEvent(
-    'scores',
-    'toggle_player',
-    currentlyActive ? 'deactivate' : 'activate'
-  );
 
   setPlayerActiveService(playerUid, !currentlyActive, gameUid);
 };

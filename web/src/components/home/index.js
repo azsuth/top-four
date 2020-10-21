@@ -10,7 +10,6 @@ import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
 
 import Instructions from 'components/home/instructions';
-import { logEvent } from '@services/logger';
 
 const Home = ({ clearState, routes: [toJoin, toCreate], showCoachmark }) => {
   const [anim, setAnim] = useState(false);
@@ -19,12 +18,6 @@ const Home = ({ clearState, routes: [toJoin, toCreate], showCoachmark }) => {
 
     setTimeout(() => setAnim(true), 500);
   }, []);
-
-  const handleClickInstructions = () => {
-    showCoachmark(<Instructions />);
-
-    logEvent('coachmark', 'show_coachmark', 'instructions');
-  };
 
   const logoClasses = cx('home__logo', { 'home__logo--anim': anim });
   const actionClasses = cx('home__actions margin-b--base width--66-pct', {
@@ -61,7 +54,7 @@ const Home = ({ clearState, routes: [toJoin, toCreate], showCoachmark }) => {
           <Button
             fullWidth
             name="home-instructions"
-            onClick={handleClickInstructions}
+            onClick={() => showCoachmark(<Instructions />)}
             variant="secondary-invert"
           >
             HOW TO PLAY

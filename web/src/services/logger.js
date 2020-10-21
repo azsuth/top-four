@@ -30,9 +30,10 @@ const path = () => {
   return pathname.substring(pathname.lastIndexOf('/'));
 };
 
-const logErrorMessage = message => {
+const logError = error => {
   maybeInitialize();
 
+  const message = `${error.message} | ${error.stack}`;
   const toLog = `${path()} | ${message}`;
 
   if (process.env.NODE_ENV !== 'test') {
@@ -40,28 +41,6 @@ const logErrorMessage = message => {
       description: toLog,
       fatal: true
     });
-  }
-};
-
-const logError = error => {
-  logErrorMessage(`${error.message} | ${error.stack}`);
-};
-
-const logEvent = (category, action, label, value) => {
-  maybeInitialize();
-
-  if (process.env.NODE_ENV !== 'test') {
-    const event = { category, action };
-
-    if (label) {
-      event.label = label;
-    }
-
-    if (value) {
-      event.value = value;
-    }
-
-    ReactGA.event(event);
   }
 };
 
@@ -75,4 +54,4 @@ const withPageView = WrappedComponent => {
   };
 };
 
-export { logError, logEvent, logErrorMessage, withPageView };
+export { logError, withPageView };

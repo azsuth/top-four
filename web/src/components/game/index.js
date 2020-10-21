@@ -5,7 +5,6 @@ import { withState } from '@state';
 import { toAllPlayersWithScores } from 'utilities/state_mapping';
 import compose from 'utilities/compose';
 import { GAME_STATE } from 'utilities/constants';
-import { logErrorMessage } from '@services/logger';
 
 import Info from 'components/game/info';
 import GameTopics from 'components/game/game_topics';
@@ -46,10 +45,6 @@ const withProps = WrappedComponent => {
     const { playerUid, playerScores } = props;
 
     const players = playerScores.filter(({ active }) => active);
-
-    if (players.length === 0) {
-      logErrorMessage('no active players in Game');
-    }
 
     let winner;
     if (players.length > 1 && players[0].score === players[1].score) {

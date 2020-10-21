@@ -24,7 +24,7 @@ const Topics = ({ topicPacks, topicPackUid, setTopicPackUid }) => {
           ))}
       </div>
       <div class="align-self--end">
-        <Coachmark eventLabel="topic_packs">
+        <Coachmark>
           Topics are people, places and things that you’ll be asked to rank each
           round.
           <br />

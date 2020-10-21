@@ -4,7 +4,7 @@ import Coachmark from 'components/shared/coachmark';
 
 function AddTopicsCoachmark() {
   return (
-    <Coachmark eventLabel="add_topics" white>
+    <Coachmark white>
       Topics are people, places and things that you’ll be asked to rank
       throughout the game. Good topics are things that are trivial yet
       polarizing. Here are a few examples of potential topics:
