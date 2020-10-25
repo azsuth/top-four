@@ -82,13 +82,17 @@ const RankableTopic = ({
     'opacity--50-pct': isRevealable && unlockedInPlayers.length > 0
   });
 
-  const topicClasses = cx(
+  const topicWrapperClasses = cx(
     'rankable-topic__topic flex justify--between align-items--center border b-color--primary rounded bg-color--white padding-h--base padding-v--large',
     {
       'rankable-topic__topic--dragging': dragging,
       'rankable-topic__topic--revealable': isRevealable
     }
   );
+
+  const topicClasses = cx({
+    'text-decoration--line-through': !ranker && showPercent && !isCorrect
+  });
 
   return (
     <div class={containerClasses}>
@@ -102,15 +106,19 @@ const RankableTopic = ({
           Reveal
         </Button>
       </div>
-      <div class={topicClasses}>
-        <span class="font-weight--bold">{topic}</span>
+      <div class={topicWrapperClasses}>
+        <div class="flex direction--column justify--center font-weight--bold">
+          <span class={topicClasses}>{topic}</span>
+          {showPercent && !isCorrect && <span>{correctTopic.topic}</span>}
+        </div>
         {ranker && renderRankerTopicStatus(showPercent, correctPercent)}
         {!ranker &&
           renderGuesserTopicStatus(
             state,
             correctPercent,
             isCorrect,
-            showPercent
+            showPercent,
+            correctTopic
           )}
       </div>
     </div>

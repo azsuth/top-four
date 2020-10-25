@@ -364,28 +364,6 @@
   color: $color-white;
 }
 
-// font
-
-.font-size--base {
-  font-size: $size-base;
-}
-
-.font-size--large {
-  font-size: $size-large;
-}
-
-.font-size--xlarge {
-  font-size: $size-xlarge;
-}
-
-.font-size--huge {
-  font-size: $size-xlarge * 2;
-}
-
-.font-weight--bold {
-  font-weight: bold;
-}
-
 // overflow
 
 .overflow-y--auto {
@@ -394,10 +372,6 @@
 
 .overflow--hidden {
   overflow: hidden;
-}
-
-.text-align--center {
-  text-align: center;
 }
 
 // border
