@@ -1,6 +1,6 @@
 import {
   addPlayerService,
-  startGameService,
+  createGameService,
   getGameUidService,
   addTopicService
 } from '@services';
@@ -11,7 +11,7 @@ import { toTeams } from 'utilities/router';
 
 jest.mock('@services', () => ({
   addPlayerService: jest.fn(),
-  startGameService: jest.fn(),
+  createGameService: jest.fn(),
   getGameUidService: jest.fn(),
   addTopicService: jest.fn()
 }));
@@ -24,7 +24,7 @@ jest.mock('utilities/router', () => ({
   toTeams: jest.fn()
 }));
 
-import { startGame, addPlayer, joinGame, addTopic } from '@actions/pre_game';
+import { createGame, addPlayer, joinGame, addTopic } from '@actions/pre_game';
 
 import { STARTED_GAME } from '@actions/types';
 import { TEAMS, INDIVIDUALS, WRITE_OUR_OWN_UID } from 'utilities/constants';
@@ -32,7 +32,7 @@ import { TEAMS, INDIVIDUALS, WRITE_OUR_OWN_UID } from 'utilities/constants';
 describe('pre game actions', () => {
   beforeEach(() => {
     addPlayerService.mockRestore();
-    startGameService.mockRestore();
+    createGameService.mockRestore();
     getGameUidService.mockRestore();
     addTopicService.mockRestore();
 
@@ -58,26 +58,26 @@ describe('pre game actions', () => {
     });
   });
 
-  describe('startGame', () => {
-    it('calls startGameService for teams and topic pack', () => {
-      startGameService.mockRejectedValue();
+  describe('createGame', () => {
+    it('calls createGameService for teams and topic pack', () => {
+      createGameService.mockRejectedValue();
 
-      startGame(
+      createGame(
         { name: 'andrew', gameMode: TEAMS, topicPackUid: '12345' },
         { state: { topicPacks: [] } }
       ).catch(jest.fn);
 
-      expect(startGameService).toHaveBeenCalledTimes(1);
-      expect(startGameService.mock.calls[0][0]).toEqual({
+      expect(createGameService).toHaveBeenCalledTimes(1);
+      expect(createGameService.mock.calls[0][0]).toEqual({
         numberOfTeams: 2,
         topicPackUid: '12345'
       });
     });
 
-    it('calls startGameService for individuals and no topic pack', () => {
-      startGameService.mockRejectedValue();
+    it('calls createGameService for individuals and no topic pack', () => {
+      createGameService.mockRejectedValue();
 
-      startGame(
+      createGame(
         {
           name: 'andrew',
           gameMode: INDIVIDUALS,
@@ -86,26 +86,26 @@ describe('pre game actions', () => {
         { state: { topicPacks: [] } }
       ).catch(jest.fn);
 
-      expect(startGameService).toHaveBeenCalledTimes(1);
-      expect(startGameService.mock.calls[0][0]).toEqual({
+      expect(createGameService).toHaveBeenCalledTimes(1);
+      expect(createGameService.mock.calls[0][0]).toEqual({
         numberOfTeams: 0,
         topicPackUid: null
       });
     });
 
     it('starts a game', async () => {
-      startGameService.mockResolvedValue({ gameId: 'A6', gameUid: '12345' });
+      createGameService.mockResolvedValue({ gameId: 'A6', gameUid: '12345' });
       addPlayerService.mockResolvedValue('98765');
       subscribeToGameUpdates.mockResolvedValue();
 
       const dispatch = jest.fn();
 
-      await startGame(
+      await createGame(
         { name: 'andrew' },
         { dispatch, state: { topicPacks: [] } }
       );
 
-      expect(startGameService).toHaveBeenCalledTimes(1);
+      expect(createGameService).toHaveBeenCalledTimes(1);
 
       expect(addPlayerService).toHaveBeenCalledTimes(1);
       expect(addPlayerService.mock.calls[0][0]).toEqual({
@@ -129,23 +129,23 @@ describe('pre game actions', () => {
       expect(subscribeToGameUpdates.mock.calls[0][0]).toBe('12345');
     });
 
-    it('rejects if startGameService fails', () => {
-      startGameService.mockRejectedValue();
+    it('rejects if createGameService fails', () => {
+      createGameService.mockRejectedValue();
 
-      expect(startGame({}, {})).rejects.toBe('cannot start game');
+      expect(createGame({}, {})).rejects.toBe('cannot start game');
     });
 
-    it('rejects if startGameService does not return a game object', () => {
-      startGameService.mockResolvedValue('not a game object');
+    it('rejects if createGameService does not return a game object', () => {
+      createGameService.mockResolvedValue('not a game object');
 
-      expect(startGame({}, {})).rejects.toBe('cannot start game');
+      expect(createGame({}, {})).rejects.toBe('cannot start game');
     });
 
     it('rejects if addPlayerService fails', () => {
-      startGameService.mockResolvedValue({ gameId: 'A6', gameUid: '12345' });
+      createGameService.mockResolvedValue({ gameId: 'A6', gameUid: '12345' });
       addPlayerService.mockRejectedValue();
 
-      expect(startGame({}, {})).rejects.toBe('cannot add player');
+      expect(createGame({}, {})).rejects.toBe('cannot add player');
     });
   });
 

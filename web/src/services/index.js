@@ -12,10 +12,14 @@ firebase.initializeApp({
   appId: '1:120019969623:web:6d6ba9a3d0834b0259e512'
 });
 
-const startGameService = async ({ numberOfTeams, topicPackUid, numRounds }) => {
-  const startGame = firebase.functions().httpsCallable('startGame');
+const createGameService = async ({
+  numberOfTeams,
+  topicPackUid,
+  numRounds
+}) => {
+  const createGame = firebase.functions().httpsCallable('startGame');
 
-  const response = await startGame({ numberOfTeams, topicPackUid, numRounds });
+  const response = await createGame({ numberOfTeams, topicPackUid, numRounds });
 
   // prune games for now
   pruneGamesService();
@@ -135,7 +139,7 @@ const logErrorMessage = (message, env) => {
 };
 
 export {
-  startGameService,
+  createGameService,
   getTopicPacksService,
   addPlayerService,
   getGameUidService,

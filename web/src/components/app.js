@@ -6,7 +6,7 @@ import { GAME_STATE, IN_PROGRESS_URL_REGEX } from 'utilities/constants';
 import compose from 'utilities/compose';
 import resolve from 'utilities/resolve';
 import cx from 'utilities/cx';
-import withRouter, { toEnd } from 'utilities/router';
+import withRouter, { toEnd, toGame } from 'utilities/router';
 
 import { withAction, withState } from '@state';
 import { subscribeToGameUpdates } from '@actions';
@@ -61,7 +61,7 @@ const withThemeState = withState('theme');
 const withSubscribeAction = withAction(subscribeToGameUpdates, 'subscribe');
 
 // routes
-const withRoutes = withRouter(toEnd);
+const withRoutes = withRouter(toEnd, toGame);
 
 // effects
 const withSubscribeEffect = WrappedComponent => {
@@ -82,7 +82,7 @@ const withSubscribeEffect = WrappedComponent => {
 const withAutoRouterEffect = WrappedComponent => {
   return props => {
     const {
-      routes: [toEnd]
+      routes: [toEnd, toGame]
     } = props;
     const gameState = resolve('fullState.game.state', props);
     const currentUrl = getCurrentUrl();
@@ -95,7 +95,11 @@ const withAutoRouterEffect = WrappedComponent => {
       ) {
         toEnd();
       }
-    }, [currentUrl, gameState, toEnd]);
+
+      if (gameState === GAME_STATE.STARTED && currentUrl.endsWith('/topics')) {
+        toGame();
+      }
+    }, [currentUrl, gameState, toEnd, toGame]);
 
     return <WrappedComponent {...props} />;
   };

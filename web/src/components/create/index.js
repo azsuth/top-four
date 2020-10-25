@@ -7,7 +7,7 @@ import compose from 'utilities/compose';
 import { WRITE_OUR_OWN_UID, INDIVIDUALS } from 'utilities/constants';
 
 import { withAction, withState } from '@state';
-import { getTopicPacks, startGame } from '@actions';
+import { getTopicPacks, createGame } from '@actions';
 
 import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
@@ -27,7 +27,7 @@ function CreateContainer({ children }) {
   );
 }
 
-const Create = ({ gameId, startGame, topicPacks }) => {
+const Create = ({ gameId, createGame, topicPacks }) => {
   const [gameMode, setGameMode] = useState(INDIVIDUALS);
   const [numRounds, setNumRounds] = useState(1);
   const [topicPackUid, setTopicPackUid] = useState(WRITE_OUR_OWN_UID);
@@ -39,7 +39,7 @@ const Create = ({ gameId, startGame, topicPacks }) => {
   const handleStartGame = () => {
     setLoading(true);
 
-    startGame({ name, gameMode, topicPackUid, numRounds }).catch(() => {
+    createGame({ name, gameMode, topicPackUid, numRounds }).catch(() => {
       setLoading(false);
     });
   };
@@ -135,7 +135,7 @@ const withTopicPacksState = withState('topicPacks');
 const withGameIdState = withState('gameId');
 
 // actions
-const withStartGameAction = withAction(startGame, 'startGame');
+const withStartGameAction = withAction(createGame, 'createGame');
 const withGetTopicPacksAction = withAction(getTopicPacks, 'getTopicPacks');
 
 // effects

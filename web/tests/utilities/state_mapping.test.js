@@ -12,7 +12,8 @@ import {
   toUnlockedInPlayers,
   toGuessesByTopic,
   toAllPlayersWithScores,
-  toActivePlayerTurns
+  toActivePlayerTurns,
+  toPlayersWithTopicsCount
 } from 'utilities/state_mapping';
 
 describe('state mapping functions', () => {
@@ -362,6 +363,38 @@ describe('state mapping functions', () => {
         player_2: 2,
         player_4: 0
       });
+    });
+  });
+
+  describe('toPlayersWithTopicsCount', () => {
+    it('takes players and topics and returns all players missing the required number of topics', () => {
+      const numRounds = 2;
+      const players = {
+        player_1: { name: 'Andrew', active: true },
+        player_2: { name: 'Emily', active: true },
+        player_3: { name: 'Harrison', active: true }
+      };
+      const topics = {
+        topic_1: { playerUid: 'player_1' },
+        topic_2: { playerUid: 'player_1' },
+        topic_3: { playerUid: 'player_1' },
+        topic_4: { playerUid: 'player_1' },
+        topic_5: { playerUid: 'player_1' },
+        topic_6: { playerUid: 'player_1' },
+        topic_7: { playerUid: 'player_1' },
+        topic_8: { playerUid: 'player_1' },
+        topic_9: { playerUid: 'player_2' },
+        topic_10: { playerUid: 'player_2' },
+        topic_11: { playerUid: 'player_2' },
+        topic_12: { playerUid: 'player_2' },
+        topic_13: { playerUid: 'player_2' }
+      };
+
+      expect(toPlayersWithTopicsCount({ numRounds, players, topics })).toEqual([
+        { uid: 'player_1', name: 'Andrew', active: true, numTopics: 8 },
+        { uid: 'player_2', name: 'Emily', active: true, numTopics: 5 },
+        { uid: 'player_3', name: 'Harrison', active: true, numTopics: 0 }
+      ]);
     });
   });
 });

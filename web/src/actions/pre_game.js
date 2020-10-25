@@ -1,32 +1,33 @@
 import { toTeams, toAddTopics, toGame } from 'utilities/router';
 
 import {
-  startGameService,
+  createGameService,
   getGameUidService,
   addPlayerService,
   joinTeamService,
   addTopicService,
   deleteTopicService,
-  unsubscribeFromGameUpdatesService
+  unsubscribeFromGameUpdatesService,
+  updateGameService
 } from '@services';
 
-import { TEAMS, WRITE_OUR_OWN_UID } from 'utilities/constants';
+import { GAME_STATE, TEAMS, WRITE_OUR_OWN_UID } from 'utilities/constants';
 import { tagLogger } from 'utilities/logging';
 
 import { subscribeToGameUpdates } from '@actions/subscribe';
 import { STARTED_GAME, CLEAR_STATE } from '@actions/types';
 
-const startGame = async (
+const createGame = async (
   { name, gameMode, topicPackUid, numRounds },
   { dispatch, state }
 ) => {
   const numberOfTeams = gameMode === TEAMS ? 2 : 0;
 
-  const data = await startGameService({
+  const data = await createGameService({
     numberOfTeams,
     topicPackUid: topicPackUid !== WRITE_OUR_OWN_UID ? topicPackUid : null,
     numRounds
-  }).catch(tagLogger('startGameService failed'));
+  }).catch(tagLogger('createGameService failed'));
 
   if (!data || !data.gameId || !data.gameUid) {
     return Promise.reject('cannot start game');
@@ -111,12 +112,21 @@ const clearState = ({ dispatch }) => {
   dispatch({ type: CLEAR_STATE });
 };
 
+const startGame = ({ state: { gameUid } }) => {
+  const game = {
+    state: GAME_STATE.STARTED
+  };
+
+  updateGameService(game, gameUid);
+};
+
 export {
-  startGame,
+  createGame,
   joinGame,
   addPlayer,
   joinTeam,
   addTopic,
   deleteTopic,
-  clearState
+  clearState,
+  startGame
 };

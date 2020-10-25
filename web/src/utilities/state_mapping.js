@@ -123,6 +123,16 @@ const toActivePlayerTurns = ({ guesses = {}, players }) =>
     {}
   );
 
+const toPlayersWithTopicsCount = ({ players, topics = {} }) => {
+  const topicsArray = Object.values(topics);
+
+  return toAllActivePlayers(players).map(player => ({
+    ...player,
+    numTopics: topicsArray.filter(({ playerUid }) => playerUid === player.uid)
+      .length
+  }));
+};
+
 export {
   teamsToArray,
   topicsToArray,
@@ -140,5 +150,6 @@ export {
   toAllPlayersWithScores,
   toAllActivePlayers,
   toAvailableAndRankingTopicsCount,
-  toActivePlayerTurns
+  toActivePlayerTurns,
+  toPlayersWithTopicsCount
 };

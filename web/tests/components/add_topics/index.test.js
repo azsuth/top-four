@@ -69,35 +69,4 @@ describe('<AddTopics />', () => {
 
     expect(wrapper.find(Topic)).toHaveLength(2);
   });
-
-  it('renders the remaining topics', () => {
-    const wrapper = shallow(
-      <AddTopics playerTopics={[]} remainingTopics={13} routes={[]} />
-    );
-
-    expect(wrapper.find('h1').text()).toBe('13 More Topics Needed');
-  });
-
-  it('renders enough topics when there are enough topics', () => {
-    const wrapper = shallow(
-      <AddTopics
-        playerTopics={[]}
-        remainingTopics={0}
-        numPlayers={4}
-        routes={[]}
-      />
-    );
-
-    expect(wrapper.find('h1').text()).toBe('Enough Topics Added');
-  });
-
-  it('disables the done button when there are any remaining topics', () => {
-    const wrapper = shallow(
-      <AddTopics playerTopics={[]} remainingTopics={2} routes={[]} />
-    );
-
-    expect(wrapper.find(Button).filter({ name: 'done' }).props().disabled).toBe(
-      true
-    );
-  });
 });

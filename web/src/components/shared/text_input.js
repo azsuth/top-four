@@ -3,6 +3,7 @@ import { h } from 'preact';
 import cx from 'utilities/cx';
 
 function TextInput({
+  disabled,
   getRef,
   label,
   name,
@@ -21,6 +22,7 @@ function TextInput({
     <div class="text-input__group">
       <input
         class={controlClasses}
+        disabled={disabled}
         id={name}
         name={name}
         onBlur={onBlur}
