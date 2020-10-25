@@ -36,12 +36,7 @@ const getLocalRanks = (game, previousGame) => {
   const { state: previousState } = previousGame || {};
   const { state: nextState, topics } = game;
 
-  if (
-    (!previousState ||
-      previousState === GAME_STATE.ADD_MORE_TOPICS ||
-      previousState === GAME_STATE.ANOTHER_ROUND) &&
-    nextState === 'ranking'
-  ) {
+  if (!previousState && nextState === 'ranking') {
     return defaultLocalRanks(topics);
   }
 

@@ -127,7 +127,7 @@ describe('game state helpers', () => {
       );
 
       expect(wrapper.find(ConfirmButton).props().helperText).toBe(
-        'Tell Emily to end the game!'
+        'Waiting on Emily to reveal the winner!'
       );
     });
 
@@ -144,7 +144,7 @@ describe('game state helpers', () => {
       );
 
       expect(wrapper.find(ConfirmButton).props().confirmText).toBe(
-        'End the game?'
+        'Reveal the winner?'
       );
     });
   });

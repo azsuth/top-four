@@ -14,13 +14,16 @@ const footerContentForState = ({
     case GAME_STATE.END_GAME:
       if (nextRanker.isThisPlayer) {
         return (
-          <ConfirmButton confirmText="End the game?" confirmAction={endGame} />
+          <ConfirmButton
+            confirmText="Reveal the winner?"
+            confirmAction={endGame}
+          />
         );
       }
 
       return (
         <ConfirmButton
-          helperText={`Tell ${nextRanker.name} to end the game!`}
+          helperText={`Waiting on ${nextRanker.name} to reveal the winner!`}
         />
       );
     case GAME_STATE.BETWEEN_ROUNDS:
@@ -67,7 +70,7 @@ const headerState = ({ gameState: { state, ranker }, rankingPlayer }) => {
     case GAME_STATE.END_GAME:
       return {
         header: 'Game Over!',
-        subheader: 'Wanna play another round?'
+        subheader: 'Who won?'
       };
     case GAME_STATE.BETWEEN_ROUNDS:
       return {

@@ -8,8 +8,5 @@ export const GAME_STATE = {
   BETWEEN_ROUNDS: 'between_rounds',
   RANKING: 'ranking',
   LOCKED_IN: 'locked_in',
-  END_GAME: 'end_game',
-  WINNERS_REVEALED: 'winners_revealed',
-  ADD_MORE_TOPICS: 'add_more_topics',
-  ANOTHER_ROUND: 'another_round'
+  END_GAME: 'end_game'
 };
