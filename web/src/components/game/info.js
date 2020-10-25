@@ -76,7 +76,7 @@ function Info({
 const withGameIdState = withState('gameId');
 const withGameTurnState = withState('game.topics', 'gameTurn', toGameTurn);
 const withRemainingTurnsState = withState(
-  'game.topics',
+  'game',
   'remainingTurns',
   toRemainingTurns
 );

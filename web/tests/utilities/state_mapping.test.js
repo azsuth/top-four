@@ -140,7 +140,7 @@ describe('state mapping functions', () => {
         56789: { status: 'unavailable' }
       };
 
-      expect(toGameTurn(topicsById)).toBe(2);
+      expect(toGameTurn(topicsById)).toBe(1);
     });
   });
 
@@ -165,21 +165,21 @@ describe('state mapping functions', () => {
 
   describe('toRemainingTurns', () => {
     it('takes an object of topics by ID and returns the number of remaining turns', () => {
-      const topicsById = {
+      const numRounds = 2;
+      const players = {
+        a: { name: 'Andrew' },
+        b: { name: 'Emily' },
+        c: { name: 'Harrison' }
+      };
+      const topics = {
         12345: { status: 'unavailable' },
         23456: { status: 'available' },
-        34567: { status: 'available' },
-        45678: { status: 'available' },
-        56789: { status: 'available' },
-        67890: { status: 'unavailable' },
-        78901: { status: 'available' },
-        89012: { status: 'available' },
-        90123: { status: 'available' },
-        11234: { status: 'available' },
-        22345: { status: 'available' }
+        34567: { status: 'unavailable' },
+        45678: { status: 'unavailable' },
+        56789: { status: 'unavailable' }
       };
 
-      expect(toRemainingTurns(topicsById)).toBe(2);
+      expect(toRemainingTurns({ numRounds, players, topics })).toBe(5);
     });
   });
 

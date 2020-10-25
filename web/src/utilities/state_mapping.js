@@ -33,19 +33,16 @@ const toPlayer = ({ playerUid, game: { players } }) => ({
 });
 
 const toGameTurn = topics =>
-  1 +
-  Math.ceil(
-    topicsToArray(topics).filter(({ status }) => status === 'unavailable')
-      .length / 4
+  Math.floor(
+    topicsToArray(topics).filter(
+      ({ status }) => status === 'unavailable' || status === 'ranked'
+    ).length / 4
   );
 
 const toTotalTurns = topics => Math.floor(topicsToArray(topics).length / 4);
 
-const toRemainingTurns = topics =>
-  Math.floor(
-    topicsToArray(topics).filter(({ status }) => status === 'available')
-      .length / 4
-  );
+const toRemainingTurns = ({ numRounds, players, topics }) =>
+  playersToArray(players).length * numRounds - toGameTurn(topics);
 
 const toRankingPlayer = ({ rankingPlayerUid, players }) => ({
   uid: rankingPlayerUid,
