@@ -6,6 +6,7 @@ import {
   setPlayerActiveService
 } from '@services';
 import { UPDATE_LOCAL_RANKS } from '@actions/types';
+import { GAME_STATE } from 'utilities/constants';
 
 const startRound = ({
   state: {
@@ -16,7 +17,7 @@ const startRound = ({
 }) => {
   const game = {
     rankingPlayerUid: playerUid,
-    state: 'ranking',
+    state: GAME_STATE.RANKING,
     topics: { ...topics },
     players: { ...players }
   };
@@ -116,7 +117,7 @@ const revealTopic = (
         status: 'ranked'
       }
     },
-    state: fullyRanked ? '' : currentState
+    state: fullyRanked ? GAME_STATE.BETWEEN_ROUNDS : currentState
   };
 
   updateGameService(game, gameUid);

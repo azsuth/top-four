@@ -15,11 +15,17 @@ firebase.initializeApp({
 const createGameService = async ({
   numberOfTeams,
   topicPackUid,
-  numRounds
+  numRounds,
+  state
 }) => {
   const createGame = firebase.functions().httpsCallable('startGame');
 
-  const response = await createGame({ numberOfTeams, topicPackUid, numRounds });
+  const response = await createGame({
+    numberOfTeams,
+    topicPackUid,
+    numRounds,
+    state
+  });
 
   // prune games for now
   pruneGamesService();

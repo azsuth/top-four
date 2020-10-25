@@ -32,7 +32,7 @@ exports.superlatives = functions.https.onCall(async (data, context) => {
 exports.startGame = functions.https.onCall(async (data, context) => {
   const db = admin.database();
 
-  const { numberOfTeams, topicPackUid, numRounds } = data;
+  const { numberOfTeams, topicPackUid, numRounds, state } = data;
   const games = await db.ref('/games').once('value');
 
   let gameIds = [];
@@ -52,7 +52,8 @@ exports.startGame = functions.https.onCall(async (data, context) => {
     teams: {},
     noTeams: numberOfTeams === 0,
     topicPack: !!topicPackUid,
-    numRounds: numRounds || -1
+    numRounds: numRounds || -1,
+    state: state || null
   });
 
   let firstTeamUid;

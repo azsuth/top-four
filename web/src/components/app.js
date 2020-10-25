@@ -96,7 +96,11 @@ const withAutoRouterEffect = WrappedComponent => {
         toEnd();
       }
 
-      if (gameState === GAME_STATE.STARTED && currentUrl.endsWith('/topics')) {
+      if (
+        gameState === GAME_STATE.STARTED &&
+        currentUrl.endsWith('/topics') &&
+        currentUrl !== '/'
+      ) {
         toGame();
       }
     }, [currentUrl, gameState, toEnd, toGame]);

@@ -11,7 +11,7 @@ describe('withGameState(WrappedComponent)', () => {
     it('returns between rounds state', () => {
       expect(
         getGameState({
-          remoteGameState: null,
+          remoteGameState: GAME_STATE.BETWEEN_ROUNDS,
           player: {},
           players: [{ uid: '12345' }]
         }).state
@@ -23,8 +23,11 @@ describe('withGameState(WrappedComponent)', () => {
         const players = [{ uid: '12345' }, { uid: '23456' }, { uid: '34567' }];
 
         expect(
-          getGameState({ remoteGameState: null, player: {}, players })
-            .nextRanker.uid
+          getGameState({
+            remoteGameState: GAME_STATE.BETWEEN_ROUNDS,
+            player: {},
+            players
+          }).nextRanker.uid
         ).toBe('12345');
       });
 
@@ -33,7 +36,7 @@ describe('withGameState(WrappedComponent)', () => {
 
         expect(
           getGameState({
-            remoteGameState: null,
+            remoteGameState: GAME_STATE.BETWEEN_ROUNDS,
             player: {},
             rankingPlayerUid: '12345',
             players,
@@ -48,7 +51,7 @@ describe('withGameState(WrappedComponent)', () => {
 
         expect(
           getGameState({
-            remoteGameState: null,
+            remoteGameState: GAME_STATE.BETWEEN_ROUNDS,
             player: {},
             rankingPlayerUid: '34567',
             players,
@@ -63,7 +66,7 @@ describe('withGameState(WrappedComponent)', () => {
 
         expect(
           getGameState({
-            remoteGameState: null,
+            remoteGameState: GAME_STATE.BETWEEN_ROUNDS,
             player: { uid: '34567' },
             rankingPlayerUid: '23456',
             players,
@@ -78,7 +81,7 @@ describe('withGameState(WrappedComponent)', () => {
 
         expect(
           getGameState({
-            remoteGameState: null,
+            remoteGameState: GAME_STATE.BETWEEN_ROUNDS,
             player: { uid: '12345' },
             rankingPlayerUid: '23456',
             players,
@@ -139,7 +142,7 @@ describe('withGameState(WrappedComponent)', () => {
 
       expect(
         getGameState({
-          remoteGameState: null,
+          remoteGameState: GAME_STATE.BETWEEN_ROUNDS,
           rankingPlayerUid: '34567',
           player: {},
           players,

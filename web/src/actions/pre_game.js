@@ -26,7 +26,8 @@ const createGame = async (
   const data = await createGameService({
     numberOfTeams,
     topicPackUid: topicPackUid !== WRITE_OUR_OWN_UID ? topicPackUid : null,
-    numRounds
+    numRounds,
+    state: topicPackUid !== WRITE_OUR_OWN_UID ? GAME_STATE.BETWEEN_ROUNDS : null
   }).catch(tagLogger('createGameService failed'));
 
   if (!data || !data.gameId || !data.gameUid) {

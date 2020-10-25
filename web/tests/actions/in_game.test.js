@@ -1,3 +1,4 @@
+import { GAME_STATE } from 'utilities/constants';
 import {
   updateGameService,
   lockInService,
@@ -30,14 +31,14 @@ describe('in game actions', () => {
   describe('startRound', () => {
     it('calls updateGameService', () => {
       const topics = {
-        '12345': { status: 'available' },
-        '23456': { status: 'unavailable' },
-        '34567': { status: 'available' },
-        '45678': { status: 'available' },
-        '56789': { status: 'available' },
-        '67890': { status: 'available' },
-        '78901': { status: 'ranked' },
-        '89012': { status: 'ranked' }
+        12345: { status: 'available' },
+        23456: { status: 'unavailable' },
+        34567: { status: 'available' },
+        45678: { status: 'available' },
+        56789: { status: 'available' },
+        67890: { status: 'available' },
+        78901: { status: 'ranked' },
+        89012: { status: 'ranked' }
       };
 
       startRound({
@@ -47,8 +48,8 @@ describe('in game actions', () => {
           game: {
             topics,
             players: {
-              '98765': { lockedIn: true },
-              '87654': { lockedIn: true }
+              98765: { lockedIn: true },
+              87654: { lockedIn: true }
             }
           }
         }
@@ -91,10 +92,10 @@ describe('in game actions', () => {
 
       expect(dispatchedAction.type).toBe(UPDATE_LOCAL_RANKS);
       expect(dispatchedAction.payload).toEqual({
-        '12345': 0,
-        '45678': 1,
-        '23456': 2,
-        '34567': 3
+        12345: 0,
+        45678: 1,
+        23456: 2,
+        34567: 3
       });
     });
   });
@@ -102,10 +103,10 @@ describe('in game actions', () => {
   describe('lockIn', () => {
     it('calls lockInService with guesses for a ranking player', () => {
       const localRanks = {
-        '12345': 0,
-        '23456': 1,
-        '34567': 2,
-        '45678': 3
+        12345: 0,
+        23456: 1,
+        34567: 2,
+        45678: 3
       };
 
       lockIn({
@@ -122,20 +123,20 @@ describe('in game actions', () => {
         gameUid: 'abcde',
         playerUid: 'bcdef',
         guesses: {
-          '12345': 'active',
-          '23456': 'active',
-          '34567': 'active',
-          '45678': 'active'
+          12345: 'active',
+          23456: 'active',
+          34567: 'active',
+          45678: 'active'
         }
       });
     });
 
     it('calls lockInService with guesses for a guessing player', () => {
       const localRanks = {
-        '12345': 0,
-        '23456': 1,
-        '34567': 2,
-        '45678': 3
+        12345: 0,
+        23456: 1,
+        34567: 2,
+        45678: 3
       };
 
       lockIn({
@@ -152,10 +153,10 @@ describe('in game actions', () => {
         gameUid: 'abcde',
         playerUid: 'bcdef',
         guesses: {
-          '12345': 0,
-          '23456': 1,
-          '34567': 2,
-          '45678': 3
+          12345: 0,
+          23456: 1,
+          34567: 2,
+          45678: 3
         }
       });
     });
@@ -166,13 +167,13 @@ describe('in game actions', () => {
       revealTopic('12345', {
         state: {
           gameUid: 'abcde',
-          localRanks: { '12345': 2 },
+          localRanks: { 12345: 2 },
           game: {
             state: 'ranking',
             topics: {
-              '12345': { rank: -1, status: 'active' },
-              '23456': { rank: -1, status: 'active' },
-              '34567': { rank: 3, status: 'unavailable' }
+              12345: { rank: -1, status: 'active' },
+              23456: { rank: -1, status: 'active' },
+              34567: { rank: 3, status: 'unavailable' }
             }
           }
         }
@@ -183,9 +184,9 @@ describe('in game actions', () => {
       expect(updateGameService.mock.calls[0][0]).toEqual({
         state: 'ranking',
         topics: {
-          '12345': { rank: 2, status: 'ranked' },
-          '23456': { rank: -1, status: 'active' },
-          '34567': { rank: 3, status: 'unavailable' }
+          12345: { rank: 2, status: 'ranked' },
+          23456: { rank: -1, status: 'active' },
+          34567: { rank: 3, status: 'unavailable' }
         }
       });
     });
@@ -194,20 +195,22 @@ describe('in game actions', () => {
       revealTopic('12345', {
         state: {
           gameUid: 'abcde',
-          localRanks: { '12345': 1 },
+          localRanks: { 12345: 1 },
           game: {
             topics: {
-              '12345': { status: 'active' },
-              '23456': { status: 'ranked' },
-              '34567': { status: 'ranked' },
-              '45678': { status: 'ranked' }
+              12345: { status: 'active' },
+              23456: { status: 'ranked' },
+              34567: { status: 'ranked' },
+              45678: { status: 'ranked' }
             }
           }
         }
       });
 
       expect(updateGameService).toHaveBeenCalledTimes(1);
-      expect(updateGameService.mock.calls[0][0].state).toBe('');
+      expect(updateGameService.mock.calls[0][0].state).toBe(
+        GAME_STATE.BETWEEN_ROUNDS
+      );
     });
   });
 
@@ -216,7 +219,7 @@ describe('in game actions', () => {
       togglePlayerActive('12345', {
         state: {
           gameUid: 'abcde',
-          game: { players: { '12345': { active: true } } }
+          game: { players: { 12345: { active: true } } }
         }
       });
 
@@ -232,7 +235,7 @@ describe('in game actions', () => {
       togglePlayerActive('12345', {
         state: {
           gameUid: 'abcde',
-          game: { players: { '12345': { active: false } } }
+          game: { players: { 12345: { active: false } } }
         }
       });
 

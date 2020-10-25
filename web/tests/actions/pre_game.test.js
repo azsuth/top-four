@@ -27,7 +27,12 @@ jest.mock('utilities/router', () => ({
 import { createGame, addPlayer, joinGame, addTopic } from '@actions/pre_game';
 
 import { STARTED_GAME } from '@actions/types';
-import { TEAMS, INDIVIDUALS, WRITE_OUR_OWN_UID } from 'utilities/constants';
+import {
+  TEAMS,
+  INDIVIDUALS,
+  WRITE_OUR_OWN_UID,
+  GAME_STATE
+} from 'utilities/constants';
 
 describe('pre game actions', () => {
   beforeEach(() => {
@@ -70,7 +75,8 @@ describe('pre game actions', () => {
       expect(createGameService).toHaveBeenCalledTimes(1);
       expect(createGameService.mock.calls[0][0]).toEqual({
         numberOfTeams: 2,
-        topicPackUid: '12345'
+        topicPackUid: '12345',
+        state: GAME_STATE.BETWEEN_ROUNDS
       });
     });
 
@@ -89,7 +95,8 @@ describe('pre game actions', () => {
       expect(createGameService).toHaveBeenCalledTimes(1);
       expect(createGameService.mock.calls[0][0]).toEqual({
         numberOfTeams: 0,
-        topicPackUid: null
+        topicPackUid: null,
+        state: null
       });
     });
 

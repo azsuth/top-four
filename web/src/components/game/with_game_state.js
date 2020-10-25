@@ -22,7 +22,10 @@ const getGameState = ({
   const { uid: playerUid, lockedIn } = player;
   const ranker = playerUid === rankingPlayerUid;
 
-  if (!remoteGameState || remoteGameState === GAME_STATE.STARTED) {
+  if (
+    remoteGameState === GAME_STATE.BETWEEN_ROUNDS ||
+    remoteGameState === GAME_STATE.STARTED
+  ) {
     const previousRankerPosition = players.findIndex(
       ({ uid }) => uid === rankingPlayerUid
     );
