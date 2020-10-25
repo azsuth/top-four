@@ -1,4 +1,4 @@
-import { toTeams, toAddTopics, toGame } from 'utilities/router';
+import { toAddTopics, toGame } from 'utilities/router';
 
 import {
   createGameService,
@@ -56,15 +56,44 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
   );
 
   if (!game || !game.gameUid) {
-    return Promise.reject('cannot get game object');
+    return Promise.reject({
+      field: 'game_id',
+      msg: `The Game ID ${gameId} doesn't exist.`
+    });
   }
 
-  const { gameUid, noTeams, topicPack } = game;
+  const { gameUid, noTeams, players, started, topicPack } = game;
 
-  const playerUid = await addPlayer({ gameUid, name });
+  const duplicatePlayer = Object.keys(players)
+    .map(playerUid => ({
+      uid: playerUid,
+      ...players[playerUid]
+    }))
+    .find(player => player.name === name);
 
-  if (!playerUid) {
-    return Promise.reject('cannot add player');
+  if (!started && duplicatePlayer) {
+    return Promise.reject({
+      field: 'name',
+      msg: `Someone already picked the name ${name}! Try a different one.`
+    });
+  }
+
+  if (started && !duplicatePlayer) {
+    return Promise.reject({
+      field: 'name',
+      msg:
+        'This game has already started. To rejoin the game, enter the same name you first joined with.'
+    });
+  }
+
+  let playerUid;
+
+  if (started && duplicatePlayer) {
+    playerUid = duplicatePlayer.uid;
+  }
+
+  if (!started && !duplicatePlayer) {
+    playerUid = await addPlayer({ gameUid, name });
   }
 
   dispatch({
@@ -73,17 +102,15 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
   });
 
   subscribeToGameUpdates(gameUid, null, { dispatch }).then(() => {
-    let route;
-
-    if (!noTeams) {
-      route = toTeams(gameId);
-    } else if (!topicPack) {
-      route = toAddTopics(gameId);
+    if (started) {
+      toGame(gameId)();
     } else {
-      route = toGame(gameId);
+      if (topicPack) {
+        toGame(gameId)();
+      } else {
+        toAddTopics(gameId)();
+      }
     }
-
-    route();
   });
 };
 
@@ -115,7 +142,8 @@ const clearState = ({ dispatch }) => {
 
 const startGame = ({ state: { gameUid } }) => {
   const game = {
-    state: GAME_STATE.STARTED
+    state: GAME_STATE.STARTED,
+    started: true
   };
 
   updateGameService(game, gameUid);

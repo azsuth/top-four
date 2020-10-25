@@ -14,7 +14,9 @@ describe('<Join />', () => {
 
       gameIdField.props().onChange('A6');
 
-      expect(wrapper.find(Button).props().disabled).toBe(true);
+      expect(
+        wrapper.find(Button).filter({ name: 'join' }).props().disabled
+      ).toBe(true);
     });
 
     it('is disabled when the game ID field is empty', () => {
@@ -23,7 +25,9 @@ describe('<Join />', () => {
 
       nameField.props().onChange('andrew');
 
-      expect(wrapper.find(Button).props().disabled).toBe(true);
+      expect(
+        wrapper.find(Button).filter({ name: 'join' }).props().disabled
+      ).toBe(true);
     });
 
     it('is enabled when the name and game ID field are populated', () => {
@@ -34,7 +38,9 @@ describe('<Join />', () => {
       nameField.props().onChange('andrew');
       gameIdField.props().onChange('A6');
 
-      expect(wrapper.find(Button).props().disabled).toBe(false);
+      expect(
+        wrapper.find(Button).filter({ name: 'join' }).props().disabled
+      ).toBe(false);
     });
 
     it('calls the joinGame function', () => {
@@ -48,7 +54,7 @@ describe('<Join />', () => {
       nameField.props().onChange('The Grund');
       gameIdField.props().onChange('A5');
 
-      wrapper.find(Button).props().onClick();
+      wrapper.find(Button).filter({ name: 'join' }).props().onClick();
 
       expect(joinGame).toHaveBeenCalledTimes(1);
       expect(joinGame.mock.calls[0][0]).toEqual({

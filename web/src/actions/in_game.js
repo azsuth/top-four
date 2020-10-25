@@ -19,7 +19,8 @@ const startRound = ({
     rankingPlayerUid: playerUid,
     state: GAME_STATE.RANKING,
     topics: { ...topics },
-    players: { ...players }
+    players: { ...players },
+    started: true
   };
 
   // mark all players not locked in
