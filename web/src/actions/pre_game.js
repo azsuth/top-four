@@ -42,12 +42,12 @@ const createGame = async (
     return Promise.reject('cannot add player');
   }
 
-  dispatch({
-    type: STARTED_GAME,
-    payload: { gameId, gameUid, playerUid, name }
+  subscribeToGameUpdates(gameUid, null, playerUid, { dispatch }).then(() => {
+    dispatch({
+      type: STARTED_GAME,
+      payload: { gameId, gameUid, playerUid, name }
+    });
   });
-
-  subscribeToGameUpdates(gameUid, null, playerUid, { dispatch });
 };
 
 const joinGame = async ({ name, gameId }, { dispatch }) => {
@@ -140,13 +140,13 @@ const clearState = ({ dispatch }) => {
   dispatch({ type: CLEAR_STATE });
 };
 
-const startGame = ({ state: { gameUid } }) => {
+const startGame = ({ state }) => {
   const game = {
     state: GAME_STATE.STARTED,
     started: true
   };
 
-  updateGameService(game, gameUid);
+  updateGameService(game, state.gameUid);
 };
 
 export {
