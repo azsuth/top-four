@@ -43,7 +43,7 @@ describe('game state helpers', () => {
       );
 
       expect(wrapper.find(ConfirmButton).props().helperText).toBe(
-        'Tell Andrew to start the next round!'
+        'Tell Andrew to start ranking!'
       );
     });
 

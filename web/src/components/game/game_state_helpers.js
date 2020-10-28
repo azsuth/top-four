@@ -39,7 +39,7 @@ const footerContentForState = ({
 
       return (
         <ConfirmButton
-          helperText={`Tell ${nextRanker.name} to start the next round!`}
+          helperText={`Tell ${nextRanker.name} to start ranking!`}
         />
       );
     case GAME_STATE.RANKING:

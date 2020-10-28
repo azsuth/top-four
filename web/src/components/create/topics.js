@@ -26,7 +26,7 @@ const Topics = ({ topicPacks, topicPackUid, setTopicPackUid }) => {
       <div class="align-self--end">
         <Coachmark>
           Topics are people, places and things that you’ll be asked to rank each
-          round.
+          turn.
           <br />
           <br />
           If you’re new to Top Four, we recommend selecting "Random" to play
