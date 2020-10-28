@@ -2,7 +2,7 @@ import { h } from 'preact';
 
 import compose from 'utilities/compose';
 import { withState } from '@state';
-import withRouter, { toAddTopics, toGame } from 'utilities/router';
+import withRouter, { toAddTopics, toPlayers } from 'utilities/router';
 
 import Button from 'components/shared/button';
 
@@ -27,13 +27,13 @@ function Share({ gameId, nextButton }) {
 const withTopicPackState = withState('game.topicPack', 'topicPack');
 
 // routes
-const withRoutes = withRouter(toAddTopics, toGame);
+const withRoutes = withRouter(toAddTopics, toPlayers);
 
 const withNextButton = WrappedComponent => {
   return props => {
     const {
       topicPack,
-      routes: [toAddTopics, toGame]
+      routes: [toAddTopics, toPlayers]
     } = props;
 
     let nextButton;
@@ -45,7 +45,7 @@ const withNextButton = WrappedComponent => {
       );
     } else {
       nextButton = (
-        <Button fullWidth onClick={toGame} variant="primary">
+        <Button fullWidth onClick={toPlayers} variant="primary">
           Done
         </Button>
       );

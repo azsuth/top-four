@@ -1,4 +1,4 @@
-import { toAddTopics, toGame } from 'utilities/router';
+import { toAddTopics, toGame, toPlayers } from 'utilities/router';
 
 import {
   createGameService,
@@ -106,7 +106,7 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
       toGame(gameId)();
     } else {
       if (topicPack) {
-        toGame(gameId)();
+        toPlayers(gameId)();
       } else {
         toAddTopics(gameId)();
       }

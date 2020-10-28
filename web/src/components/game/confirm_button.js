@@ -7,7 +7,12 @@ import Button from 'components/shared/button';
 import IconCheck from 'components/shared/icon/icon_check';
 import IconOutlineX from 'components/shared/icon/icon_outline_x';
 
-const ConfirmButton = ({ confirmText, confirmAction, helperText }) => {
+const ConfirmButton = ({
+  confirmText,
+  confirmAction,
+  disabled,
+  helperText
+}) => {
   const [confirming, setConfirming] = useState(false);
 
   const actionsClasses = cx(
@@ -37,7 +42,11 @@ const ConfirmButton = ({ confirmText, confirmAction, helperText }) => {
         )}
 
         {!confirming && (
-          <Button fullWidth onClick={() => setConfirming(true)}>
+          <Button
+            disabled={disabled}
+            fullWidth
+            onClick={() => setConfirming(true)}
+          >
             {confirmText || ''}
           </Button>
         )}

@@ -17,6 +17,7 @@ import ErrorBoundary from 'components/error_boundary';
 import Home from 'routes/home';
 import Join from 'routes/join';
 import Create from 'routes/create';
+import Players from 'routes/players';
 import AddTopics from 'routes/add_topics';
 import Game from 'routes/game';
 import End from 'routes/end';
@@ -40,6 +41,7 @@ const App = ({ coachmark, theme }) => {
             <Home path="/" />
             <Join path="/join" />
             <Create path="/create" />
+            <Players path="/:routeGameId/players" />
             <AddTopics path="/:routeGameId/topics" />
             <Game path="/:routeGameId/game" />
             <End path="/:routeGameId/end" />
@@ -99,7 +101,7 @@ const withAutoRouterEffect = WrappedComponent => {
 
       if (
         gameState === GAME_STATE.STARTED &&
-        currentUrl.endsWith('/topics') &&
+        (currentUrl.endsWith('/topics') || currentUrl.endsWith('/players')) &&
         currentUrl !== '/'
       ) {
         toGame();
