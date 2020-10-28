@@ -69,9 +69,10 @@ const withSubscribeEffect = WrappedComponent => {
     useEffect(() => {
       const uid = resolve('fullState.gameUid', props);
       const previousGame = resolve('fullState.game', props);
+      const playerUid = resolve('fullState.playerUid', props);
 
       if (uid && getCurrentUrl().match(IN_PROGRESS_URL_REGEX)) {
-        props.subscribe(uid, previousGame);
+        props.subscribe(uid, previousGame, playerUid);
       }
     }, []);
 

@@ -19,7 +19,7 @@ import { STARTED_GAME, CLEAR_STATE } from '@actions/types';
 
 const createGame = async (
   { name, gameMode, topicPackUid, numRounds },
-  { dispatch, state }
+  { dispatch }
 ) => {
   const numberOfTeams = gameMode === TEAMS ? 2 : 0;
 
@@ -47,7 +47,7 @@ const createGame = async (
     payload: { gameId, gameUid, playerUid, name }
   });
 
-  subscribeToGameUpdates(gameUid, null, { dispatch });
+  subscribeToGameUpdates(gameUid, null, playerUid, { dispatch });
 };
 
 const joinGame = async ({ name, gameId }, { dispatch }) => {
@@ -62,7 +62,7 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
     });
   }
 
-  const { gameUid, noTeams, players, started, topicPack } = game;
+  const { gameUid, players, started, topicPack } = game;
 
   const duplicatePlayer = Object.keys(players)
     .map(playerUid => ({
@@ -101,7 +101,7 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
     payload: { gameId, gameUid, playerUid, name }
   });
 
-  subscribeToGameUpdates(gameUid, null, { dispatch }).then(() => {
+  subscribeToGameUpdates(gameUid, null, playerUid, { dispatch }).then(() => {
     if (started) {
       toGame(gameId)();
     } else {
