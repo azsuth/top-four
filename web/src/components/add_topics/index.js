@@ -118,7 +118,12 @@ const AddTopics = ({
               Waiting on {remainingPlayers[0].name} to enter topics.
             </span>
           )}
-          {remainingTotalTopics === 0 && isLeadPlayer && (
+          {remainingTotalTopics === 0 && isLeadPlayer && numPlayers === 1 && (
+            <span class="color--light-gray margin-t--s">
+              Waiting on more players.
+            </span>
+          )}
+          {remainingTotalTopics === 0 && isLeadPlayer && numPlayers > 1 && (
             <Button name="done" onClick={() => startGame()} variant="primary">
               Start Game
             </Button>
