@@ -4,7 +4,8 @@
   position: relative;
 
   &__logo {
-    display: inline;
+    display: inline-flex;
+    flex-direction: column;
     left: 50%;
     position: absolute;
     top: 50%;
@@ -14,6 +15,16 @@
     &--anim {
       top: 33%;
       transform: translate(-50%, -50%) scale(0.9);
+    }
+  }
+
+  &__logo-button {
+    align-self: flex-end;
+    opacity: 0;
+    transition: all $timing-base;
+
+    &--anim {
+      opacity: 1;
     }
   }
 

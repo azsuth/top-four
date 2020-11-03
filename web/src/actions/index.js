@@ -29,9 +29,10 @@ const themes = [
 let shuffled = false;
 
 const cycleTheme = ({ dispatch, state: { theme: currentTheme } }) => {
-  if (!shuffled) {
-    shuffle(themes);
-  }
+  // if (!shuffled) {
+  //   shuffle(themes);
+  //   shuffled = true;
+  // }
 
   const index = themes.indexOf(currentTheme);
   const nextTheme = themes[(index + 1) % themes.length];
