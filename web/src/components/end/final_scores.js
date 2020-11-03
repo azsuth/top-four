@@ -8,7 +8,7 @@ function FinalScores({ playerScores }) {
 
   return (
     <div class="container flex-grow--1 flex direction--column align-items--center margin--large padding-v--large padding-h--s">
-      <h1 class="modal-header color--primary-dark margin-b--large">
+      <h1 class="modal-header color--primary-darkest margin-b--large">
         Final Scores
       </h1>
       <div class="flex-grow--1 width--100-pct overflow-y--auto padding-h--s">

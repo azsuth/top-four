@@ -130,21 +130,37 @@ function renderRadioInputs() {
   );
 }
 
-function renderThemes(setTheme) {
+function renderThemes(theme, setTheme) {
+  const themes = [
+    'orange',
+    'berry',
+    'fuschia',
+    'purple',
+    'indigo',
+    'blue',
+    'cyan',
+    'teal',
+    'mint',
+    'green',
+    'lime',
+    'golden'
+  ];
+
+  const cycleTheme = () => {
+    const currentThemeIndex = themes.indexOf(theme);
+    const nextTheme = themes[(currentThemeIndex + 1) % themes.length];
+
+    setTheme(nextTheme);
+  };
+
   return (
     <>
       <h2 class="color--dark-gray font-size--large font-weight--bold">
         Themes
       </h2>
       <div class="flex justify--between">
-        <Button onClick={() => setTheme('orange')} variant="primary">
-          ORANGE
-        </Button>
-        <Button onClick={() => setTheme('purple')} variant="primary">
-          PURPLE
-        </Button>
-        <Button onClick={() => setTheme('green')} variant="primary">
-          GREEN
+        <Button onClick={cycleTheme} variant="primary">
+          {theme.toUpperCase()}
         </Button>
       </div>
     </>
@@ -160,7 +176,7 @@ function Storybook() {
         <h1 class="color--dark-gray font-size--xlarge font-weight--bold">
           Top Four Components
         </h1>
-        {renderThemes(setTheme)}
+        {renderThemes(theme, setTheme)}
         {renderRadioInputs()}
         {renderTextInputs()}
         {renderButtons()}

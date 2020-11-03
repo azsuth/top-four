@@ -18,7 +18,7 @@ function Players({ playerScores, playerUid, togglePlayerActive }) {
 
   return (
     <div class="players flex-grow--1 container flex direction--column align-items--center margin--base padding--large overflow--hidden">
-      <h1 class="modal-header color--primary-dark">Scoreboard</h1>
+      <h1 class="modal-header color--primary-darkest">Scoreboard</h1>
       <div class="flex-grow--1 width--100-pct margin-t--s overflow-y--auto">
         {players.map(({ uid, name, score, active }, index) => (
           <div class="flex justify--between align-items--center font-weight--bold font-size--base height--2">

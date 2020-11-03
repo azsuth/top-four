@@ -46,6 +46,7 @@ a.btn {
 .btn.btn--primary {
   @include themify() {
     background-color: themed('color-primary');
+    color: themed('color-font');
 
     &:active {
       background-color: themed('color-primary-dark');
@@ -53,7 +54,7 @@ a.btn {
 
     &[disabled] {
       background-color: rgba($color: themed('color-primary'), $alpha: 0.4);
-      color: rgba($color: $color-white, $alpha: 0.6);
+      color: rgba($color: themed('color-font'), $alpha: 0.6);
     }
   }
 }
@@ -101,7 +102,7 @@ a.btn {
   @include themify() {
     background-color: themed('color-primary');
     border: 2px solid $color-white;
-    color: $color-white;
+    color: themed('color-font');
 
     &:active {
       background-color: themed('color-primary-dark');
@@ -130,11 +131,13 @@ a.btn {
 // text-invert
 
 .btn.btn--text-invert {
-  color: $color-white;
-  padding: 0;
-  text-align: start;
+  @include themify() {
+    color: themed('color-font');
+    padding: 0;
+    text-align: start;
 
-  &[disabled] {
-    opacity: 0.4;
+    &[disabled] {
+      opacity: 0.4;
+    }
   }
 }

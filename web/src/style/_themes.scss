@@ -1,25 +1,114 @@
+@import 'variables';
+
 $color-orange: #ff5d28;
-$color-purple: #c36be2;
-$color-green: #3cdabc;
+$color-berry: #ff0e65;
+$color-fuschia: #da00ed;
+$color-purple: #7e19ff;
+$color-indigo: #3531ff;
+$color-blue: #0085ff;
+$color-cyan: #00c2ff;
+$color-teal: #00e8e8;
+$color-mint: #00f68f;
+$color-green: #22f200;
+$color-lime: #dbff00;
+$color-golden: #ffd600;
 
 $themes: (
   orange: (
     color-primary: $color-orange,
-    color-primary-dark: darken($color-orange, 14%),
-    color-primary-light: lighten($color-orange, 14%),
-    color-primary-lightest: lighten($color-orange, 25%)
+    color-primary-dark: #df3f0a,
+    color-primary-darkest: #df3f0a,
+    color-primary-light: #ffbea9,
+    color-primary-lightest: #ffefe9,
+    color-font: $color-white
+  ),
+  berry: (
+    color-primary: $color-berry,
+    color-primary-dark: #d60a54,
+    color-primary-darkest: #d60a54,
+    color-primary-light: #ffb7d1,
+    color-primary-lightest: #ffe7f0,
+    color-font: $color-white
+  ),
+  fuschia: (
+    color-primary: $color-fuschia,
+    color-primary-dark: #b411c3,
+    color-primary-darkest: #b411c3,
+    color-primary-light: #f6bffa,
+    color-primary-lightest: #fbe5fd,
+    color-font: $color-white
   ),
   purple: (
     color-primary: $color-purple,
-    color-primary-dark: darken($color-purple, 14%),
-    color-primary-light: lighten($color-purple, 14%),
-    color-primary-lightest: lighten($color-purple, 25%)
+    color-primary-dark: #6013c3,
+    color-primary-darkest: #6013c3,
+    color-primary-light: #dfc6ff,
+    color-primary-lightest: #f2e8ff,
+    color-font: $color-white
+  ),
+  indigo: (
+    color-primary: $color-indigo,
+    color-primary-dark: #2825bf,
+    color-primary-darkest: #2825bf,
+    color-primary-light: #c2c1ff,
+    color-primary-lightest: #ebeaff,
+    color-font: $color-white
+  ),
+  blue: (
+    color-primary: $color-blue,
+    color-primary-dark: #0070d6,
+    color-primary-darkest: #0070d6,
+    color-primary-light: #b3daff,
+    color-primary-lightest: #e5f3ff,
+    color-font: $color-white
+  ),
+  cyan: (
+    color-primary: $color-cyan,
+    color-primary-dark: #0098da,
+    color-primary-darkest: #0098da,
+    color-primary-light: #b3edff,
+    color-primary-lightest: #e5f9ff,
+    color-font: $color-gray-dark
+  ),
+  teal: (
+    color-primary: $color-teal,
+    color-primary-dark: #00c5c5,
+    color-primary-darkest: #00a5a5,
+    color-primary-light: #b3f8f8,
+    color-primary-lightest: #e5fdfd,
+    color-font: $color-gray-dark
+  ),
+  mint: (
+    color-primary: $color-mint,
+    color-primary-dark: #00d17a,
+    color-primary-darkest: #00a963,
+    color-primary-light: #b3fcdd,
+    color-primary-lightest: #e5fef4,
+    color-font: $color-gray-dark
   ),
   green: (
     color-primary: $color-green,
-    color-primary-dark: darken($color-green, 14%),
-    color-primary-light: lighten($color-green, 14%),
-    color-primary-lightest: lighten($color-green, 25%)
+    color-primary-dark: #1dce00,
+    color-primary-darkest: #18a900,
+    color-primary-light: #bdfbb3,
+    color-primary-lightest: #e9fee5,
+    color-font: $color-gray-dark
+  ),
+  lime: (
+    color-primary: $color-lime,
+    color-primary-dark: #bbd900,
+    color-primary-darkest: #889e00,
+    color-primary-light: #f1ff99,
+    color-primary-lightest: #faffd9,
+    color-font: $color-gray-dark
+  ),
+  golden: (
+    color-primary: $color-golden,
+    color-primary-dark: #efbb04,
+    color-primary-darkest: #ca8500,
+    color-primary-light: #ffef99,
+    color-primary-lightest: #fff9d9,
+    color-font: $color-gray-dark
   )
 );
 
@@ -49,6 +138,15 @@ $themes: (
 
 :export {
   colorOrange: $color-orange;
+  colorBerry: $color-berry;
+  colorFuschia: $color-fuschia;
   colorPurple: $color-purple;
+  colorIndigo: $color-indigo;
+  colorBlue: $color-blue;
+  colorCyan: $color-cyan;
+  colorTeal: $color-teal;
+  colorMint: $color-mint;
   colorGreen: $color-green;
+  colorLime: $color-lime;
+  colorGolden: $color-golden;
 }

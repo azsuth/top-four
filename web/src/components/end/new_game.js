@@ -6,7 +6,7 @@ import Button from 'components/shared/button';
 function NewGame({ routes: [toRoot] }) {
   return (
     <div class="flex-grow--1 container flex direction--column justify--between align-items--center margin--base padding--large overflow--hidden">
-      <h1 class="modal-header color--primary-dark margin-b--large">
+      <h1 class="modal-header color--primary-darkest margin-b--large">
         Wanna play again?
       </h1>
       <Button onClick={toRoot}>Start New Game</Button>

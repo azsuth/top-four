@@ -12,6 +12,8 @@ import {
 import { withReducerLogging } from 'utilities/logging';
 import { withSaveableState } from 'utilities/local_storage';
 
+import { randomTheme } from '@actions';
+
 const gameStateReducer = (state, { type, payload }) => {
   switch (type) {
     case STARTED_GAME:
@@ -27,7 +29,7 @@ const gameStateReducer = (state, { type, payload }) => {
     case TOPIC_PACKS:
       return { ...state, topicPacks: payload };
     case CLEAR_STATE:
-      return { theme: 'orange' };
+      return { theme: randomTheme() };
     case SHOW_COACHMARK:
       return {
         ...state,

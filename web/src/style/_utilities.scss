@@ -354,9 +354,9 @@
   }
 }
 
-.color--primary-dark {
+.color--primary-darkest {
   @include themify() {
-    color: themed('color-primary-dark');
+    color: themed('color-primary-darkest');
   }
 }
 

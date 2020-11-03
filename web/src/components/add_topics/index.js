@@ -56,7 +56,7 @@ const AddTopics = ({
         <AddTopicsCoachmark />
       </div>
       <div class="container flex direction--column align-items--center flex-grow--1 margin--large padding-v--large padding-b--s overflow--hidden">
-        <h1 class="modal-header color--primary-dark margin-b--base">
+        <h1 class="modal-header color--primary-darkest margin-b--base">
           {remainingPlayerTopics > 1 &&
             `Enter ${remainingPlayerTopics} More Topics`}
           {remainingPlayerTopics === 1 && 'Enter 1 More Topic'}

@@ -26,7 +26,7 @@ function Players({ gameId, players, playerUid, startGame }) {
         </span>
       </div>
       <div class="container flex direction--column align-items--center flex-grow--1 margin--large padding-v--large padding-b--s overflow--hidden">
-        <h1 class="modal-header color--primary-dark margin-b--base">
+        <h1 class="modal-header color--primary-darkest margin-b--base">
           {players.length} Player{players.length > 1 ? 's' : ''}
         </h1>
         <div class="flex-grow--1 flex direction--column padding-h--base overflow-y--auto width--100-pct">

@@ -14,7 +14,9 @@ import TextInput from 'components/shared/text_input';
 function JoinContainer({ children, title }) {
   return (
     <div class="join__container container flex direction--column align-items--center flex-grow--1 margin--large padding-t--large padding-h--s padding-b--s">
-      <h1 class="modal-header color--primary-dark margin-b--large">{title}</h1>
+      <h1 class="modal-header color--primary-darkest margin-b--large">
+        {title}
+      </h1>
       {children}
     </div>
   );

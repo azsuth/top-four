@@ -16,7 +16,7 @@ const Header = ({ header, hideInfo, showInfo, subheader }) => {
           <IconChevronUp />
         </div>
       )}
-      <h1 class="modal-header color--primary-dark margin-b--xs">{header}</h1>
+      <h1 class="modal-header color--primary-darkest margin-b--xs">{header}</h1>
       <span class="font-weight--bold">{subheader}</span>
     </div>
   );

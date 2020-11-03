@@ -15,7 +15,7 @@ function Rounds({ numRounds, setNumRounds }) {
 
   return (
     <div class="rounds flex-grow--1 width--100-pct flex direction--column align-items--center">
-      <h1 class="modal-header color--primary-dark margin-b--large">
+      <h1 class="modal-header color--primary-darkest margin-b--large">
         How many rounds do you want to play?
       </h1>
       <div class="flex-grow--1 flex direction--column align-items--center font-size--xlarge font-weight--bold color--light-gray">
