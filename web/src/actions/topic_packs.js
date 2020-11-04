@@ -12,26 +12,12 @@ const getTopicPacks = async ({ state, dispatch }) => {
 
   if (topicPacks) {
     const packs = Object.keys(topicPacks)
-      .map(uid => {
-        const topicPack = topicPacks[uid];
-        const { name, topics } = topicPack;
-
-        const numTopics = Object.keys(topics).length;
-        const numTurns = Math.floor(numTopics / 4);
-
-        return {
-          uid,
-          ...topicPack,
-          rawName: name,
-          name: `${name} (${numTurns} turns)`
-        };
-      })
+      .map(uid => ({ uid, ...topicPacks[uid] }))
       .sort(({ isRandomPack }) => (isRandomPack ? -1 : 1));
 
     packs.unshift({
       uid: WRITE_OUR_OWN_UID,
       isRandomPack: false,
-      rawName: 'Write our own!',
       name: 'Write our own!'
     });
 
