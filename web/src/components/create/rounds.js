@@ -27,10 +27,12 @@ function Rounds({ numRounds, setNumRounds }) {
       </div>
       <div class="align-self--end">
         <Coachmark>
-          @harrison &amp; @emily
+          Each player ranks once per round. The more rounds you choose, the
+          longer the game will last.
           <br />
           <br />
-          Fill me in!
+          For groups of 2-4, we suggest playing 3-4 rounds. For groups of 5 or
+          more, we suggest playing 1-2 rounds.
         </Coachmark>
       </div>
     </div>
