@@ -3,15 +3,14 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import sampleSize from 'lodash/sampleSize';
 
 import compose from 'utilities/compose';
+import withRouter, { toPlayers } from 'utilities/router';
 import {
   topicsToPlayerTopics,
-  toAvailableAndRankingTopicsCount,
-  toAllActivePlayers,
-  toActivePlayerTurns,
-  toPlayersWithTopicsCount
+  toAllActivePlayers
 } from 'utilities/state_mapping';
+
 import { withAction, withState } from '@state';
-import { addTopic, getTopicPacks, startGame } from '@actions';
+import { addTopic, getTopicPacks } from '@actions';
 
 import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
@@ -23,15 +22,11 @@ import Topic from 'components/add_topics/topic';
 const AddTopics = ({
   addTopic,
   gameId,
-  isLeadPlayer,
-  leadPlayer,
   numPlayers,
   numRounds,
   playerTopics,
-  remainingPlayers,
   remainingPlayerTopics,
-  remainingTotalTopics,
-  startGame,
+  routes: [toPlayers],
   topicExample
 }) => {
   const [topic, setTopic] = useState('');
@@ -107,31 +102,10 @@ const AddTopics = ({
               Keep adding topics!
             </span>
           )}
-          {remainingPlayerTopics === 0 && remainingPlayers.length > 1 && (
-            <span class="color--light-gray margin-t--s">
-              Waiting on {remainingPlayers.length} player
-              {remainingPlayers > 1 ? 's' : ''} to enter topics.
-            </span>
-          )}
-          {remainingPlayerTopics === 0 && remainingPlayers.length === 1 && (
-            <span class="color--light-gray margin-t--s">
-              Waiting on {remainingPlayers[0].name} to enter topics.
-            </span>
-          )}
-          {remainingTotalTopics === 0 && isLeadPlayer && numPlayers === 1 && (
-            <span class="color--light-gray margin-t--s">
-              Waiting on more players.
-            </span>
-          )}
-          {remainingTotalTopics === 0 && isLeadPlayer && numPlayers > 1 && (
-            <Button name="done" onClick={() => startGame()} variant="primary">
-              Start Game
+          {remainingPlayerTopics === 0 && (
+            <Button name="done" onClick={toPlayers}>
+              Done Adding Topics
             </Button>
-          )}
-          {remainingTotalTopics === 0 && !isLeadPlayer && (
-            <span class="color--light-gray margin-t--s">
-              Tell {leadPlayer.name} to start the game!
-            </span>
           )}
         </div>
       </div>
@@ -139,17 +113,13 @@ const AddTopics = ({
   );
 };
 
+const withRoutes = withRouter(toPlayers);
+
 // actions
 const withAddTopicAction = withAction(addTopic, 'addTopic');
 const withGetTopicPacksAction = withAction(getTopicPacks, 'getTopicPacks');
-const withStartGameAction = withAction(startGame, 'startGame');
 
 // state
-const withTopicsState = withState(
-  'game.topics',
-  'numTopics',
-  toAvailableAndRankingTopicsCount
-);
 const withPlayerTopicsState = withState(
   null,
   'playerTopics',
@@ -163,17 +133,6 @@ const withPlayersState = withState(
 const withGameIdState = withState('gameId');
 const withTopicPacksState = withState('topicPacks');
 const withNumRoundsState = withState('game.numRounds', 'numRounds');
-const withPlayerTurnsState = withState(
-  'game',
-  'playerTurns',
-  toActivePlayerTurns
-);
-const withPlayerUidState = withState('playerUid');
-const withPlayersMissingTopicsState = withState(
-  'game',
-  'playersWithTopicsCount',
-  toPlayersWithTopicsCount
-);
 
 const randomTopicFromTopicPacks = topicPacks => {
   if (topicPacks) {
@@ -220,56 +179,29 @@ const withTopicExampleProp = WrappedComponent => {
 
 const withProps = WrappedComponent => {
   return props => {
-    const {
-      numRounds,
-      numTopics = 0,
-      players,
-      playerTopics,
-      playerTurns,
-      playerUid,
-      playersWithTopicsCount
-    } = props;
+    const { numRounds, players, playerTopics } = props;
 
-    const roundsPlayed = playerTurns[players[players.length - 1].uid] || 0;
-    const remainingRounds = numRounds - roundsPlayed;
-
-    const remainingTotalTopics =
-      players.length * 4 * remainingRounds - numTopics;
-    const remainingPlayers = playersWithTopicsCount.filter(
-      ({ numTopics }) => numTopics < remainingRounds * 4
-    );
-    const remainingPlayerTopics = 4 * remainingRounds - playerTopics.length;
-
-    const leadPlayer = players[0];
-    const isLeadPlayer = leadPlayer.uid === playerUid;
+    const remainingPlayerTopics = 4 * numRounds - playerTopics.length;
 
     return (
       <WrappedComponent
         {...props}
-        leadPlayer={leadPlayer}
-        isLeadPlayer={isLeadPlayer}
         numPlayers={players.length}
-        remainingPlayers={remainingPlayers}
         remainingPlayerTopics={remainingPlayerTopics}
-        remainingTotalTopics={remainingTotalTopics}
       />
     );
   };
 };
 
 const wrappers = compose(
+  withRoutes,
   withAddTopicAction,
   withGetTopicPacksAction,
-  withStartGameAction,
-  withTopicsState,
   withPlayerTopicsState,
   withPlayersState,
   withGameIdState,
   withTopicPacksState,
   withNumRoundsState,
-  withPlayerTurnsState,
-  withPlayerUidState,
-  withPlayersMissingTopicsState,
   withTopicExampleProp,
   withProps
 );
