@@ -217,7 +217,7 @@ describe('pre game actions', () => {
 
       expect(joinGame({ gameId: 'A6' }, {})).rejects.toEqual({
         field: 'game_id',
-        msg: `The Game ID A6 doesn't exist.`
+        subheader: `The Game ID A6 doesn't exist.`
       });
     });
 
@@ -230,7 +230,8 @@ describe('pre game actions', () => {
 
       expect(joinGame({ name: 'Andrew' }, {})).rejects.toEqual({
         field: 'name',
-        msg: 'Someone already picked the name Andrew! Try a different one.'
+        subheader: 'Try a different name.',
+        msg: 'Someone is already playing with the name Andrew!'
       });
     });
 
@@ -243,8 +244,8 @@ describe('pre game actions', () => {
 
       expect(joinGame({ name: 'Emily' }, {})).rejects.toEqual({
         field: 'name',
-        msg:
-          'This game has already started. To rejoin the game, enter the same name you first joined with.'
+        subheader: 'This game has already started.',
+        msg: 'Rejoining? Enter the same name you started with.'
       });
     });
   });

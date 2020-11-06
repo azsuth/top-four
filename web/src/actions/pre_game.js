@@ -59,7 +59,7 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
   if (!game || !game.gameUid) {
     return Promise.reject({
       field: 'game_id',
-      msg: `The Game ID ${gameId} doesn't exist.`
+      subheader: `The Game ID ${gameId} doesn't exist.`
     });
   }
 
@@ -75,15 +75,16 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
   if (!started && duplicatePlayer) {
     return Promise.reject({
       field: 'name',
-      msg: `Someone already picked the name ${name}! Try a different one.`
+      subheader: 'Try a different name.',
+      msg: `Someone is already playing with the name ${name}!`
     });
   }
 
   if (started && !duplicatePlayer) {
     return Promise.reject({
       field: 'name',
-      msg:
-        'This game has already started. To rejoin the game, enter the same name you first joined with.'
+      subheader: 'This game has already started.',
+      msg: 'Rejoining? Enter the same name you started with.'
     });
   }
 
