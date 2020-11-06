@@ -11,7 +11,8 @@ const ConfirmButton = ({
   confirmText,
   confirmAction,
   disabled,
-  helperText
+  helperText,
+  skipConfirm
 }) => {
   const [confirming, setConfirming] = useState(false);
 
@@ -25,6 +26,14 @@ const ConfirmButton = ({
   const helperTextClasses = cx('font-weight--bold margin-b--s', {
     'visibility--hidden': !helperText || confirming
   });
+
+  const handleClick = () => {
+    if (skipConfirm) {
+      confirmAction();
+    } else {
+      setConfirming(true);
+    }
+  };
 
   const handleConfirm = () => {
     setConfirming(false);
@@ -42,11 +51,7 @@ const ConfirmButton = ({
         )}
 
         {!confirming && (
-          <Button
-            disabled={disabled}
-            fullWidth
-            onClick={() => setConfirming(true)}
-          >
+          <Button disabled={disabled} fullWidth onClick={handleClick}>
             {confirmText || ''}
           </Button>
         )}

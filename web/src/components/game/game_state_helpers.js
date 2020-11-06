@@ -17,6 +17,7 @@ const footerContentForState = ({
           <ConfirmButton
             confirmText="Reveal the winner?"
             confirmAction={endGame}
+            skipConfirm
           />
         );
       }
@@ -33,6 +34,7 @@ const footerContentForState = ({
             confirmText="Start"
             confirmAction={startRound}
             helperText="Hey, it's your turn!"
+            skipConfirm
           />
         );
       }
