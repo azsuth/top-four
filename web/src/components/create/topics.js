@@ -9,7 +9,7 @@ const Topics = ({ topicPacks, topicPackUid, setTopicPackUid }) => {
       <h1 class="modal-header color--primary-darkest margin-b--large">
         What topics do you want to play with?
       </h1>
-      <div class="flex-grow--1">
+      <div class="align-self--start padding-l--xlarge flex-grow--1">
         {topicPacks &&
           topicPacks.map(({ uid, name }) => (
             <div key={uid} class="margin-b--large">

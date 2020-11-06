@@ -107,7 +107,7 @@ const RankableTopic = ({
         </Button>
       </div>
       <div class={topicWrapperClasses}>
-        <div class="flex direction--column justify--center font-weight--bold">
+        <div class="flex direction--column justify--center">
           <span class={topicClasses}>{topic}</span>
           {showPercent && !isCorrect && <span>{correctTopic.topic}</span>}
         </div>

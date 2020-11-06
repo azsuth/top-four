@@ -10,6 +10,8 @@ import { withState } from '@state';
 
 import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
+import IconArrowRight from 'components/shared/icon/icon_arrow_right';
+import IconArrowLeft from 'components/shared/icon/icon_arrow_left';
 
 import Superlative from 'components/end/superlative';
 import FinalScores from 'components/end/final_scores';
@@ -43,7 +45,10 @@ function End({ gameData }) {
             variant="text-invert"
             onClick={() => setStep(prevStep => prevStep - 1)}
           >
-            &lt; Back
+            <div class="flex align-items--center">
+              <IconArrowLeft white />
+              Back
+            </div>
           </Button>
         </div>
         <div
@@ -55,7 +60,10 @@ function End({ gameData }) {
             variant="text-invert"
             onClick={() => setStep(prevStep => prevStep + 1)}
           >
-            Next &gt;
+            <div class="flex align-items--center">
+              Next
+              <IconArrowRight white />
+            </div>
           </Button>
         </div>
       </div>

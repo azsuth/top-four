@@ -24,7 +24,10 @@ const Name = ({
       <h1 class="modal-header color--primary-darkest margin-b--large">
         What's your name?
       </h1>
-      <form autoComplete="off" class="flex direction--column flex-grow--1">
+      <form
+        autoComplete="off"
+        class="flex direction--column flex-grow--1 width--80-pct"
+      >
         <div class={inputClasses}>
           <TextInput
             label="Your name"

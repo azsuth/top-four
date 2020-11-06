@@ -10,14 +10,14 @@ import IconChevronUp from 'components/shared/icon/icon_chevron_up';
 
 const Header = ({ header, hideInfo, showInfo, subheader }) => {
   return (
-    <div class="game-header text-align--center">
+    <div class="game-header text-align--center padding-h--base">
       {showInfo && (
         <div onClick={hideInfo}>
           <IconChevronUp />
         </div>
       )}
       <h1 class="modal-header color--primary-darkest margin-b--xs">{header}</h1>
-      <span class="font-weight--bold">{subheader}</span>
+      <div class="font-weight--bold height--2">{subheader}</div>
     </div>
   );
 };

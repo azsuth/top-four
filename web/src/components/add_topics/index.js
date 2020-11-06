@@ -59,7 +59,7 @@ const AddTopics = ({
 
   return (
     <div class="add-topics flex direction--column height--100-pct bg-color--primary">
-      <div class="flex-shrink--0 flex align-items--center margin-t--xlarge padding-h--base">
+      <div class="flex-shrink--0 flex align-items--center margin-t--xlarge padding-h--large">
         <span class="color--white font-weight--bold">{gameId}</span>
         <span class="flex-grow--1">
           <Logo size="small" />
@@ -106,7 +106,7 @@ const AddTopics = ({
             {error}
           </span>
         )}
-        <div class="flex-grow--1 min-height--huge flex direction--column margin-t--xlarge padding-h--base overflow-y--auto width--100-pct">
+        <div class="flex-grow--1 min-height--huge flex direction--column margin-t--xlarge padding-l--add_topic padding-r--base overflow-y--auto width--100-pct">
           {[...playerTopics].reverse().map((topic, index, arr) => (
             <div>
               <div class="margin-b--base">

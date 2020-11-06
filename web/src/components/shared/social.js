@@ -3,6 +3,7 @@ import { h } from 'preact';
 import Button from 'components/shared/button';
 import IconInstagram from 'components/shared/icon/icon_instagram';
 import IconTwitter from 'components/shared/icon/icon_twitter';
+import IconFacebook from 'components/shared/icon/icon_facebook';
 
 function Social({ whiteBackground }) {
   return (
@@ -26,11 +27,18 @@ function Social({ whiteBackground }) {
           <IconInstagram white={!whiteBackground} />
         </a>
         <a
-          class="margin-l--base"
+          class="margin-h--base"
           href="https://twitter.com/TopFourGame"
           target="_blank"
         >
           <IconTwitter white={!whiteBackground} />
+        </a>
+        <a
+          class="margin-l--base"
+          href="https://www.facebook.com/TopFourGame/"
+          target="_blank"
+        >
+          <IconFacebook white={!whiteBackground} />
         </a>
       </div>
     </div>

@@ -102,7 +102,7 @@ function Players({
 
   return (
     <div class="players flex direction--column height--100-pct bg-color--primary">
-      <div class="flex-shrink--0 flex align-items--center margin-t--xlarge padding-h--base">
+      <div class="flex-shrink--0 flex align-items--center margin-t--xlarge padding-h--large">
         <span class="color--white font-weight--bold">{gameId}</span>
         <span class="flex-grow--1">
           <Logo size="small" />
@@ -111,13 +111,13 @@ function Players({
           <IconCircleI />
         </span>
       </div>
-      <div class="container flex direction--column align-items--center flex-grow--1 margin--large padding-v--large padding-b--s overflow--hidden">
+      <div class="container flex direction--column align-items--center flex-grow--1 margin--large padding-v--large padding-h--s padding-b--s overflow--hidden">
         <h1 class="modal-header color--primary-darkest margin-b--base">
           {players.length} Player{players.length > 1 ? 's' : ''}
         </h1>
-        <div class="flex-grow--1 flex direction--column padding-h--base overflow-y--auto width--100-pct">
+        <div class="flex-grow--1 flex direction--column padding-h--xlarge overflow-y--auto width--100-pct">
           {players.map((player, index) => (
-            <div class="margin-b--base flex align-items--center font-weight--bold font-size--base">
+            <div class="margin-b--base flex font-weight--bold font-size--base">
               <span class="color--primary display--ib margin-r--s">
                 {index + 1}.
               </span>

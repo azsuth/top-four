@@ -7,7 +7,7 @@ function FinalScores({ playerScores }) {
   const players = playerScores.filter(({ active }) => active);
 
   return (
-    <div class="container flex-grow--1 flex direction--column align-items--center margin--large padding-v--large padding-h--s">
+    <div class="container min-height--50-pct flex direction--column align-items--center margin--large padding-v--large padding-h--s">
       <h1 class="modal-header color--primary-darkest margin-b--large">
         Final Scores
       </h1>

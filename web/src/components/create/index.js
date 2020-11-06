@@ -11,6 +11,8 @@ import { getTopicPacks, createGame } from '@actions';
 
 import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
+import IconArrowRight from 'components/shared/icon/icon_arrow_right';
+import IconArrowLeft from 'components/shared/icon/icon_arrow_left';
 
 import GameMode from 'components/create/game_mode';
 import Topics from 'components/create/topics';
@@ -21,7 +23,7 @@ import Rounds from 'components/create/rounds';
 
 function CreateContainer({ children }) {
   return (
-    <div class="container flex-grow--1 flex direction--column align-items--center margin--large padding-t--large padding-h--s padding-b--s">
+    <div class="container flex-grow--1 flex direction--column align-items--center margin--large padding-t--large padding-h--base padding-b--s">
       {children}
     </div>
   );
@@ -109,7 +111,10 @@ const Create = ({ gameId, createGame, topicPacks }) => {
               onClick={() => setStep(prevStep => prevStep - 1)}
               variant="text-invert"
             >
-              &lt; Back
+              <div class="flex align-items--center">
+                <IconArrowLeft white />
+                Back
+              </div>
             </Button>
           </div>
           <div
@@ -121,7 +126,10 @@ const Create = ({ gameId, createGame, topicPacks }) => {
               onClick={() => setStep(prevStep => prevStep + 1)}
               variant="text-invert"
             >
-              Next &gt;
+              <div class="flex align-items--center">
+                Next
+                <IconArrowRight white />
+              </div>
             </Button>
           </div>
         </div>
