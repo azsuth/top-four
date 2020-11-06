@@ -7,11 +7,11 @@ $color-purple: #7e19ff;
 $color-indigo: #3531ff;
 $color-blue: #0085ff;
 $color-cyan: #00c2ff;
-$color-teal: #00e8e8;
-$color-mint: #00f68f;
-$color-green: #22f200;
-$color-lime: #dbff00;
-$color-golden: #ffd600;
+$color-teal: #00cfcf;
+$color-mint: #00e090;
+$color-green: #3dc000;
+$color-lime: #9acc0b;
+$color-golden: #ffa800;
 
 $themes: (
   orange: (
@@ -68,47 +68,47 @@ $themes: (
     color-primary-darkest: #0098da,
     color-primary-light: #b3edff,
     color-primary-lightest: #e5f9ff,
-    color-font: $color-gray-dark
+    color-font: $color-white
   ),
   teal: (
     color-primary: $color-teal,
-    color-primary-dark: #00c5c5,
-    color-primary-darkest: #00a5a5,
-    color-primary-light: #b3f8f8,
+    color-primary-dark: #00a6a6,
+    color-primary-darkest: #00a6a6,
+    color-primary-light: #b3f1f1,
     color-primary-lightest: #e5fdfd,
-    color-font: $color-gray-dark
+    color-font: $color-white
   ),
   mint: (
     color-primary: $color-mint,
-    color-primary-dark: #00d17a,
-    color-primary-darkest: #00a963,
-    color-primary-light: #b3fcdd,
+    color-primary-dark: #00b374,
+    color-primary-darkest: #00b374,
+    color-primary-light: #b3f6de,
     color-primary-lightest: #e5fef4,
-    color-font: $color-gray-dark
+    color-font: $color-white
   ),
   green: (
     color-primary: $color-green,
-    color-primary-dark: #1dce00,
-    color-primary-darkest: #18a900,
-    color-primary-light: #bdfbb3,
-    color-primary-lightest: #e9fee5,
-    color-font: $color-gray-dark
+    color-primary-dark: #319a00,
+    color-primary-darkest: #319a00,
+    color-primary-light: #beecb3,
+    color-primary-lightest: #ecf9e5,
+    color-font: $color-white
   ),
   lime: (
     color-primary: $color-lime,
-    color-primary-dark: #bbd900,
-    color-primary-darkest: #889e00,
-    color-primary-light: #f1ff99,
-    color-primary-lightest: #faffd9,
-    color-font: $color-gray-dark
+    color-primary-dark: #7aa511,
+    color-primary-darkest: #7aa511,
+    color-primary-light: #e1f0b6,
+    color-primary-lightest: #f8fee4,
+    color-font: $color-white
   ),
   golden: (
     color-primary: $color-golden,
-    color-primary-dark: #efbb04,
-    color-primary-darkest: #ca8500,
-    color-primary-light: #ffef99,
-    color-primary-lightest: #fff9d9,
-    color-font: $color-gray-dark
+    color-primary-dark: #cc8600,
+    color-primary-darkest: #cc8600,
+    color-primary-light: #ffe6a6,
+    color-primary-lightest: #fff7db,
+    color-font: $color-white
   )
 );
 
