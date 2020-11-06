@@ -34,7 +34,7 @@ const App = ({ coachmark, theme }) => {
   });
 
   return (
-    <div id="app" class={`theme-${theme}`}>
+    <div id="app" class={`theme-${theme || 'orange'}`}>
       <ErrorBoundary>
         <div class={appContentClass}>
           <Router>
