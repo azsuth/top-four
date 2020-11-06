@@ -29,17 +29,33 @@ const AddTopics = ({
   routes: [toPlayers],
   topicExample
 }) => {
+  const [error, setError] = useState(null);
   const [topic, setTopic] = useState('');
+  const [errorWidth, setErrorWidth] = useState(null);
   const topicInputRef = useRef();
 
   const handleAddTopic = () => {
-    addTopic(topic);
+    addTopic(topic).catch(playerName => {
+      setError(`Ope! ${playerName} already added that...try again`);
+    });
     setTopic('');
 
     if (topicInputRef.current) {
       topicInputRef.current.focus();
     }
   };
+
+  useEffect(() => {
+    if (topicInputRef.current) {
+      setErrorWidth(topicInputRef.current.offsetWidth);
+    }
+  }, [topicInputRef.current]);
+
+  useEffect(() => {
+    if (topic) {
+      setError(null);
+    }
+  }, [topic]);
 
   return (
     <div class="add-topics flex direction--column height--100-pct bg-color--primary">
@@ -62,7 +78,7 @@ const AddTopics = ({
           class="flex-shrink--0 flex padding-h--base"
           onSubmit={handleAddTopic}
         >
-          <div class="margin-r--s">
+          <div class="flex direction--column margin-r--s">
             <TextInput
               disabled={remainingPlayerTopics === 0}
               getRef={topicInputRef}
@@ -82,6 +98,14 @@ const AddTopics = ({
             Add
           </Button>
         </form>
+        {error && (
+          <span
+            class="align-self--start color--primary font-size--s font-weight--bold margin-l--large margin-t--xxs"
+            style={{ width: errorWidth }}
+          >
+            {error}
+          </span>
+        )}
         <div class="flex-grow--1 min-height--huge flex direction--column margin-t--xlarge padding-h--base overflow-y--auto width--100-pct">
           {[...playerTopics].reverse().map((topic, index, arr) => (
             <div>

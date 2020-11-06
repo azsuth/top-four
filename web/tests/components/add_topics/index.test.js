@@ -31,7 +31,11 @@ describe('<AddTopics />', () => {
 
     it('clears the input when clicked', () => {
       const wrapper = shallow(
-        <AddTopics playerTopics={[]} addTopic={() => {}} routes={[]} />
+        <AddTopics
+          playerTopics={[]}
+          addTopic={jest.fn().mockResolvedValue()}
+          routes={[]}
+        />
       );
 
       wrapper.find(TextInput).props().onChange('road trips');
@@ -42,7 +46,7 @@ describe('<AddTopics />', () => {
     });
 
     it('calls the addTopic function when clicked', () => {
-      const addTopic = jest.fn();
+      const addTopic = jest.fn().mockResolvedValue();
 
       const wrapper = shallow(
         <AddTopics playerTopics={[]} addTopic={addTopic} routes={[]} />

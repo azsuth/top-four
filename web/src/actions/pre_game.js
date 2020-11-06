@@ -129,8 +129,32 @@ const joinTeam = async (teamUid, { state: { gameUid, playerUid } }) => {
   joinTeamService({ teamUid, playerUid, gameUid });
 };
 
-const addTopic = (topic, { state: { gameUid, playerUid } }) => {
-  addTopicService({ topic, playerUid, gameUid });
+const addTopic = (
+  newTopic,
+  {
+    state: {
+      gameUid,
+      playerUid,
+      game: { players, topics = {} }
+    }
+  }
+) => {
+  return new Promise((resolve, reject) => {
+    const duplicateTopic = Object.values(topics).find(
+      ({ topic: topicName }) =>
+        topicName.toUpperCase().trim() === newTopic.toUpperCase().trim()
+    );
+
+    if (duplicateTopic) {
+      const playerName = players[duplicateTopic.playerUid].name;
+
+      reject(playerName);
+    } else {
+      addTopicService({ topic: newTopic, playerUid, gameUid });
+
+      resolve();
+    }
+  });
 };
 
 const deleteTopic = (topicUid, { state: { gameUid } }) => {

@@ -109,8 +109,16 @@
   margin-left: $size-base;
 }
 
+.margin-l--large {
+  margin-left: $size-large;
+}
+
 .margin-t--none {
   margin-top: 0;
+}
+
+.margin-t--xxs {
+  margin-top: $size-xxs;
 }
 
 .margin-t--xs {
@@ -312,6 +320,10 @@
 
 .align-self--end {
   align-self: flex-end;
+}
+
+.align-self--start {
+  align-self: flex-start;
 }
 
 .flex-grow--1 {

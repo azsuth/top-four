@@ -163,7 +163,7 @@ describe('pre game actions', () => {
         name: 'andrew'
       });
 
-      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledTimes(2);
 
       const dispatchedAction = dispatch.mock.calls[0][0];
 
@@ -196,7 +196,7 @@ describe('pre game actions', () => {
 
       expect(addPlayerService).not.toHaveBeenCalled();
 
-      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledTimes(2);
 
       const dispatchedAction = dispatch.mock.calls[0][0];
 
@@ -250,9 +250,9 @@ describe('pre game actions', () => {
   });
 
   describe('addTopic', () => {
-    it('calls addTopicService', () => {
-      addTopic('road trips', {
-        state: { gameUid: '12345', playerUid: 'abcde' }
+    it('calls addTopicService', async () => {
+      await addTopic('road trips', {
+        state: { gameUid: '12345', playerUid: 'abcde', game: { topics: {} } }
       });
 
       expect(addTopicService).toHaveBeenCalledTimes(1);
@@ -261,6 +261,19 @@ describe('pre game actions', () => {
         gameUid: '12345',
         playerUid: 'abcde'
       });
+    });
+
+    it('rejects if adding a duplicate topic', () => {
+      return expect(
+        addTopic('road trips', {
+          state: {
+            game: {
+              players: { abcde: { name: 'Andrew' } },
+              topics: { 12345: { playerUid: 'abcde', topic: 'Road trips ' } }
+            }
+          }
+        })
+      ).rejects.toBe('Andrew');
     });
   });
 });
