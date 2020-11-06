@@ -4,9 +4,9 @@ import compose from 'utilities/compose';
 import { toGameTurn, toRemainingTurns } from 'utilities/state_mapping';
 import { withState } from '@state';
 
-import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
 import IconTrophy from 'components/shared/icon/icon_trophy';
+import Social from 'components/shared/social';
 
 import Players from 'components/game/players';
 import IconX from 'components/shared/icon/icon_x';
@@ -57,18 +57,7 @@ function Info({
         </span>
       </div>
       <Players />
-      <div class="flex justify--center margin-t--base">
-        <div class="width--15">
-          <Button
-            href="mailto:feedback@topfour.io"
-            fullWidth
-            link
-            variant="secondary-invert"
-          >
-            Send Us Feedback
-          </Button>
-        </div>
-      </div>
+      <Social />
     </div>
   );
 }

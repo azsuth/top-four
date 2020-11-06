@@ -1,7 +1,9 @@
 import { h } from 'preact';
 
 import withRouter, { toRoot } from 'utilities/router';
+
 import Button from 'components/shared/button';
+import Social from 'components/shared/social';
 
 function NewGame({ routes: [toRoot] }) {
   return (
@@ -9,7 +11,12 @@ function NewGame({ routes: [toRoot] }) {
       <h1 class="modal-header color--primary-darkest margin-b--large">
         Play again?
       </h1>
-      <Button onClick={toRoot}>Start New Game</Button>
+      <div class="flex direction--column align-items--center">
+        <Button fullWidth onClick={toRoot}>
+          Start New Game
+        </Button>
+        <Social whiteBackground />
+      </div>
     </div>
   );
 }
