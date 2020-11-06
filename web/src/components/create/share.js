@@ -1,8 +1,10 @@
 import { h } from 'preact';
 
 import compose from 'utilities/compose';
-import { withState } from '@state';
 import withRouter, { toAddTopics, toPlayers } from 'utilities/router';
+
+import { withAction, withState } from '@state';
+import { randomizeTheme } from '@actions';
 
 import Button from 'components/shared/button';
 
@@ -28,26 +30,44 @@ function Share({ gameId, nextButton }) {
 // state
 const withTopicPackState = withState('game.topicPack', 'topicPack');
 
+// actions
+const withRandomizeThemeAction = withAction(randomizeTheme, 'randomizeTheme');
+
 // routes
 const withRoutes = withRouter(toAddTopics, toPlayers);
 
 const withNextButton = WrappedComponent => {
   return props => {
     const {
-      topicPack,
-      routes: [toAddTopics, toPlayers]
+      randomizeTheme,
+      routes: [toAddTopics, toPlayers],
+      topicPack
     } = props;
 
     let nextButton;
     if (!topicPack) {
       nextButton = (
-        <Button fullWidth onClick={toAddTopics} variant="primary">
+        <Button
+          fullWidth
+          onClick={() => {
+            toAddTopics();
+            randomizeTheme();
+          }}
+          variant="primary"
+        >
           Add Topics
         </Button>
       );
     } else {
       nextButton = (
-        <Button fullWidth onClick={toPlayers} variant="primary">
+        <Button
+          fullWidth
+          onClick={() => {
+            toPlayers();
+            randomizeTheme();
+          }}
+          variant="primary"
+        >
           Done
         </Button>
       );
@@ -57,6 +77,11 @@ const withNextButton = WrappedComponent => {
   };
 };
 
-const wrappers = compose(withTopicPackState, withRoutes, withNextButton);
+const wrappers = compose(
+  withTopicPackState,
+  withRandomizeThemeAction,
+  withRoutes,
+  withNextButton
+);
 
 export default wrappers(Share);

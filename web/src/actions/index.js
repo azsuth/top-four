@@ -40,6 +40,10 @@ const cycleTheme = ({ dispatch, state: { theme: currentTheme } }) => {
   dispatch({ type: SET_THEME, payload: nextTheme });
 };
 
+const randomizeTheme = ({ dispatch }) => {
+  dispatch({ type: SET_THEME, payload: randomTheme() });
+};
+
 function shuffle(array) {
   let currentIndex = array.length;
 
@@ -57,7 +61,13 @@ function randomTheme() {
   return themes[Math.floor(Math.random() * themes.length)];
 }
 
-export { showCoachmark, hideCoachmark, cycleTheme, randomTheme };
+export {
+  showCoachmark,
+  hideCoachmark,
+  cycleTheme,
+  randomTheme,
+  randomizeTheme
+};
 
 export * from '@actions/topic_packs';
 export * from '@actions/pre_game';

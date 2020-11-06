@@ -14,6 +14,7 @@ import {
 import { GAME_STATE, TEAMS, WRITE_OUR_OWN_UID } from 'utilities/constants';
 import { tagLogger } from 'utilities/logging';
 
+import { randomizeTheme } from '@actions';
 import { subscribeToGameUpdates } from '@actions/subscribe';
 import { STARTED_GAME, CLEAR_STATE } from '@actions/types';
 
@@ -111,6 +112,8 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
         toAddTopics(gameId)();
       }
     }
+
+    randomizeTheme({ dispatch });
   });
 };
 
