@@ -6,7 +6,7 @@ const Instructions = () => (
   <div>
     <Logo size="small" />
     <br />
-    Top Four is the best party game you can play on your phone. Get to know your
+    Top Four is the best party game you can play on your phone. Get to know
     friends by debating hot takes!
     <br />
     <br />
