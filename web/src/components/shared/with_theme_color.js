@@ -5,7 +5,7 @@ import { withState } from '@state';
 
 function withThemeColor(WrappedComponent) {
   function ThemeColorProvider(props) {
-    const { theme } = props;
+    const { theme = 'orange' } = props;
     const titleCaseTheme = theme.charAt(0).toUpperCase() + theme.substr(1);
 
     const themeColor = variables[`color${titleCaseTheme}`];
