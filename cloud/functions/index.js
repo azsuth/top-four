@@ -124,7 +124,7 @@ const randomLetter = () => {
 };
 
 const randomNumber = () => {
-  return randomFromPossible('1234567890');
+  return randomFromPossible('123456789');
 };
 
 const randomFromPossible = possible => {
