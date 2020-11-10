@@ -40,7 +40,7 @@ const RankableTopics = ({
                 >
                   {(provided, snapshot) => (
                     <div
-                      class="margin-t--base"
+                      class="margin-t--base outline--none"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}

@@ -33,7 +33,6 @@ const footerContentForState = ({
           <ConfirmButton
             confirmText="Start"
             confirmAction={startRound}
-            helperText="Hey, it's your turn!"
             skipConfirm
           />
         );
@@ -67,7 +66,10 @@ const footerContentForState = ({
   }
 };
 
-const headerState = ({ gameState: { state, ranker }, rankingPlayer }) => {
+const headerState = ({
+  gameState: { state, ranker, nextRanker },
+  rankingPlayer
+}) => {
   switch (state) {
     case GAME_STATE.END_GAME:
       return {
@@ -75,6 +77,13 @@ const headerState = ({ gameState: { state, ranker }, rankingPlayer }) => {
         subheader: 'Who won?'
       };
     case GAME_STATE.BETWEEN_ROUNDS:
+      if (nextRanker.isThisPlayer) {
+        return {
+          header: `You're up`,
+          subheader: 'Time to start ranking!'
+        };
+      }
+
       return {
         header: 'Waiting',
         subheader: '...for the next turn to start'
