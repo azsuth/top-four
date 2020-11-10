@@ -36,7 +36,7 @@ const Instructions = () => (
     <h2>How to win</h2>
     Players get 1 point for each topic that they place in the exact same
     position as the Ranker. The player with the most points at the end of the
-    game wins!
+    game wins! deploy test
   </div>
 );
 
