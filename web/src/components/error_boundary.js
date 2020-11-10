@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
-import { Button } from '@material-ui/core';
 
 import { logError } from '@services/logger';
 
+import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
 
 class ErrorBoundary extends Component {
@@ -29,22 +29,18 @@ class ErrorBoundary extends Component {
     if (!hasError) return children;
 
     return (
-      <div class="error">
-        <div>
+      <div class="error bg-color--primary height--100-pct flex direction--column align-items--center padding--s">
+        <div class="margin-t--xlarge">
           <Logo size="small" />
         </div>
-        <h1>oops...</h1>
-        <div class="error__content">
+        <h1 class="modal-header color--white margin-v--large">oops...</h1>
+        <div class="flex-grow--1 flex direction--column justify--around align-items--center text-align--center color--white font-weight--bold font-size--base">
           <span>...we're embarassed, but something went wrong.</span>
           <span>Maybe try refreshing the page?</span>
           <span>
             Or{' '}
             <span class="error__home-button">
-              <Button
-                variant="contained"
-                disableElevation
-                onClick={this.handleClick}
-              >
+              <Button onClick={this.handleClick} variant="secondary">
                 return home
               </Button>
             </span>{' '}

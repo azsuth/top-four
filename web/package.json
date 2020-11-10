@@ -23,7 +23,7 @@
   "devDependencies": {
     "async-to-gen": "^1.4.0",
     "enzyme": "^3.10.0",
-    "enzyme-adapter-preact-pure": "^2.0.0",
+    "enzyme-adapter-preact-pure": "^2.2.3",
     "eslint": "^6.0.1",
     "eslint-config-synacor": "^3.0.4",
     "identity-obj-proxy": "^3.0.0",
@@ -31,20 +31,17 @@
     "jest-preset-preact": "^1.0.0",
     "node-sass": "^4.14.1",
     "per-env": "^1.0.2",
-    "preact-cli": "^3.0.0-rc.10",
+    "preact-cli": "^3.0.1",
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.3.1",
-    "serve": "^11.1.0"
+    "serve": "^11.3.2"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.13",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.52",
-    "dotenv-webpack": "^1.7.0",
-    "firebase": "^7.14.2",
-    "lodash": "^4.17.15",
-    "preact": "^10.4.1",
-    "preact-render-to-string": "^5.1.7",
+    "dotenv-webpack": "^1.8.0",
+    "firebase": "^7.20.0",
+    "lodash": "^4.17.20",
+    "preact": "^10.4.8",
+    "preact-render-to-string": "^5.1.10",
     "preact-router": "^3.0.0",
     "react-beautiful-dnd": "^13.0.0",
     "react-ga": "^2.7.0",
@@ -66,6 +63,8 @@
       "^@services(.*)$": "<rootDir>/src/services$1",
       "^state(.*)$": "<rootDir>/src/state$1",
       "^@state(.*)$": "<rootDir>/src/state$1",
+      "^storybook(.*)$": "<rootDir>/src/storybook$1",
+      "^@storybook(.*)$": "<rootDir>/src/storybook$1",
       "^utilities(.*)$": "<rootDir>/src/utilities$1"
     },
     "transform": {

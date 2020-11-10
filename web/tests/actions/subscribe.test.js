@@ -7,6 +7,7 @@ jest.mock('@services', () => ({
 import { subscribeToGameUpdates } from '@actions/subscribe';
 
 import { GAME_UPDATE } from '@actions/types';
+import { GAME_STATE } from 'utilities/constants';
 
 describe('subscription actions', () => {
   beforeEach(() => {
@@ -15,7 +16,7 @@ describe('subscription actions', () => {
 
   describe('subscribeToGameUpdates', () => {
     it('calls subscribeToGameUpdatesService with gameUid', () => {
-      subscribeToGameUpdates('12345', null, { dispatch: jest.fn() });
+      subscribeToGameUpdates('12345', null, 'abcde', { dispatch: jest.fn() });
 
       expect(subscribeToGameUpdatesService).toHaveBeenCalledTimes(1);
       expect(subscribeToGameUpdatesService.mock.calls[0][0]).toBe('12345');
@@ -24,7 +25,7 @@ describe('subscription actions', () => {
     it('dispatches the game update action on new data', () => {
       const dispatch = jest.fn();
 
-      subscribeToGameUpdates('12345', null, { dispatch });
+      subscribeToGameUpdates('12345', null, 'abcde', { dispatch });
 
       const on = subscribeToGameUpdatesService.mock.calls[0][1];
       on({ newData: '98765' });
@@ -43,23 +44,28 @@ describe('subscription actions', () => {
     it('calculates default local ranks when round starts', () => {
       const dispatch = jest.fn();
       const topics = {
-        '12345': { status: 'active' },
-        '23456': { status: 'active' },
-        '34567': { status: 'active' },
-        '45678': { status: 'available' },
-        '56789': { status: 'active' }
+        12345: { status: 'active' },
+        23456: { status: 'active' },
+        34567: { status: 'active' },
+        45678: { status: 'available' },
+        56789: { status: 'active' }
       };
 
-      subscribeToGameUpdates('12345', null, { dispatch });
+      subscribeToGameUpdates(
+        '12345',
+        { state: GAME_STATE.BETWEEN_ROUNDS },
+        'abcde',
+        { dispatch }
+      );
 
       const on = subscribeToGameUpdatesService.mock.calls[0][1];
       on({ state: 'ranking', topics });
 
       expect(dispatch.mock.calls[0][0].payload.localRanks).toEqual({
-        '12345': 0,
-        '23456': 1,
-        '34567': 2,
-        '56789': 3
+        12345: 0,
+        23456: 1,
+        34567: 2,
+        56789: 3
       });
     });
   });

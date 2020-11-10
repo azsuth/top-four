@@ -6,7 +6,7 @@ import {
   setPlayerActiveService
 } from '@services';
 import { UPDATE_LOCAL_RANKS } from '@actions/types';
-import { logEvent } from '@services/logger';
+import { GAME_STATE } from 'utilities/constants';
 
 const startRound = ({
   state: {
@@ -17,9 +17,10 @@ const startRound = ({
 }) => {
   const game = {
     rankingPlayerUid: playerUid,
-    state: 'ranking',
+    state: GAME_STATE.RANKING,
     topics: { ...topics },
-    players: { ...players }
+    players: { ...players },
+    started: true
   };
 
   // mark all players not locked in
@@ -117,7 +118,7 @@ const revealTopic = (
         status: 'ranked'
       }
     },
-    state: fullyRanked ? '' : currentState
+    state: fullyRanked ? GAME_STATE.BETWEEN_ROUNDS : currentState
   };
 
   updateGameService(game, gameUid);
@@ -133,12 +134,6 @@ const togglePlayerActive = (
   }
 ) => {
   const currentlyActive = players[playerUid].active;
-
-  logEvent(
-    'scores',
-    'toggle_player',
-    currentlyActive ? 'deactivate' : 'activate'
-  );
 
   setPlayerActiveService(playerUid, !currentlyActive, gameUid);
 };

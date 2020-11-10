@@ -1,12 +1,17 @@
 import { h } from 'preact';
 
-const Logo = ({ size }) => {
-  const height = size === 'small' ? 42 * 0.75 : 42;
+import { withAction } from '@state';
+import { cycleTheme } from '@actions';
+
+const Logo = ({ cycleTheme, size }) => {
+  const height = size === 'small' ? 42 * 0.66 : 42;
 
   return (
-    <div class="logo">
+    <div
+      class="height--100-pct flex justify--center align-items--center"
+      onClick={() => cycleTheme()}
+    >
       <svg
-        width="336"
         height={height}
         viewBox={`0 0 336 42`}
         fill="none"
@@ -45,4 +50,6 @@ const Logo = ({ size }) => {
   );
 };
 
-export default Logo;
+const withCycleThemeAction = withAction(cycleTheme, 'cycleTheme');
+
+export default withCycleThemeAction(Logo);

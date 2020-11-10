@@ -1,31 +1,22 @@
 // size
 
-$size-xxs: 0.5em;
-$size-xs: 1em;
-$size-s: 2em;
-$size-base: 4em;
+$size-xxs: 0.375em;
+$size-xs: 0.5em;
+$size-s: 0.875em;
+$size-base: 1.125em;
+$size-large: 1.5em;
+$size-xlarge: 2em;
 
 // timing
 
 $timing-fast: 250ms;
+$timing-base: 500ms;
+$timing-slow: 1000ms;
 
 // color
 
+$color-gray-dark: #2e2e2e;
+$color-gray-light: #969696;
+$color-gray-lighter: #dedede;
+$color-white: #fff;
 $color-black: #000;
-$color-light-gray: #eee;
-$color-dark-gray: #444;
-$color-gray: #aaa;
-$color-white: #fafafa;
-
-$color-primary: #ff5d28;
-$color-secondary: #c36be2;
-
-$color-orange: $color-primary;
-$color-green: #3cdabd;
-$color-purple: $color-secondary;
-$color-yellow: #b6db22;
-
-:export {
-  colorPrimary: $color-primary;
-  colorSecondary: $color-secondary;
-}

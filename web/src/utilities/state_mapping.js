@@ -32,20 +32,17 @@ const toPlayer = ({ playerUid, game: { players } }) => ({
   uid: playerUid
 });
 
-const toGameRound = topics =>
-  1 +
-  Math.ceil(
-    topicsToArray(topics).filter(({ status }) => status === 'unavailable')
-      .length / 4
-  );
-
-const toTotalRounds = topics => Math.floor(topicsToArray(topics).length / 4);
-
-const toRemainingRounds = topics =>
+const toGameTurn = topics =>
   Math.floor(
-    topicsToArray(topics).filter(({ status }) => status === 'available')
-      .length / 4
+    topicsToArray(topics).filter(
+      ({ status }) => status === 'unavailable' || status === 'ranked'
+    ).length / 4
   );
+
+const toTotalTurns = topics => Math.floor(topicsToArray(topics).length / 4);
+
+const toRemainingTurns = ({ numRounds, players, topics }) =>
+  playersToArray(players).length * numRounds - toGameTurn(topics);
 
 const toRankingPlayer = ({ rankingPlayerUid, players }) => ({
   uid: rankingPlayerUid,
@@ -115,6 +112,27 @@ const toAvailableAndRankingTopicsCount = topics =>
     ({ status }) => status === 'available' || status === 'active'
   ).length;
 
+const toActivePlayerTurns = ({ guesses = {}, players }) =>
+  toAllActivePlayers(players).reduce(
+    (playerTurns, player) => ({
+      ...playerTurns,
+      [player.uid]:
+        Object.values(guesses[player.uid] || []).filter(val => val === 'active')
+          .length / 4
+    }),
+    {}
+  );
+
+const toPlayersWithTopicsCount = ({ players, topics = {} }) => {
+  const topicsArray = Object.values(topics);
+
+  return toAllActivePlayers(players).map(player => ({
+    ...player,
+    numTopics: topicsArray.filter(({ playerUid }) => playerUid === player.uid)
+      .length
+  }));
+};
+
 export {
   teamsToArray,
   topicsToArray,
@@ -122,14 +140,16 @@ export {
   topicsToPlayerTopics,
   playersToPlayersByTeam,
   toPlayer,
-  toGameRound,
-  toTotalRounds,
+  toGameTurn,
+  toTotalTurns,
   toRankingPlayer,
   toActiveTopics,
   toUnlockedInPlayers,
   toGuessesByTopic,
-  toRemainingRounds,
+  toRemainingTurns,
   toAllPlayersWithScores,
   toAllActivePlayers,
-  toAvailableAndRankingTopicsCount
+  toAvailableAndRankingTopicsCount,
+  toActivePlayerTurns,
+  toPlayersWithTopicsCount
 };

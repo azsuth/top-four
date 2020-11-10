@@ -9,7 +9,7 @@ body {
   background: $color-white;
   font-family: 'Roboto', arial, sans-serif;
   font-weight: 400;
-  color: $color-dark-gray;
+  color: $color-gray-dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: none;
@@ -26,4 +26,26 @@ body {
 
 #app {
   height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-size: $size-base;
+  font-weight: normal;
+  margin: 0;
+}
+
+hr {
+  border-color: $color-gray-lighter;
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 1px;
+  color: $color-gray-lighter;
+  margin-top: $size-base;
+  margin-bottom: $size-base;
 }

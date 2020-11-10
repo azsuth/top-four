@@ -1,6 +1,8 @@
 import { h } from 'preact';
 import { shallow } from 'enzyme';
-import { Button, TextField } from '@material-ui/core';
+
+import Button from 'components/shared/button';
+import TextInput from 'components/shared/text_input';
 
 import { AddTopics } from 'components/add_topics';
 import Topic from 'components/add_topics/topic';
@@ -10,10 +12,7 @@ describe('<AddTopics />', () => {
     it('is disabled when the topic field is empty', () => {
       const wrapper = shallow(<AddTopics playerTopics={[]} routes={[]} />);
 
-      wrapper
-        .find(TextField)
-        .props()
-        .onInput({ target: { value: '' } });
+      wrapper.find(TextInput).props().onChange('');
 
       expect(
         wrapper.find(Button).filter({ name: 'add' }).props().disabled
@@ -23,10 +22,7 @@ describe('<AddTopics />', () => {
     it('is enabled when the topic field is populated', () => {
       const wrapper = shallow(<AddTopics playerTopics={[]} routes={[]} />);
 
-      wrapper
-        .find(TextField)
-        .props()
-        .onInput({ target: { value: 'socks with sandals' } });
+      wrapper.find(TextInput).props().onChange('socks with sandals');
 
       expect(
         wrapper.find(Button).filter({ name: 'add' }).props().disabled
@@ -35,30 +31,28 @@ describe('<AddTopics />', () => {
 
     it('clears the input when clicked', () => {
       const wrapper = shallow(
-        <AddTopics playerTopics={[]} addTopic={() => {}} routes={[]} />
+        <AddTopics
+          playerTopics={[]}
+          addTopic={jest.fn().mockResolvedValue()}
+          routes={[]}
+        />
       );
 
-      wrapper
-        .find(TextField)
-        .props()
-        .onInput({ target: { value: 'road trips' } });
+      wrapper.find(TextInput).props().onChange('road trips');
 
       wrapper.find(Button).filter({ name: 'add' }).props().onClick();
 
-      expect(wrapper.find(TextField).props().value).toBe('');
+      expect(wrapper.find(TextInput).props().value).toBe('');
     });
 
     it('calls the addTopic function when clicked', () => {
-      const addTopic = jest.fn();
+      const addTopic = jest.fn().mockResolvedValue();
 
       const wrapper = shallow(
         <AddTopics playerTopics={[]} addTopic={addTopic} routes={[]} />
       );
 
-      wrapper
-        .find(TextField)
-        .props()
-        .onInput({ target: { value: 'sex on the beach' } });
+      wrapper.find(TextInput).props().onChange('sex on the beach');
 
       wrapper.find(Button).filter({ name: 'add' }).props().onClick();
 
@@ -78,40 +72,5 @@ describe('<AddTopics />', () => {
     );
 
     expect(wrapper.find(Topic)).toHaveLength(2);
-  });
-
-  it('renders the remaining topics', () => {
-    const wrapper = shallow(
-      <AddTopics playerTopics={[]} remainingTopics={13} routes={[]} />
-    );
-
-    expect(wrapper.find('span[name="remainingTopics"]').text()).toBe(
-      'Add 13 topics to play a full round'
-    );
-  });
-
-  it('renders the number of players when there are enough topics', () => {
-    const wrapper = shallow(
-      <AddTopics
-        playerTopics={[]}
-        remainingTopics={0}
-        numPlayers={4}
-        routes={[]}
-      />
-    );
-
-    expect(wrapper.find('span[name="remainingTopics"]').text()).toBe(
-      'Enough topics for 4 players'
-    );
-  });
-
-  it('disables the done button when there are any remaining topics', () => {
-    const wrapper = shallow(
-      <AddTopics playerTopics={[]} remainingTopics={2} routes={[]} />
-    );
-
-    expect(wrapper.find(Button).filter({ name: 'done' }).props().disabled).toBe(
-      true
-    );
   });
 });

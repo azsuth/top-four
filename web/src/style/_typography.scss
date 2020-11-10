@@ -1,0 +1,50 @@
+@import 'variables';
+
+.page-header {
+  font-size: $size-xlarge;
+  font-weight: bold;
+}
+
+.modal-header {
+  font-size: $size-large;
+  font-weight: bold;
+  text-align: center;
+}
+
+.text-align--center {
+  text-align: center;
+}
+
+.text-decoration--line-through {
+  text-decoration: line-through;
+}
+
+// font
+
+.font-size--s {
+  font-size: $size-s;
+}
+
+.font-size--base {
+  font-size: $size-base;
+}
+
+.font-size--large {
+  font-size: $size-large;
+}
+
+.font-size--xlarge {
+  font-size: $size-xlarge;
+}
+
+.font-size--huge {
+  font-size: $size-xlarge * 2;
+}
+
+.font-weight--bold {
+  font-weight: bold;
+}
+
+.font-weight--normal {
+  font-weight: normal;
+}

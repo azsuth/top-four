@@ -1,57 +1,65 @@
 import { h } from 'preact';
-import { useEffect } from 'preact/hooks';
-import { Button } from '@material-ui/core';
+import { useEffect, useState } from 'preact/hooks';
 
+import cx from 'utilities/cx';
 import withRouter, { toJoin, toCreate } from 'utilities/router';
 import { withAction } from '@state';
 import { clearState, showCoachmark } from '@actions';
 
+import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
+
 import Instructions from 'components/home/instructions';
-import { logEvent } from '@services/logger';
 
 const Home = ({ clearState, routes: [toJoin, toCreate], showCoachmark }) => {
+  const [anim, setAnim] = useState(false);
   useEffect(() => {
     clearState();
+
+    setTimeout(() => setAnim(true), 500);
   }, []);
 
-  const handleClickInstructions = () => {
-    showCoachmark(<Instructions />);
-
-    logEvent('coachmark', 'show_coachmark', 'instructions');
-  };
+  const logoClasses = cx('home__logo', { 'home__logo--anim': anim });
+  const actionClasses = cx('home__actions margin-b--base width--66-pct', {
+    'home__actions--anim': anim
+  });
 
   return (
-    <div class="home">
-      <div class="home__header">
+    <div class="home height--100-pct bg-color--primary">
+      <div class={logoClasses}>
         <Logo />
       </div>
-      <div class="home__buttons">
-        <Button
-          className="home__main-button"
-          variant="contained"
-          disableElevation
-          onClick={toJoin}
-        >
-          Join an existing game
-        </Button>
-        <span class="home__separator">or</span>
-        <Button
-          className="home__main-button"
-          variant="contained"
-          disableElevation
-          onClick={toCreate}
-        >
-          Start a new game
-        </Button>
-        <span class="home__separator" />
-        <Button
-          className="home__secondary-button"
-          variant="outlined"
-          onClick={handleClickInstructions}
-        >
-          How to play
-        </Button>
+      <div class={actionClasses}>
+        <div class="margin-b--base">
+          <Button
+            fullWidth
+            name="join-game"
+            onClick={toJoin}
+            variant="primary-invert"
+          >
+            JOIN A GAME
+          </Button>
+        </div>
+        <div class="margin-b--base">
+          <Button
+            fullWidth
+            name="start-game"
+            onClick={toCreate}
+            variant="primary-invert"
+          >
+            START A GAME
+          </Button>
+        </div>
+        <div class="margin-b--base padding-t--base">
+          <Button
+            fullWidth
+            name="home-instructions"
+            onClick={() => showCoachmark(<Instructions />)}
+            variant="secondary-invert"
+          >
+            HOW TO PLAY
+          </Button>
+        </div>
       </div>
     </div>
   );

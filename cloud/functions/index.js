@@ -32,7 +32,7 @@ exports.superlatives = functions.https.onCall(async (data, context) => {
 exports.startGame = functions.https.onCall(async (data, context) => {
   const db = admin.database();
 
-  const { numberOfTeams, topicPackUid } = data;
+  const { numberOfTeams, topicPackUid, numRounds, state } = data;
   const games = await db.ref('/games').once('value');
 
   let gameIds = [];
@@ -51,7 +51,9 @@ exports.startGame = functions.https.onCall(async (data, context) => {
     startDate: moment().format(),
     teams: {},
     noTeams: numberOfTeams === 0,
-    topicPack: !!topicPackUid
+    topicPack: !!topicPackUid,
+    numRounds: numRounds || -1,
+    state: state || null
   });
 
   let firstTeamUid;
@@ -122,7 +124,7 @@ const randomLetter = () => {
 };
 
 const randomNumber = () => {
-  return randomFromPossible('1234567890');
+  return randomFromPossible('123456789');
 };
 
 const randomFromPossible = possible => {

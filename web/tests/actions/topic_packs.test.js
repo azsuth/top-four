@@ -25,11 +25,11 @@ describe('topic pack actions', () => {
 
     it('dispatches the topic packs action on success', async () => {
       getTopicPacksService.mockResolvedValue({
-        '12345': {
+        12345: {
           name: 'pack 1',
-          topics: { '1': {}, '2': {}, '3': {}, '4': {} }
+          topics: { 1: {}, 2: {}, 3: {}, 4: {} }
         },
-        '23456': {
+        23456: {
           name: 'random pack',
           topics: {
             a: {},
@@ -57,9 +57,8 @@ describe('topic pack actions', () => {
       expect(dispatchedAction.payload.length).toBe(3);
       expect(dispatchedAction.payload[0].uid).toBe(WRITE_OUR_OWN_UID);
       expect(dispatchedAction.payload[1].uid).toBe('23456');
-      expect(dispatchedAction.payload[1].name).toBe('random pack (2 turns)');
       expect(dispatchedAction.payload[2].uid).toBe('12345');
-      expect(dispatchedAction.payload[2].name).toBe('pack 1 (1 turns)');
+      expect(dispatchedAction.payload[2].name).toBe('pack 1');
     });
 
     it('does not call getTopicPacksService if topic packs already exist', () => {

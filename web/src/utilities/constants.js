@@ -7,5 +7,7 @@ export const IN_PROGRESS_URL_REGEX = /\/[A-Z]{1}\d{1}\/\w*/g;
 export const GAME_STATE = {
   BETWEEN_ROUNDS: 'between_rounds',
   RANKING: 'ranking',
-  LOCKED_IN: 'locked_in'
+  LOCKED_IN: 'locked_in',
+  END_GAME: 'end_game',
+  STARTED: 'started'
 };

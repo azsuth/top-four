@@ -1,0 +1,152 @@
+@import 'variables';
+
+$color-orange: #ff5d28;
+$color-berry: #ff0e65;
+$color-fuschia: #da00ed;
+$color-purple: #7e19ff;
+$color-indigo: #3531ff;
+$color-blue: #0085ff;
+$color-cyan: #00c2ff;
+$color-teal: #00cfcf;
+$color-mint: #00e090;
+$color-green: #3dc000;
+$color-lime: #9acc0b;
+$color-golden: #ffa800;
+
+$themes: (
+  orange: (
+    color-primary: $color-orange,
+    color-primary-dark: #df3f0a,
+    color-primary-darkest: #df3f0a,
+    color-primary-light: #ffbea9,
+    color-primary-lightest: #ffefe9,
+    color-font: $color-white
+  ),
+  berry: (
+    color-primary: $color-berry,
+    color-primary-dark: #d60a54,
+    color-primary-darkest: #d60a54,
+    color-primary-light: #ffb7d1,
+    color-primary-lightest: #ffe7f0,
+    color-font: $color-white
+  ),
+  fuschia: (
+    color-primary: $color-fuschia,
+    color-primary-dark: #b411c3,
+    color-primary-darkest: #b411c3,
+    color-primary-light: #f6bffa,
+    color-primary-lightest: #fbe5fd,
+    color-font: $color-white
+  ),
+  purple: (
+    color-primary: $color-purple,
+    color-primary-dark: #6013c3,
+    color-primary-darkest: #6013c3,
+    color-primary-light: #dfc6ff,
+    color-primary-lightest: #f2e8ff,
+    color-font: $color-white
+  ),
+  indigo: (
+    color-primary: $color-indigo,
+    color-primary-dark: #2825bf,
+    color-primary-darkest: #2825bf,
+    color-primary-light: #c2c1ff,
+    color-primary-lightest: #ebeaff,
+    color-font: $color-white
+  ),
+  blue: (
+    color-primary: $color-blue,
+    color-primary-dark: #0070d6,
+    color-primary-darkest: #0070d6,
+    color-primary-light: #b3daff,
+    color-primary-lightest: #e5f3ff,
+    color-font: $color-white
+  ),
+  cyan: (
+    color-primary: $color-cyan,
+    color-primary-dark: #0098da,
+    color-primary-darkest: #0098da,
+    color-primary-light: #b3edff,
+    color-primary-lightest: #e5f9ff,
+    color-font: $color-white
+  ),
+  teal: (
+    color-primary: $color-teal,
+    color-primary-dark: #00a6a6,
+    color-primary-darkest: #00a6a6,
+    color-primary-light: #b3f1f1,
+    color-primary-lightest: #e5fdfd,
+    color-font: $color-white
+  ),
+  mint: (
+    color-primary: $color-mint,
+    color-primary-dark: #00b374,
+    color-primary-darkest: #00b374,
+    color-primary-light: #b3f6de,
+    color-primary-lightest: #e5fef4,
+    color-font: $color-white
+  ),
+  green: (
+    color-primary: $color-green,
+    color-primary-dark: #319a00,
+    color-primary-darkest: #319a00,
+    color-primary-light: #beecb3,
+    color-primary-lightest: #ecf9e5,
+    color-font: $color-white
+  ),
+  lime: (
+    color-primary: $color-lime,
+    color-primary-dark: #7aa511,
+    color-primary-darkest: #7aa511,
+    color-primary-light: #e1f0b6,
+    color-primary-lightest: #f8fee4,
+    color-font: $color-white
+  ),
+  golden: (
+    color-primary: $color-golden,
+    color-primary-dark: #cc8600,
+    color-primary-darkest: #cc8600,
+    color-primary-light: #ffe6a6,
+    color-primary-lightest: #fff7db,
+    color-font: $color-white
+  )
+);
+
+@mixin themify() {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value
+          )
+        ) !global;
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
+:export {
+  colorOrange: $color-orange;
+  colorBerry: $color-berry;
+  colorFuschia: $color-fuschia;
+  colorPurple: $color-purple;
+  colorIndigo: $color-indigo;
+  colorBlue: $color-blue;
+  colorCyan: $color-cyan;
+  colorTeal: $color-teal;
+  colorMint: $color-mint;
+  colorGreen: $color-green;
+  colorLime: $color-lime;
+  colorGolden: $color-golden;
+}

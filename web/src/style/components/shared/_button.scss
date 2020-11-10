@@ -1,0 +1,143 @@
+@import '../../variables';
+@import '../../themes';
+
+// reset
+
+.btn {
+  background-color: inherit;
+  border: initial;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  padding: inherit;
+  position: relative;
+  text-decoration: inherit;
+  -webkit-appearance: none;
+}
+
+a.btn {
+  border-bottom: none;
+  text-align: center;
+
+  &:hover {
+    border-bottom: none;
+  }
+}
+
+// basic
+
+.btn {
+  border-radius: $size-xxs;
+  color: $color-white;
+  display: inline-block;
+  font-size: $size-base;
+  font-weight: bold;
+  padding: $size-s $size-base;
+  text-transform: uppercase;
+
+  &[disabled] {
+    pointer-events: none;
+  }
+}
+
+// primary
+
+.btn.btn--primary {
+  @include themify() {
+    background-color: themed('color-primary');
+    color: themed('color-font');
+
+    &:active {
+      background-color: themed('color-primary-dark');
+    }
+
+    &[disabled] {
+      background-color: rgba($color: themed('color-primary'), $alpha: 0.4);
+      color: rgba($color: themed('color-font'), $alpha: 0.6);
+    }
+  }
+}
+
+// primary invert
+
+.btn.btn--primary-invert {
+  @include themify() {
+    background-color: $color-white;
+    color: themed('color-primary-dark');
+
+    &:active {
+      background-color: rgba($color: $color-white, $alpha: 0.9);
+    }
+
+    &[disabled] {
+      background-color: rgba($color: $color-white, $alpha: 0.6);
+      color: rgba($color: themed('color-primary-dark'), $alpha: 0.4);
+    }
+  }
+}
+
+// secondary
+
+.btn.btn--secondary {
+  @include themify() {
+    background-color: $color-white;
+    border: 2px solid themed('color-primary');
+    color: themed('color-primary-dark');
+
+    &:active {
+      background-color: rgba($color: themed('color-primary'), $alpha: 0.1);
+    }
+
+    &[disabled] {
+      border: 2px solid rgba($color: themed('color-primary'), $alpha: 0.4);
+      color: rgba($color: themed('color-primary-dark'), $alpha: 0.4);
+    }
+  }
+}
+
+// secondary invert
+
+.btn.btn--secondary-invert {
+  @include themify() {
+    background-color: themed('color-primary');
+    border: 2px solid $color-white;
+    color: themed('color-font');
+
+    &:active {
+      background-color: themed('color-primary-dark');
+    }
+
+    &[disabled] {
+      opacity: 0.4;
+    }
+  }
+}
+
+// text
+
+.btn.btn--text {
+  @include themify() {
+    color: themed('color-primary-dark');
+    padding: 0;
+    text-align: start;
+
+    &[disabled] {
+      color: rgba($color: themed('color-primary-dark'), $alpha: 0.4);
+    }
+  }
+}
+
+// text-invert
+
+.btn.btn--text-invert {
+  @include themify() {
+    color: themed('color-font');
+    padding: 0;
+    text-align: start;
+
+    &[disabled] {
+      opacity: 0.4;
+    }
+  }
+}

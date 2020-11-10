@@ -1,41 +1,33 @@
 @import 'variables';
 
 .home {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  background: $color-primary;
+  position: relative;
 
-  &__header {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__buttons {
-    display: flex;
+  &__logo {
+    display: inline-flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: $size-base;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: all $timing-base;
+
+    &--anim {
+      top: 33%;
+      transform: translate(-50%, -50%) scale(0.9);
+    }
   }
 
-  &__separator {
-    font-weight: bolder;
-    margin: $size-xs 0;
-    color: $color-white;
-  }
+  &__actions {
+    bottom: 0;
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: all $timing-base;
 
-  .home__main-button {
-    background-color: $color-white;
-    width: 100%;
-  }
-
-  .home__secondary-button {
-    margin-top: $size-xs;
-    color: $color-white;
-    border-color: $color-white;
-    width: 100%;
+    &--anim {
+      opacity: 1;
+    }
   }
 }

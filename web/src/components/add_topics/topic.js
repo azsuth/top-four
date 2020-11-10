@@ -1,29 +1,19 @@
 import { h } from 'preact';
-import { DeleteOutline } from '@material-ui/icons';
+
+import IconDelete from 'components/shared/icon/icon_delete';
 
 import { withAction } from '@state';
 import { deleteTopic } from '@actions';
-import { logErrorMessage, logEvent } from '@services/logger';
 
 const Topic = ({ topic: topicObj, deleteTopic }) => {
-  if (!topicObj) {
-    logErrorMessage('missing topic in Topic');
-  }
-
   const { uid, topic } = topicObj;
 
-  const handleDeleteTopic = () => {
-    deleteTopic(uid);
-
-    logEvent('add_topic', 'delete_topic');
-  };
-
   return (
-    <div class="topic">
+    <div class="topic flex justify--between align-items--center">
       <span>{topic}</span>
-      <span class="topic__delete-button">
-        <DeleteOutline color="secondary" onClick={handleDeleteTopic} />
-      </span>
+      <div onClick={() => deleteTopic(uid)}>
+        <IconDelete color="secondary" />
+      </div>
     </div>
   );
 };

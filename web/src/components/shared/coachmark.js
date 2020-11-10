@@ -1,20 +1,14 @@
 import { h } from 'preact';
-import HelpIcon from '@material-ui/icons/HelpOutline';
 
 import { withAction } from '@state';
 import { showCoachmark } from '@actions';
-import { logEvent } from '@services/logger';
 
-const Coachmark = ({ children, showCoachmark, eventLabel }) => {
-  const handleShowCoachmark = () => {
-    showCoachmark(children);
+import IconCircleI from 'components/shared/icon/icon_circle_i';
 
-    logEvent('coachmark', 'show_coachmark', eventLabel);
-  };
-
+const Coachmark = ({ children, showCoachmark, white }) => {
   return (
-    <div class="coachmark">
-      <HelpIcon onClick={handleShowCoachmark} color="secondary" />
+    <div class="coachmark" onClick={() => showCoachmark(children)}>
+      <IconCircleI white={white} />
     </div>
   );
 };

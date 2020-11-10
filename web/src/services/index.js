@@ -12,10 +12,20 @@ firebase.initializeApp({
   appId: '1:120019969623:web:6d6ba9a3d0834b0259e512'
 });
 
-const startGameService = async ({ numberOfTeams, topicPackUid }) => {
-  const startGame = firebase.functions().httpsCallable('startGame');
+const createGameService = async ({
+  numberOfTeams,
+  topicPackUid,
+  numRounds,
+  state
+}) => {
+  const createGame = firebase.functions().httpsCallable('startGame');
 
-  const response = await startGame({ numberOfTeams, topicPackUid });
+  const response = await createGame({
+    numberOfTeams,
+    topicPackUid,
+    numRounds,
+    state
+  });
 
   // prune games for now
   pruneGamesService();
@@ -56,11 +66,24 @@ const getGameUidService = async gameId => {
     .find(game => game.gameId === gameId);
 };
 
+let subscribedGameUid = null;
 const subscribeToGameUpdatesService = (gameUid, on) => {
+  unsubscribeFromGameUpdatesService();
+
+  subscribedGameUid = gameUid;
+
   firebase
     .database()
     .ref(`/games/${gameUid}`)
     .on('value', snapshot => on(snapshot.val()));
+};
+
+const unsubscribeFromGameUpdatesService = () => {
+  if (subscribedGameUid) {
+    firebase.database().ref(`/games/${subscribedGameUid}`).off('value');
+
+    subscribedGameUid = null;
+  }
 };
 
 const joinTeamService = ({ teamUid, playerUid, gameUid }) => {
@@ -106,16 +129,33 @@ const setPlayerActiveService = (playerUid, active, gameUid) => {
     .update({ active });
 };
 
+const logErrorMessage = (message, env) => {
+  const date = new Date();
+
+  const yyyy = date.getFullYear();
+  const m = date.getMonth() + 1;
+  const d = date.getDate();
+
+  const mm = `${m > 9 ? '' : '0'}${m}`;
+  const dd = `${d > 9 ? '' : '0'}${d}`;
+
+  const errorDate = `${yyyy}-${mm}-${dd}`;
+
+  firebase.database().ref(`/error/${env}/${errorDate}`).push(message);
+};
+
 export {
-  startGameService,
+  createGameService,
   getTopicPacksService,
   addPlayerService,
   getGameUidService,
   subscribeToGameUpdatesService,
+  unsubscribeFromGameUpdatesService,
   joinTeamService,
   addTopicService,
   deleteTopicService,
   updateGameService,
   lockInService,
-  setPlayerActiveService
+  setPlayerActiveService,
+  logErrorMessage
 };

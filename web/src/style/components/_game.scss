@@ -1,71 +1,54 @@
 @import '../variables';
+@import '../themes';
 
-.game {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.game-topics {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: all $timing-fast;
 
-  &__drawer {
-    min-width: 65%;
-    max-width: 80%;
+  &--hidden {
+    top: calc(100% - 2.5em);
+  }
+}
+
+.rankable-topic {
+  min-height: 4.25em;
+  transition: all $timing-fast;
+
+  &__reveal-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 
-  &__winner-wrapper {
-    margin-top: $size-xs;
-  }
+  &__topic {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: all $timing-fast;
 
-  &__winner {
-    background-color: lighten($color: $color-green, $amount: 20%) !important;
-    color: $color-white !important;
+    &--dragging {
+      @include themify() {
+        background-color: themed('color-primary-lightest');
+      }
+    }
 
-    span {
-      font-weight: bold;
-      font-size: 1.2em;
-      padding: 0 $size-xs;
+    &--revealable {
+      right: 26%;
     }
   }
-}
 
-.game-header {
-  text-align: center;
-
-  &__top-bar {
-    padding: $size-xs $size-s 0 $size-s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    span {
-      font-weight: bold;
-    }
+  &--dragging {
+    box-shadow: 0 4px 10px rgba($color: $color-black, $alpha: 0.25);
   }
 
-  a {
-    font-weight: bold;
-    color: $color-orange;
+  &:focus {
+    outline: 0;
   }
-
-  h1 {
-    color: $color-orange;
-    margin-bottom: $size-xxs;
-    margin-top: $size-xxs;
-  }
-
-  &__game-id {
-    color: $color-green;
-  }
-}
-
-.game-body {
-  flex-grow: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.game-footer {
-  height: 6em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

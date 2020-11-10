@@ -1,65 +1,68 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
-import { Button } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
-import CloseIcon from '@material-ui/icons/Close';
 
 import cx from 'utilities/cx';
-import { logEvent } from '@services/logger';
 
-const ConfirmButton = ({ confirmText, confirmAction, prefix }) => {
+import Button from 'components/shared/button';
+import IconCheck from 'components/shared/icon/icon_check';
+import IconOutlineX from 'components/shared/icon/icon_outline_x';
+
+const ConfirmButton = ({
+  confirmText,
+  confirmAction,
+  disabled,
+  helperText,
+  skipConfirm
+}) => {
   const [confirming, setConfirming] = useState(false);
 
-  const actionsClasses = cx('confirm-button', {
-    'visibility--hidden': !confirmAction
+  const actionsClasses = cx(
+    'confirm-button width--66-pct flex justify--around align-items--center margin-h--s',
+    {
+      'visibility--hidden': !confirmAction
+    }
+  );
+
+  const helperTextClasses = cx('font-weight--bold margin-b--s', {
+    'visibility--hidden': !helperText || confirming
   });
+
+  const handleClick = () => {
+    if (skipConfirm) {
+      confirmAction();
+    } else {
+      setConfirming(true);
+    }
+  };
 
   const handleConfirm = () => {
     setConfirming(false);
     confirmAction();
   };
 
-  const handleCancel = () => {
-    setConfirming(false);
-
-    logEvent('in_game', 'cancel_confirm', confirmText);
-  };
-
   return (
-    <div class={actionsClasses}>
-      {confirming && (
-        <span class="confirm-button__cancel">
-          <Button variant="outlined" color="primary" onClick={handleCancel}>
-            <CloseIcon />
-          </Button>
-        </span>
-      )}
-
-      <span class="confirm-button__action">
-        {!confirming && (
-          <>
-            {prefix && <span class="confirm-button__prefix">{prefix}</span>}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setConfirming(true)}
-            >
-              {confirmText || ''}
-            </Button>
-          </>
-        )}
+    <div class="flex direction--column align-items--center width--100-pct">
+      <span class={helperTextClasses}>{helperText}</span>
+      <div class={actionsClasses}>
         {confirming && (
-          <span class="confirm-button__action--confirming">You sure?</span>
+          <span onClick={() => setConfirming(false)}>
+            <IconOutlineX />
+          </span>
         )}
-      </span>
 
-      {confirming && (
-        <span class="confirm-button__confirm">
-          <Button variant="outlined" color="primary" onClick={handleConfirm}>
-            <CheckIcon />
+        {!confirming && (
+          <Button disabled={disabled} fullWidth onClick={handleClick}>
+            {confirmText || ''}
           </Button>
-        </span>
-      )}
+        )}
+        {confirming && <span class="font-weight--bold">You sure?</span>}
+
+        {confirming && (
+          <span onClick={handleConfirm}>
+            <IconCheck />
+          </span>
+        )}
+      </div>
     </div>
   );
 };

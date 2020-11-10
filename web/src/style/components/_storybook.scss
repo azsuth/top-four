@@ -1,0 +1,12 @@
+@import '../variables';
+
+.storybook {
+  > * {
+    margin-bottom: $size-s;
+    flex-shrink: 0;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}

@@ -1,32 +1,35 @@
-import { toShare, toTeams, toAddTopics, toGame } from 'utilities/router';
+import { toAddTopics, toGame, toPlayers } from 'utilities/router';
 
 import {
-  startGameService,
+  createGameService,
   getGameUidService,
   addPlayerService,
   joinTeamService,
   addTopicService,
-  deleteTopicService
+  deleteTopicService,
+  unsubscribeFromGameUpdatesService,
+  updateGameService
 } from '@services';
 
-import { logEvent } from '@services/logger';
-
-import { TEAMS, WRITE_OUR_OWN_UID } from 'utilities/constants';
+import { GAME_STATE, TEAMS, WRITE_OUR_OWN_UID } from 'utilities/constants';
 import { tagLogger } from 'utilities/logging';
 
+import { randomizeTheme } from '@actions';
 import { subscribeToGameUpdates } from '@actions/subscribe';
 import { STARTED_GAME, CLEAR_STATE } from '@actions/types';
 
-const startGame = async (
-  { name, gameMode, topicPackUid },
-  { dispatch, state }
+const createGame = async (
+  { name, gameMode, topicPackUid, numRounds },
+  { dispatch }
 ) => {
   const numberOfTeams = gameMode === TEAMS ? 2 : 0;
 
-  const data = await startGameService({
+  const data = await createGameService({
     numberOfTeams,
-    topicPackUid: topicPackUid !== WRITE_OUR_OWN_UID ? topicPackUid : null
-  }).catch(tagLogger('startGameService failed'));
+    topicPackUid: topicPackUid !== WRITE_OUR_OWN_UID ? topicPackUid : null,
+    numRounds,
+    state: topicPackUid !== WRITE_OUR_OWN_UID ? GAME_STATE.BETWEEN_ROUNDS : null
+  }).catch(tagLogger('createGameService failed'));
 
   if (!data || !data.gameId || !data.gameUid) {
     return Promise.reject('cannot start game');
@@ -40,22 +43,12 @@ const startGame = async (
     return Promise.reject('cannot add player');
   }
 
-  dispatch({
-    type: STARTED_GAME,
-    payload: { gameId, gameUid, playerUid, name }
+  subscribeToGameUpdates(gameUid, null, playerUid, { dispatch }).then(() => {
+    dispatch({
+      type: STARTED_GAME,
+      payload: { gameId, gameUid, playerUid, name }
+    });
   });
-
-  subscribeToGameUpdates(gameUid, null, { dispatch }).then(() =>
-    toShare(gameId)()
-  );
-
-  if (state && state.topicPacks) {
-    const topicPack = state.topicPacks.find(({ uid }) => uid === topicPackUid);
-
-    if (topicPack) {
-      logEvent('start_game', 'topic_pack', topicPack.rawName);
-    }
-  }
 };
 
 const joinGame = async ({ name, gameId }, { dispatch }) => {
@@ -64,15 +57,45 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
   );
 
   if (!game || !game.gameUid) {
-    return Promise.reject('cannot get game object');
+    return Promise.reject({
+      field: 'game_id',
+      subheader: `The Game ID ${gameId} doesn't exist.`
+    });
   }
 
-  const { gameUid, noTeams, topicPack } = game;
+  const { gameUid, players, started, topicPack } = game;
 
-  const playerUid = await addPlayer({ gameUid, name });
+  const duplicatePlayer = Object.keys(players)
+    .map(playerUid => ({
+      uid: playerUid,
+      ...players[playerUid]
+    }))
+    .find(player => player.name === name);
 
-  if (!playerUid) {
-    return Promise.reject('cannot add player');
+  if (!started && duplicatePlayer) {
+    return Promise.reject({
+      field: 'name',
+      subheader: 'Try a different name.',
+      msg: `Someone is already playing with the name ${name}!`
+    });
+  }
+
+  if (started && !duplicatePlayer) {
+    return Promise.reject({
+      field: 'name',
+      subheader: 'This game has already started.',
+      msg: 'Rejoining? Enter the same name you started with.'
+    });
+  }
+
+  let playerUid;
+
+  if (started && duplicatePlayer) {
+    playerUid = duplicatePlayer.uid;
+  }
+
+  if (!started && !duplicatePlayer) {
+    playerUid = await addPlayer({ gameUid, name });
   }
 
   dispatch({
@@ -80,18 +103,18 @@ const joinGame = async ({ name, gameId }, { dispatch }) => {
     payload: { gameId, gameUid, playerUid, name }
   });
 
-  subscribeToGameUpdates(gameUid, null, { dispatch }).then(() => {
-    let route;
-
-    if (!noTeams) {
-      route = toTeams(gameId);
-    } else if (!topicPack) {
-      route = toAddTopics(gameId);
+  subscribeToGameUpdates(gameUid, null, playerUid, { dispatch }).then(() => {
+    if (started) {
+      toGame(gameId)();
     } else {
-      route = toGame(gameId);
+      if (topicPack) {
+        toPlayers(gameId)();
+      } else {
+        toAddTopics(gameId)();
+      }
     }
 
-    route();
+    randomizeTheme({ dispatch });
   });
 };
 
@@ -107,8 +130,32 @@ const joinTeam = async (teamUid, { state: { gameUid, playerUid } }) => {
   joinTeamService({ teamUid, playerUid, gameUid });
 };
 
-const addTopic = (topic, { state: { gameUid, playerUid } }) => {
-  addTopicService({ topic, playerUid, gameUid });
+const addTopic = (
+  newTopic,
+  {
+    state: {
+      gameUid,
+      playerUid,
+      game: { players, topics = {} }
+    }
+  }
+) => {
+  return new Promise((resolve, reject) => {
+    const duplicateTopic = Object.values(topics).find(
+      ({ topic: topicName }) =>
+        topicName.toUpperCase().trim() === newTopic.toUpperCase().trim()
+    );
+
+    if (duplicateTopic) {
+      const playerName = players[duplicateTopic.playerUid].name;
+
+      reject(playerName);
+    } else {
+      addTopicService({ topic: newTopic, playerUid, gameUid });
+
+      resolve();
+    }
+  });
 };
 
 const deleteTopic = (topicUid, { state: { gameUid } }) => {
@@ -116,15 +163,27 @@ const deleteTopic = (topicUid, { state: { gameUid } }) => {
 };
 
 const clearState = ({ dispatch }) => {
+  unsubscribeFromGameUpdatesService();
+
   dispatch({ type: CLEAR_STATE });
 };
 
+const startGame = ({ state }) => {
+  const game = {
+    state: GAME_STATE.STARTED,
+    started: true
+  };
+
+  updateGameService(game, state.gameUid);
+};
+
 export {
-  startGame,
+  createGame,
   joinGame,
   addPlayer,
   joinTeam,
   addTopic,
   deleteTopic,
-  clearState
+  clearState,
+  startGame
 };

@@ -17,8 +17,7 @@ describe('game state helpers', () => {
           {footerContentForState({
             gameState: {
               state: GAME_STATE.BETWEEN_ROUNDS,
-              nextRanker: { isThisPlayer: true },
-              availableTopicsCount: 5
+              nextRanker: { isThisPlayer: true }
             },
             startRound
           })}
@@ -37,35 +36,14 @@ describe('game state helpers', () => {
           {footerContentForState({
             gameState: {
               state: GAME_STATE.BETWEEN_ROUNDS,
-              nextRanker: { isThisPlayer: false, name: 'Andrew' },
-              availableTopicsCount: 5
+              nextRanker: { isThisPlayer: false, name: 'Andrew' }
             }
           })}
         </div>
       );
 
-      expect(wrapper.containsMatchingElement(<span />)).toBe(true);
-      expect(wrapper.text()).toBe('Tell Andrew to start the next round!');
-    });
-
-    it('prompts for more topics between rounds when there are not enough for another round', () => {
-      const addMoreTopics = jest.fn();
-
-      const wrapper = shallow(
-        <div>
-          {footerContentForState({
-            gameState: {
-              state: GAME_STATE.BETWEEN_ROUNDS,
-              availableTopicsCount: 3
-            },
-            addMoreTopics
-          })}
-        </div>
-      );
-
-      expect(wrapper.containsMatchingElement(<ConfirmButton />)).toBe(true);
-      expect(wrapper.find(ConfirmButton).props().confirmAction).toEqual(
-        addMoreTopics
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        'Tell Andrew to start ranking!'
       );
     });
 
@@ -97,8 +75,9 @@ describe('game state helpers', () => {
         </div>
       );
 
-      expect(wrapper.containsMatchingElement(<span />)).toBe(true);
-      expect(wrapper.text()).toBe(`Everyone's locked in!`);
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        `Everyone's locked in!`
+      );
     });
 
     it('returns a message when only one player is not locked in', () => {
@@ -113,8 +92,9 @@ describe('game state helpers', () => {
         </div>
       );
 
-      expect(wrapper.containsMatchingElement(<span />)).toBe(true);
-      expect(wrapper.text()).toBe('Waiting on Emily to lock in!');
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        'Waiting on Emily to lock in!'
+      );
     });
 
     it('returns a message when more than one player is not locked in', () => {
@@ -129,8 +109,43 @@ describe('game state helpers', () => {
         </div>
       );
 
-      expect(wrapper.containsMatchingElement(<span />)).toBe(true);
-      expect(wrapper.text()).toBe('Waiting on 2 players to lock in!');
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        'Waiting on 2 players to lock in!'
+      );
+    });
+
+    it('returns a message when the game is over and this is not the active player', () => {
+      const wrapper = shallow(
+        <div>
+          {footerContentForState({
+            gameState: {
+              state: GAME_STATE.END_GAME,
+              nextRanker: { isThisPlayer: false, name: 'Emily' }
+            }
+          })}
+        </div>
+      );
+
+      expect(wrapper.find(ConfirmButton).props().helperText).toBe(
+        'Waiting on Emily to reveal the winner!'
+      );
+    });
+
+    it('returns an end game button for the active player', () => {
+      const wrapper = shallow(
+        <div>
+          {footerContentForState({
+            gameState: {
+              state: GAME_STATE.END_GAME,
+              nextRanker: { isThisPlayer: true, name: 'Emily' }
+            }
+          })}
+        </div>
+      );
+
+      expect(wrapper.find(ConfirmButton).props().confirmText).toBe(
+        'Reveal the winner?'
+      );
     });
   });
 });

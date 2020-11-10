@@ -1,45 +1,47 @@
 import { h } from 'preact';
-import { FormControlLabel, RadioGroup, Radio } from '@material-ui/core';
 
 import { INDIVIDUALS, TEAMS } from 'utilities/constants';
 
 import Coachmark from 'components/shared/coachmark';
+import RadioInput from 'components/shared/radio_input';
 
 const GameMode = ({ gameMode, setGameMode }) => {
   return (
-    <div class="game-mode">
-      <div class="game-mode__header">
-        <span class="game-mode__header--title">How do you want to play?</span>
-        <div class="game-mode__header--coachmark">
-          <Coachmark eventLabel="game_mode">
-            Confused on what to choose?
-            <br />
-            <br />
-            We recommend playing as individuals if you’re not in the same
-            location.
-            <br />
-            <br />
-            We recommend playing as teams if you are in the same location and
-            are playing with 6 or more people.
-          </Coachmark>
-        </div>
-      </div>
-      <div class="game-mode__choices">
-        <RadioGroup
-          value={gameMode}
-          onChange={({ target: { value } }) => setGameMode(value)}
-        >
-          <FormControlLabel
-            value={TEAMS}
-            control={<Radio disabled />}
-            label="As teams (coming soon!)"
-          />
-          <FormControlLabel
-            value={INDIVIDUALS}
-            control={<Radio />}
+    <div class="game-mode flex-grow--1 width--100-pct flex direction--column align-items--center">
+      <h1 class="modal-header color--primary-darkest margin-b--large">
+        How do you want to play?
+      </h1>
+      <div class="flex-grow--1">
+        <div class="margin-b--large">
+          <RadioInput
+            checked={gameMode === INDIVIDUALS}
             label="As individuals"
+            name={INDIVIDUALS}
+            onChange={() => setGameMode(INDIVIDUALS)}
+            value={INDIVIDUALS}
           />
-        </RadioGroup>
+        </div>
+        <RadioInput
+          checked={gameMode === TEAMS}
+          disabled
+          label="As teams (coming soon!)"
+          name={TEAMS}
+          onChange={() => setGameMode(TEAMS)}
+          value={TEAMS}
+        />
+      </div>
+      <div class="align-self--end">
+        <Coachmark>
+          Confused on what to choose?
+          <br />
+          <br />
+          We recommend playing as individuals if you’re not in the same
+          location.
+          <br />
+          <br />
+          We recommend playing as teams if you are in the same location and are
+          playing with 6 or more people.
+        </Coachmark>
       </div>
     </div>
   );

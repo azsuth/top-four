@@ -1,68 +1,33 @@
 import { h } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { Drawer, Slide, Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 
 import { withState } from '@state';
 import { toAllPlayersWithScores } from 'utilities/state_mapping';
 import compose from 'utilities/compose';
 import { GAME_STATE } from 'utilities/constants';
-import { logErrorMessage, logEvent } from '@services/logger';
 
-import Header from 'components/game/header';
-import Body from 'components/game/body';
-import Footer from 'components/game/footer';
-import Scores from 'components/game/scores';
+import Info from 'components/game/info';
+import GameTopics from 'components/game/game_topics';
 import withGameState from 'components/game/with_game_state';
 
-const SlideTransition = props => <Slide {...props} />;
-
-const Game = ({ closeSnackbar, gameState, snackbarOpen, winner }) => {
-  const [showScores, setShowScores] = useState(false);
-
-  const handleClickScores = () => {
-    setShowScores(true);
-
-    logEvent('in_game', 'show_scores');
-  };
-
-  const handleClickSnackbar = () => {
-    closeSnackbar();
-    setShowScores(true);
-
-    logEvent('in_game', 'click_snackbar');
-  };
+const Game = ({ gameState }) => {
+  const [showInfo, setShowInfo] = useState(false);
+  const [topicsTop, setTopicsTop] = useState(null);
 
   return (
-    <div class="game">
-      <Header gameState={gameState} onClickScores={handleClickScores} />
-      <Body gameState={gameState} />
-      <Footer gameState={gameState} />
-
-      <Drawer
-        classes={{ paper: 'game__drawer' }}
-        anchor="right"
-        open={showScores}
-        onClose={() => setShowScores(false)}
-      >
-        <Scores />
-      </Drawer>
-
-      <Snackbar
-        onClick={handleClickSnackbar}
-        open={snackbarOpen}
-        onClose={closeSnackbar}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        TransitionComponent={SlideTransition}
-        classes={{
-          root: 'game__winner-wrapper'
-        }}
-      >
-        <Alert icon={false} elevation={3} classes={{ root: 'game__winner' }}>
-          <span>{winner}</span>
-        </Alert>
-      </Snackbar>
+    <div class="game height--100-pct">
+      <Info
+        setTopicsTop={setTopicsTop}
+        showInfo={showInfo}
+        toggleShowInfo={() => setShowInfo(show => !show)}
+        topicsTop={topicsTop}
+      />
+      <GameTopics
+        gameState={gameState}
+        hideInfo={() => setShowInfo(false)}
+        showInfo={showInfo}
+        topicsTop={topicsTop}
+      />
     </div>
   );
 };
@@ -80,10 +45,6 @@ const withProps = WrappedComponent => {
     const { playerUid, playerScores } = props;
 
     const players = playerScores.filter(({ active }) => active);
-
-    if (players.length === 0) {
-      logErrorMessage('no active players in Game');
-    }
 
     let winner;
     if (players.length > 1 && players[0].score === players[1].score) {
@@ -133,9 +94,7 @@ const withEffect = WrappedComponent => {
 const wrappers = compose(
   withPlayerScoresState,
   withPlayerUidState,
-  withGameState,
-  withProps,
-  withEffect
+  withGameState
 );
 
 export { Game };

@@ -1,6 +1,8 @@
 import { useEffect } from 'preact/hooks';
 import ReactGA from 'react-ga';
 
+import { logErrorMessage } from '@services';
+
 let initialized = false;
 
 const maybeInitialize = () => {
@@ -30,38 +32,12 @@ const path = () => {
   return pathname.substring(pathname.lastIndexOf('/'));
 };
 
-const logErrorMessage = message => {
-  maybeInitialize();
-
+const logError = error => {
+  const message = `${error.message} | ${error.stack}`;
   const toLog = `${path()} | ${message}`;
 
   if (process.env.NODE_ENV !== 'test') {
-    ReactGA.exception({
-      description: toLog,
-      fatal: true
-    });
-  }
-};
-
-const logError = error => {
-  logErrorMessage(`${error.message} | ${error.stack}`);
-};
-
-const logEvent = (category, action, label, value) => {
-  maybeInitialize();
-
-  if (process.env.NODE_ENV !== 'test') {
-    const event = { category, action };
-
-    if (label) {
-      event.label = label;
-    }
-
-    if (value) {
-      event.value = value;
-    }
-
-    ReactGA.event(event);
+    logErrorMessage(toLog, process.env.NODE_ENV);
   }
 };
 
@@ -75,4 +51,4 @@ const withPageView = WrappedComponent => {
   };
 };
 
-export { logError, logEvent, logErrorMessage, withPageView };
+export { logError, withPageView };

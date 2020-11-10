@@ -1,0 +1,63 @@
+@import '../../variables';
+@import '../../themes';
+
+input[type='radio'] {
+  font-size: inherit;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.radio-input__group {
+  display: flex;
+  position: relative;
+}
+
+input[type='radio'] {
+  appearance: none;
+  left: -1000em;
+  position: absolute;
+
+  & ~ .radio-input__field {
+    background-clip: content-box;
+    @include themify() {
+      border: 2px solid themed('color-primary');
+    }
+    border-radius: 50%;
+    display: block;
+    flex-shrink: 0;
+    height: 1.25em;
+    margin-bottom: 0;
+    padding: $size-xxs;
+    transition: border $timing-fast, padding $timing-fast;
+    width: 1.25em;
+  }
+
+  &:checked ~ .radio-input__field {
+    @include themify() {
+      background-color: themed('color-primary');
+      border-color: themed('color-primary');
+    }
+    padding: 0.188em;
+  }
+
+  & ~ .radio-input__label {
+    color: $color-gray-dark;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0;
+    padding-left: $size-base;
+    position: relative;
+  }
+
+  &:disabled ~ .radio-input__field {
+    @include themify() {
+      border-color: rgba($color: themed('color-primary'), $alpha: 0.4);
+    }
+  }
+
+  &:disabled ~ .radio-input__label {
+    color: $color-gray-light;
+  }
+}
