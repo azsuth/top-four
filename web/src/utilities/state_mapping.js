@@ -27,10 +27,14 @@ const playersToPlayersByTeam = players =>
     };
   }, {});
 
-const toPlayer = ({ playerUid, game: { players } }) => ({
-  ...players[playerUid],
-  uid: playerUid
-});
+const toPlayer = ({ playerUid, game }) => {
+  if (game && game.players) {
+    return {
+      ...game.players[playerUid],
+      uid: playerUid
+    };
+  }
+};
 
 const toGameTurn = topics =>
   Math.floor(

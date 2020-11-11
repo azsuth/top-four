@@ -19,6 +19,8 @@ const getGameState = ({
   numRounds,
   playerTurns
 }) => {
+  if (!player) return null;
+
   const { uid: playerUid, lockedIn } = player;
   const ranker = playerUid === rankingPlayerUid;
 
