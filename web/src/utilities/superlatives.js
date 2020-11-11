@@ -158,7 +158,7 @@ function theLoser({ guesses, players, topics }) {
   };
 }
 
-function theOpenBook({ players }, { rankers }) {
+function theOpenBook({ numRounds, players }, { rankers }) {
   const sortedRankers = Object.keys(rankers)
     .map(rankerUid => ({
       uid: rankerUid,
@@ -166,26 +166,26 @@ function theOpenBook({ players }, { rankers }) {
       ...players[rankerUid]
     }))
     .sort(
-      ({ numberPerfect: numberPerfectA }, { numberPerfect: numberPerfectB }) =>
-        numberPerfectB - numberPerfectA
+      ({ numberCorrect: numberCorrectA }, { numberCorrect: numberCorrectB }) =>
+        numberCorrectB - numberCorrectA
     );
 
-  const mostPerfectCount = sortedRankers[0].numberPerfect;
-  const mostPerfectPlayers = sortedRankers.filter(
-    ({ numberPerfect }) => numberPerfect === mostPerfectCount
+  const highestScore = sortedRankers[0].numberCorrect;
+  const highestScorePlayers = sortedRankers.filter(
+    ({ numberCorrect }) => numberCorrect === highestScore
   );
 
-  if (mostPerfectPlayers.length === sortedRankers.length) return null;
+  if (highestScorePlayers.length === sortedRankers.length) return null;
 
-  if (mostPerfectPlayers.length === 1) {
-    const mostPerfectPlayer = mostPerfectPlayers[0];
+  if (highestScorePlayers.length === 1) {
+    const mostPerfectPlayer = highestScorePlayers[0];
 
     return {
       header: 'The Open Book',
       subheader: 'No need to judge you by your cover',
       recipient: mostPerfectPlayer.name,
-      footer: `The group guessed your rankings 100% correct ${mostPerfectCount} time${
-        mostPerfectCount !== 1 ? 's' : ''
+      footer: `The group scored the most points on your turn${
+        numRounds > 1 ? 's' : ''
       }!`
     };
   }
@@ -193,10 +193,8 @@ function theOpenBook({ players }, { rankers }) {
   return {
     header: 'The Open Book',
     subheader: 'A few of you need some more mystery in your life',
-    recipient: mostPerfectPlayers.map(({ name }) => name).join(', '),
-    footer: `The group guessed your rankings 100% correct ${mostPerfectCount} time${
-      mostPerfectCount !== 1 ? 's' : ''
-    }!`
+    recipient: highestScorePlayers.map(({ name }) => name).join(', '),
+    footer: `The group scored the most points on your turns!`
   };
 }
 

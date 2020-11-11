@@ -110,11 +110,11 @@ describe('superlative functions', () => {
   });
 
   describe('theOpenBook', () => {
-    it('calculates the player whose rankings were guessed 100% the most', () => {
+    it('calculates the player others scored the most points against', () => {
       const rankers = {
-        12345: { numberPerfect: 3 },
-        23456: { numberPerfect: 2 },
-        34567: { numberPerfect: 0 }
+        12345: { numberCorrect: 3 },
+        23456: { numberCorrect: 2 },
+        34567: { numberCorrect: 0 }
       };
       const players = {
         12345: { name: 'Andrew' },
@@ -122,19 +122,19 @@ describe('superlative functions', () => {
         34567: { name: 'Harrison' }
       };
 
-      const superlative = theOpenBook({ players }, { rankers });
+      const superlative = theOpenBook({ numRounds: 1, players }, { rankers });
 
       expect(superlative.recipient).toBe('Andrew');
       expect(superlative.footer).toBe(
-        'The group guessed your rankings 100% correct 3 times!'
+        'The group scored the most points on your turn!'
       );
     });
 
     it('calculates a tie', () => {
       const rankers = {
-        12345: { numberPerfect: 3 },
-        23456: { numberPerfect: 3 },
-        34567: { numberPerfect: 0 }
+        12345: { numberCorrect: 3 },
+        23456: { numberCorrect: 3 },
+        34567: { numberCorrect: 0 }
       };
       const players = {
         12345: { name: 'Andrew' },
@@ -146,15 +146,15 @@ describe('superlative functions', () => {
 
       expect(superlative.recipient).toBe('Andrew, Emily');
       expect(superlative.footer).toBe(
-        'The group guessed your rankings 100% correct 3 times!'
+        'The group scored the most points on your turns!'
       );
     });
 
     it('returns null if all players tied', () => {
       const rankers = {
-        12345: { numberPerfect: 0 },
-        23456: { numberPerfect: 0 },
-        34567: { numberPerfect: 0 }
+        12345: { numberCorrect: 0 },
+        23456: { numberCorrect: 0 },
+        34567: { numberCorrect: 0 }
       };
       const players = {
         12345: { name: 'Andrew' },
@@ -167,7 +167,7 @@ describe('superlative functions', () => {
   });
 
   describe('theStranger', () => {
-    it('calculates the players whose rankings were guessed 0% the most', () => {
+    it('calculates the player others scored the fewest points against', () => {
       const rankers = {
         12345: { numberCorrect: 8 },
         23456: { numberCorrect: 1 },
@@ -289,8 +289,8 @@ describe('superlative functions', () => {
       expect(topicGuesses.a).toEqual({
         correctRank: 0,
         guesses: [0, 3],
-        numCorrect: 1,
-        numIncorrect: 1,
+        numberCorrect: 1,
+        numberIncorrect: 1,
         ranker: '23456'
       });
     });
