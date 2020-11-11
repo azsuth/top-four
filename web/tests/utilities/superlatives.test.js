@@ -8,6 +8,7 @@ import {
   theWinner,
   theLoser,
   theOpenBook,
+  theStranger,
   getTopicGuesses
 } from 'utilities/superlatives';
 
@@ -162,6 +163,63 @@ describe('superlative functions', () => {
       };
 
       expect(theOpenBook({ players }, { rankers })).toBe(null);
+    });
+  });
+
+  describe('theStranger', () => {
+    it('calculates the players whose rankings were guessed 0% the most', () => {
+      const rankers = {
+        12345: { numberCorrect: 8 },
+        23456: { numberCorrect: 1 },
+        34567: { numberCorrect: 6 }
+      };
+      const players = {
+        12345: { name: 'Andrew' },
+        23456: { name: 'Emily' },
+        34567: { name: 'Harrison' }
+      };
+
+      const superlative = theStranger({ players }, { rankers });
+
+      expect(superlative.recipient).toBe('Emily');
+      expect(superlative.footer).toBe(
+        'The group only scored 1 point guessing your rankings!'
+      );
+    });
+
+    it('calculates a tie', () => {
+      const rankers = {
+        12345: { numberCorrect: 8 },
+        23456: { numberCorrect: 4 },
+        34567: { numberCorrect: 4 }
+      };
+      const players = {
+        12345: { name: 'Andrew' },
+        23456: { name: 'Emily' },
+        34567: { name: 'Harrison' }
+      };
+
+      const superlative = theStranger({ players }, { rankers });
+
+      expect(superlative.recipient).toBe('Emily, Harrison');
+      expect(superlative.footer).toBe(
+        'The group only scored 4 points on your turns!'
+      );
+    });
+
+    it('returns null if all players tie', () => {
+      const rankers = {
+        12345: { numberCorrect: 4 },
+        23456: { numberCorrect: 4 },
+        34567: { numberCorrect: 4 }
+      };
+      const players = {
+        12345: { name: 'Andrew' },
+        23456: { name: 'Emily' },
+        34567: { name: 'Harrison' }
+      };
+
+      expect(theStranger({ players }, { rankers })).toBe(null);
     });
   });
 

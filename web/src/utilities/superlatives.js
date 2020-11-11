@@ -152,7 +152,8 @@ function theOpenBook({ players }, { rankers }) {
   const sortedRankers = Object.keys(rankers)
     .map(rankerUid => ({
       uid: rankerUid,
-      ...rankers[rankerUid]
+      ...rankers[rankerUid],
+      ...players[rankerUid]
     }))
     .sort(
       ({ numberPerfect: numberPerfectA }, { numberPerfect: numberPerfectB }) =>
@@ -164,10 +165,10 @@ function theOpenBook({ players }, { rankers }) {
     ({ numberPerfect }) => numberPerfect === mostPerfectCount
   );
 
-  if (mostPerfectPlayers.length === Object.keys(players).length) return null;
+  if (mostPerfectPlayers.length === sortedRankers.length) return null;
 
   if (mostPerfectPlayers.length === 1) {
-    const mostPerfectPlayer = players[mostPerfectPlayers[0].uid];
+    const mostPerfectPlayer = mostPerfectPlayers[0];
 
     return {
       header: 'The Open Book',
@@ -180,12 +181,52 @@ function theOpenBook({ players }, { rankers }) {
   return {
     header: 'The Open Book',
     subheader: 'A few of you need some more mystery in your life',
-    recipient: mostPerfectPlayers
-      .map(({ uid }) => players[uid].name)
-      .join(', '),
+    recipient: mostPerfectPlayers.map(({ name }) => name).join(', '),
     footer: `The group guessed your rankings 100% correct ${mostPerfectCount} times!`
   };
 }
 
-export { theWinner, theLoser, theOpenBook, getTopicGuesses };
+function theStranger({ players }, { rankers }) {
+  const sortedRankers = Object.keys(rankers)
+    .map(rankerUid => ({
+      uid: rankerUid,
+      ...rankers[rankerUid],
+      ...players[rankerUid]
+    }))
+    .sort(
+      ({ numberCorrect: numberCorrectA }, { numberCorrect: numberCorrectB }) =>
+        numberCorrectA - numberCorrectB
+    );
+
+  const lowestScore = sortedRankers[0].numberCorrect;
+  const lowestScorePlayers = sortedRankers.filter(
+    ({ numberCorrect }) => numberCorrect === lowestScore
+  );
+
+  if (lowestScorePlayers.length === sortedRankers.length) return null;
+
+  if (lowestScorePlayers.length === 1) {
+    const lowestScorePlayer = lowestScorePlayers[0];
+
+    return {
+      header: 'The Complete Stranger',
+      subheader: 'Do you know anyone here?',
+      recipient: lowestScorePlayer.name,
+      footer: `The group only scored ${lowestScore} point${
+        lowestScore !== 1 ? 's' : ''
+      } guessing your rankings!`
+    };
+  }
+
+  return {
+    header: 'The Complete Stranger',
+    subheader: 'Did you come here together?',
+    recipient: lowestScorePlayers.map(({ name }) => name).join(', '),
+    footer: `The group only scored ${lowestScore} point${
+      lowestScore !== 1 ? 's' : ''
+    } on your turns!`
+  };
+}
+
+export { theWinner, theLoser, theOpenBook, theStranger, getTopicGuesses };
 export default generateSuperlatives;
