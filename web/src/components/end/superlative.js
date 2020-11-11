@@ -12,7 +12,7 @@ function Superlative({ superlative }) {
         <h2 class="font-weight--bold">{subheader}</h2>
       </div>
       <span class="font-size--xlarge font-weight--bold">{recipient}</span>
-      <span class="font-size--base">{footer}</span>
+      <span class="font-size--base text-align--center">{footer}</span>
     </div>
   );
 }

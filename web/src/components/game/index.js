@@ -14,6 +14,8 @@ const Game = ({ gameState }) => {
   const [showInfo, setShowInfo] = useState(false);
   const [topicsTop, setTopicsTop] = useState(null);
 
+  if (!gameState) return null;
+
   return (
     <div class="game height--100-pct">
       <Info
