@@ -1,14 +1,24 @@
 import { toAllPlayersWithScores } from 'utilities/state_mapping';
 
 function generateSuperlatives(gameData) {
-  const topicGuesses = getTopicGuesses(gameData);
-  const rankers = getRankers(topicGuesses);
+  const playerCount = Object.values(gameData.players).map(
+    ({ active }) => active
+  ).length;
 
-  return [
-    theWinner(gameData),
-    theLoser(gameData),
-    theOpenBook(gameData, { topicGuesses, rankers })
-  ].filter(superlative => !!superlative);
+  const allPlayersSuperlatives = [theWinner(gameData), theLoser(gameData)];
+
+  if (playerCount > 2) {
+    const topicGuesses = getTopicGuesses(gameData);
+    const rankers = getRankers(topicGuesses);
+
+    return [
+      ...allPlayersSuperlatives,
+      theOpenBook(gameData, { rankers }),
+      theStranger(gameData, { rankers })
+    ].filter(superlative => !!superlative);
+  }
+
+  return allPlayersSuperlatives.filter(superlative => !!superlative);
 }
 
 function getTopicGuesses({ guesses, topics }) {
@@ -19,8 +29,8 @@ function getTopicGuesses({ guesses, topics }) {
           correctRank: topics[topicUid].rank,
           guesses: [],
           ranker: undefined,
-          numCorrect: 0,
-          numIncorrect: 0
+          numberCorrect: 0,
+          numberIncorrect: 0
         };
       }
 
@@ -32,9 +42,9 @@ function getTopicGuesses({ guesses, topics }) {
         accum[topicUid].guesses.push(guess);
 
         if (guess === accum[topicUid].correctRank) {
-          accum[topicUid].numCorrect += 1;
+          accum[topicUid].numberCorrect += 1;
         } else {
-          accum[topicUid].numIncorrect += 1;
+          accum[topicUid].numberIncorrect += 1;
         }
       }
     });
@@ -65,7 +75,7 @@ function getRankers(topicGuesses) {
       accum[rankerUid].numberLied += 1;
     }
 
-    if (topicGuess.numIncorrect === 0) {
+    if (topicGuess.numberIncorrect === 0) {
       accum[rankerUid].numberPerfect += 1;
     }
 
@@ -174,7 +184,9 @@ function theOpenBook({ players }, { rankers }) {
       header: 'The Open Book',
       subheader: 'No need to judge you by your cover',
       recipient: mostPerfectPlayer.name,
-      footer: `The group guessed your rankings 100% correct ${mostPerfectCount} times!`
+      footer: `The group guessed your rankings 100% correct ${mostPerfectCount} time${
+        mostPerfectCount !== 1 ? 's' : ''
+      }!`
     };
   }
 
@@ -182,7 +194,9 @@ function theOpenBook({ players }, { rankers }) {
     header: 'The Open Book',
     subheader: 'A few of you need some more mystery in your life',
     recipient: mostPerfectPlayers.map(({ name }) => name).join(', '),
-    footer: `The group guessed your rankings 100% correct ${mostPerfectCount} times!`
+    footer: `The group guessed your rankings 100% correct ${mostPerfectCount} time${
+      mostPerfectCount !== 1 ? 's' : ''
+    }!`
   };
 }
 
@@ -208,23 +222,37 @@ function theStranger({ players }, { rankers }) {
   if (lowestScorePlayers.length === 1) {
     const lowestScorePlayer = lowestScorePlayers[0];
 
+    let footer;
+    if (lowestScore === 0) {
+      footer = 'The group scored ZERO points guessing your rankings!';
+    } else {
+      footer = `The group only scored ${lowestScore} point${
+        lowestScore !== 1 ? 's' : ''
+      } guessing your rankings!`;
+    }
+
     return {
       header: 'The Complete Stranger',
       subheader: 'Do you know anyone here?',
       recipient: lowestScorePlayer.name,
-      footer: `The group only scored ${lowestScore} point${
-        lowestScore !== 1 ? 's' : ''
-      } guessing your rankings!`
+      footer
     };
+  }
+
+  let footer;
+  if (lowestScore === 0) {
+    footer = 'The group scored ZERO points on your turns!';
+  } else {
+    footer = `The group only scored ${lowestScore} point${
+      lowestScore !== 1 ? 's' : ''
+    } on your turns!`;
   }
 
   return {
     header: 'The Complete Stranger',
     subheader: 'Did you come here together?',
     recipient: lowestScorePlayers.map(({ name }) => name).join(', '),
-    footer: `The group only scored ${lowestScore} point${
-      lowestScore !== 1 ? 's' : ''
-    } on your turns!`
+    footer
   };
 }
 
