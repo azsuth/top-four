@@ -1,6 +1,8 @@
 import { toAllPlayersWithScores } from 'utilities/state_mapping';
 
 function generateSuperlatives(gameData) {
+  if (!gameData) return [];
+
   const playerCount = Object.values(gameData.players).map(
     ({ active }) => active
   ).length;
