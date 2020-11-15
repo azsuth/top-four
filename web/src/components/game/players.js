@@ -31,6 +31,7 @@ function Players({ playerScores, playerUid, togglePlayerActive }) {
             {editing && (
               <Button
                 disabled={uid === playerUid}
+                name={active ? 'deactive-player' : 'activate-player'}
                 onClick={() => togglePlayerActive(uid)}
                 variant="text"
               >
@@ -42,7 +43,11 @@ function Players({ playerScores, playerUid, togglePlayerActive }) {
         ))}
       </div>
       <div class="margin-t--s width--15">
-        <Button fullWidth onClick={() => setEditing(val => !val)}>
+        <Button
+          fullWidth
+          name={editing ? 'done-edit-players' : 'start-edit-players'}
+          onClick={() => setEditing(val => !val)}
+        >
           {editing ? 'Done Editing' : 'Edit Players'}
         </Button>
       </div>

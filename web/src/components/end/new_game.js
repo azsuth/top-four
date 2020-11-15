@@ -12,7 +12,7 @@ function NewGame({ routes: [toRoot] }) {
         Play again?
       </h1>
       <div class="flex direction--column align-items--center">
-        <Button fullWidth onClick={toRoot}>
+        <Button fullWidth name="start-new-game" onClick={toRoot}>
           Start New Game
         </Button>
         <Social whiteBackground />

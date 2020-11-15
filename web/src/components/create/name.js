@@ -44,6 +44,7 @@ const Name = ({
           <Button
             disabled={disabled}
             fullWidth
+            name="create-game"
             onClick={onStartGame}
             variant="primary"
           >

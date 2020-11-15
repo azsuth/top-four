@@ -49,6 +49,7 @@ const withNextButton = WrappedComponent => {
       nextButton = (
         <Button
           fullWidth
+          name="share-topics"
           onClick={() => {
             toAddTopics();
             randomizeTheme();
@@ -62,6 +63,7 @@ const withNextButton = WrappedComponent => {
       nextButton = (
         <Button
           fullWidth
+          name="share-done"
           onClick={() => {
             toPlayers();
             randomizeTheme();

@@ -42,8 +42,9 @@ function End({ gameData }) {
       <div class="flex justify--between margin-h--large margin-b--large">
         <div class={cx({ 'visibility--hidden': step === 0 })}>
           <Button
-            variant="text-invert"
+            name="back"
             onClick={() => setStep(prevStep => prevStep - 1)}
+            variant="text-invert"
           >
             <div class="flex align-items--center">
               <IconArrowLeft white />
@@ -57,8 +58,9 @@ function End({ gameData }) {
           })}
         >
           <Button
-            variant="text-invert"
+            name="next"
             onClick={() => setStep(prevStep => prevStep + 1)}
+            variant="text-invert"
           >
             <div class="flex align-items--center">
               Next

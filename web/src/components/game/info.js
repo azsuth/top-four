@@ -4,6 +4,7 @@ import compose from 'utilities/compose';
 import { toGameTurn, toRemainingTurns } from 'utilities/state_mapping';
 import { withState } from '@state';
 
+import Button from 'components/shared/button';
 import Logo from 'components/shared/logo';
 import IconTrophy from 'components/shared/icon/icon_trophy';
 import Social from 'components/shared/social';
@@ -43,10 +44,16 @@ function Info({
         <span class="flex-grow--1 margin-h--xlarge">
           <Logo size="small" />
         </span>
-        <div onClick={toggleShowInfo}>
-          {showInfo && <IconX white />}
-          {!showInfo && <IconTrophy white />}
-        </div>
+        {showInfo && (
+          <Button name="hide-info" onClick={toggleShowInfo} variant="icon">
+            <IconX white />
+          </Button>
+        )}
+        {!showInfo && (
+          <Button name="show-info" onClick={toggleShowInfo} variant="icon">
+            <IconTrophy white />
+          </Button>
+        )}
       </div>
       <div class="flex justify--between align-items--center margin-t--xlarge padding-h--base">
         <span class="color--white font-weight--bold font-size--base">

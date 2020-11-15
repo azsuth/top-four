@@ -51,7 +51,12 @@ const ConfirmButton = ({
         )}
 
         {!confirming && (
-          <Button disabled={disabled} fullWidth onClick={handleClick}>
+          <Button
+            disabled={disabled}
+            fullWidth
+            name="confirm"
+            onClick={handleClick}
+          >
             {confirmText || ''}
           </Button>
         )}

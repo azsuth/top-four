@@ -108,6 +108,7 @@ const Create = ({ gameId, createGame, topicPacks }) => {
             })}
           >
             <Button
+              name="back"
               onClick={() => setStep(prevStep => prevStep - 1)}
               variant="text-invert"
             >
@@ -123,6 +124,7 @@ const Create = ({ gameId, createGame, topicPacks }) => {
             })}
           >
             <Button
+              name="next"
               onClick={() => setStep(prevStep => prevStep + 1)}
               variant="text-invert"
             >
