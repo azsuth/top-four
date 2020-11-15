@@ -13,6 +13,7 @@ function Social({ whiteBackground }) {
           href="mailto:feedback@topfour.io"
           fullWidth
           link
+          name="send-feedback"
           variant={whiteBackground ? 'secondary' : 'secondary-invert'}
         >
           Send Us Feedback

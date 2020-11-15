@@ -24,7 +24,7 @@ const AddTopics = ({
   gameId,
   numPlayers,
   numRounds,
-  playerTopics,
+  playerTopics = [],
   remainingPlayerTopics,
   routes: [toPlayers],
   topicExample
@@ -82,7 +82,7 @@ const AddTopics = ({
             <TextInput
               disabled={remainingPlayerTopics === 0}
               getRef={topicInputRef}
-              label="Polarizing Topic"
+              label="Polarizing Thing"
               name="topic"
               onChange={setTopic}
               placeholder={topicExample ? `e.g. ${topicExample}` : null}
@@ -203,7 +203,7 @@ const withTopicExampleProp = WrappedComponent => {
 
 const withProps = WrappedComponent => {
   return props => {
-    const { numRounds, players, playerTopics } = props;
+    const { numRounds, players = [], playerTopics = [] } = props;
 
     const remainingPlayerTopics = 4 * numRounds - playerTopics.length;
 

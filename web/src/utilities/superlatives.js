@@ -1,6 +1,8 @@
 import { toAllPlayersWithScores } from 'utilities/state_mapping';
 
 function generateSuperlatives(gameData) {
+  if (!gameData) return [];
+
   const playerCount = Object.values(gameData.players).map(
     ({ active }) => active
   ).length;
@@ -191,7 +193,7 @@ function theOpenBook({ numRounds, players }, { rankers }) {
   }
 
   return {
-    header: 'The Open Book',
+    header: 'The Open Books',
     subheader: 'A few of you need some more mystery in your life',
     recipient: highestScorePlayers.map(({ name }) => name).join(', '),
     footer: `The group scored the most points on your turns!`
@@ -247,7 +249,7 @@ function theStranger({ players }, { rankers }) {
   }
 
   return {
-    header: 'The Complete Stranger',
+    header: 'The Complete Strangers',
     subheader: 'Did you come here together?',
     recipient: lowestScorePlayers.map(({ name }) => name).join(', '),
     footer

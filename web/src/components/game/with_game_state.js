@@ -9,6 +9,7 @@ import {
 } from 'utilities/state_mapping';
 import compose from 'utilities/compose';
 import { GAME_STATE } from 'utilities/constants';
+import { logErrorMessage } from '@services/logger';
 
 const getGameState = ({
   remoteGameState,
@@ -34,6 +35,13 @@ const getGameState = ({
     const previousRanker = players[previousRankerPosition];
 
     const nextRanker = players[(previousRankerPosition + 1) % players.length];
+
+    if (!nextRanker) {
+      logErrorMessage(
+        `missing nextRanker. previousRankerPosition: ${previousRankerPosition}, players.length: ${players.length}`
+      );
+    }
+
     nextRanker.isThisPlayer = nextRanker && playerUid === nextRanker.uid;
 
     const nextState =

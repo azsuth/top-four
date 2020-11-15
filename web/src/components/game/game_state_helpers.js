@@ -79,7 +79,7 @@ const headerState = ({
     case GAME_STATE.BETWEEN_ROUNDS:
       if (nextRanker.isThisPlayer) {
         return {
-          header: `You're up`,
+          header: `You're Up`,
           subheader: 'Time to start ranking!'
         };
       }

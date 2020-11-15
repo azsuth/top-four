@@ -40,7 +40,11 @@ class ErrorBoundary extends Component {
           <span>
             Or{' '}
             <span class="error__home-button">
-              <Button onClick={this.handleClick} variant="secondary">
+              <Button
+                name="return-home"
+                onClick={this.handleClick}
+                variant="secondary"
+              >
                 return home
               </Button>
             </span>{' '}
