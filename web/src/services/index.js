@@ -129,7 +129,7 @@ const setPlayerActiveService = (playerUid, active, gameUid) => {
     .update({ active });
 };
 
-const logErrorMessage = (message, env) => {
+const logErrorMessageService = (message, env) => {
   const date = new Date();
 
   const yyyy = date.getFullYear();
@@ -157,5 +157,5 @@ export {
   updateGameService,
   lockInService,
   setPlayerActiveService,
-  logErrorMessage
+  logErrorMessageService
 };
