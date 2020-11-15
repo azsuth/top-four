@@ -203,7 +203,7 @@ const withTopicExampleProp = WrappedComponent => {
 
 const withProps = WrappedComponent => {
   return props => {
-    const { numRounds, players, playerTopics = [] } = props;
+    const { numRounds, players = [], playerTopics = [] } = props;
 
     const remainingPlayerTopics = 4 * numRounds - playerTopics.length;
 
