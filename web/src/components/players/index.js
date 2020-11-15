@@ -96,6 +96,8 @@ function Players({
   startGame,
   topicPack
 }) {
+  if (!players) return null;
+
   const leadPlayer = players[0];
   const isLeadPlayer = leadPlayer.uid === playerUid;
   const requiredTopics = numRounds * 4;
@@ -167,7 +169,7 @@ const withProps = WrappedComponent => {
   return props => {
     const { numRounds, players, topicPack } = props;
 
-    if (topicPack) {
+    if (topicPack || !players) {
       return <WrappedComponent {...props} />;
     }
 
