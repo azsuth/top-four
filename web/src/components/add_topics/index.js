@@ -82,7 +82,7 @@ const AddTopics = ({
             <TextInput
               disabled={remainingPlayerTopics === 0}
               getRef={topicInputRef}
-              label="Polarizing Topic"
+              label="Polarizing Thing"
               name="topic"
               onChange={setTopic}
               placeholder={topicExample ? `e.g. ${topicExample}` : null}
