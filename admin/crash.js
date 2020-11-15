@@ -2,12 +2,27 @@ const fs = require('fs');
 const sourceMap = require('source-map');
 
 const BUILD_PATH = '../web/build/';
-const HOST = 'https://dev.topfour.io/';
-const error =
-  "/game | undefined is not an object (evaluating 'r.charAt') | https://topfour.io/route-game.chunk.e5c48.esm.js:1:113560\nC@https://topfour.io/bundle.86c5f.esm.js:1:272363\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nw@https://topfour.io/bundle.86c5f.esm.js:1:273981\nC@https://topfour.io/bundle.86c5f.esm.js:1:272761\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nw@https://topfour.io/bundle.86c5f.esm.js:1:273981\nC@https://topfour.io/bundle.86c5f.esm.js:1:272761\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nw@https://topfour.io/bundle.86c5f.esm.js:1:273981\nC@https://topfour.io/bundle.86c5f.esm.js:1:272761\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nw@https://topfour.io/bundle.86c5f.esm.js:1:273981\nC@https://topfour.io/bundle.86c5f.esm.js:1:272761\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nw@https://topfour.io/bundle.86c5f.esm.js:1:273981\nC@https://topfour.io/bundle.86c5f.esm.js:1:272761\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nd@https://topfour.io/bundle.86c5f.esm.js:1:268973\nC@https://topfour.io/bundle.86c5f.esm.js:1:272590\nhttps://topfour.io/bundle.86c5f.esm.js:1:268326\nsome@[native code]\nf@https://topfour.io/bundle.86c5f.esm.js:1:268228\npromiseReactionJob@[native code]";
+const HOST = 'https://topfour.io/';
+const error = process.argv.slice(2)[0];
+
+const firstPipe = error.indexOf('|');
+const secondPipe = error.indexOf('|', firstPipe + 1);
+
+const route = error.substring(0, firstPipe);
+const errorMsg = error.substring(firstPipe + 2, secondPipe);
+const pack = error.substring(
+  error.indexOf(HOST) + HOST.length,
+  error.indexOf('.js:') + 3
+);
+const column = error
+  .substring(error.indexOf(pack), error.indexOf(HOST, error.indexOf(pack)))
+  .match(/1:(\d+)/)[1];
 
 new sourceMap.SourceMapConsumer(
-  fs.readFileSync(`${BUILD_PATH}route-game.chunk.e5c48.esm.js.map`, 'utf-8')
+  fs.readFileSync(`${BUILD_PATH}${pack}.map`, 'utf-8')
 ).then((consumer) => {
-  console.log(consumer.originalPositionFor({ line: 1, column: 113560 }));
+  console.log(`Route: ${route}`);
+  console.log(`Error: ${errorMsg}`);
+  console.log('Location:');
+  console.log(consumer.originalPositionFor({ line: 1, column }));
 });
