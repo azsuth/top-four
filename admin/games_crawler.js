@@ -25,9 +25,17 @@ const data = Object.keys(games).reduce(
       );
     }
 
+    if (game.guesses && Object.keys(game.guesses).length > 0) {
+      gamesData.startedGames += 1;
+
+      if (game.state === 'end_game') {
+        gamesData.endedGames += 1;
+      }
+    }
+
     return gamesData;
   },
-  { topics: [], players: [] }
+  { topics: [], players: [], startedGames: 0, endedGames: 0 }
 );
 
 const file = fs.createWriteStream(
@@ -35,7 +43,10 @@ const file = fs.createWriteStream(
   { flags: 'a' }
 );
 
-file.write('Topics\n\n');
+file.write(`Started Games: ${data.startedGames}`);
+file.write(`\nEnded Games: ${data.endedGames}`);
+
+file.write('\n\nTopics\n\n');
 
 data.topics.forEach((topic) => file.write(`${topic}\n`));
 
