@@ -24,7 +24,7 @@ const Topics = ({ topicPacks, topicPackUid, setTopicPackUid }) => {
           ))}
       </div>
       <div class="align-self--end">
-        <Coachmark>
+        <Coachmark name="topic-pack">
           Topics are people, places and things that you’ll be asked to rank each
           turn.
           <br />
