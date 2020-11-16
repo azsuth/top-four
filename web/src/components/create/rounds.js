@@ -26,7 +26,7 @@ function Rounds({ numRounds, setNumRounds }) {
         ))}
       </div>
       <div class="align-self--end">
-        <Coachmark>
+        <Coachmark name="rounds">
           Each player ranks once per round. The more rounds you choose, the
           longer the game will last.
           <br />

@@ -31,7 +31,7 @@ const GameMode = ({ gameMode, setGameMode }) => {
         />
       </div>
       <div class="align-self--end">
-        <Coachmark>
+        <Coachmark name="game-mode">
           Confused on what to choose?
           <br />
           <br />

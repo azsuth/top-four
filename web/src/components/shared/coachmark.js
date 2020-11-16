@@ -6,11 +6,11 @@ import { showCoachmark } from '@actions';
 import Button from './button';
 import IconCircleI from 'components/shared/icon/icon_circle_i';
 
-const Coachmark = ({ children, showCoachmark, white }) => {
+const Coachmark = ({ children, name, showCoachmark, white }) => {
   return (
     <div class="coachmark">
       <Button
-        name="coachmark"
+        name={`${name}-coachmark`}
         onClick={() => showCoachmark(children)}
         variant="icon"
       >
