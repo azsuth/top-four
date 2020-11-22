@@ -110,11 +110,11 @@ const updateGameService = (game, gameUid) => {
   firebase.database().ref(`/games/${gameUid}`).update(game);
 };
 
-const lockInService = async ({ gameUid, playerUid, guesses }) => {
+const lockInService = async ({ gameUid, guesses, player, playerUid }) => {
   await firebase
     .database()
     .ref(`/games/${gameUid}/players/${playerUid}`)
-    .update({ lockedIn: true });
+    .update(player);
 
   firebase
     .database()

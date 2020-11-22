@@ -110,24 +110,29 @@ describe('in game actions', () => {
       };
 
       lockIn({
+        dispatch: () => {},
         state: {
           gameUid: 'abcde',
-          playerUid: 'bcdef',
           localRanks,
-          game: { rankingPlayerUid: 'bcdef' }
+          playerUid: 'bcdef',
+          game: {
+            players: { bcdef: { name: 'Vinny' } },
+            rankingPlayerUid: 'bcdef'
+          }
         }
       });
 
       expect(lockInService).toHaveBeenCalledTimes(1);
       expect(lockInService.mock.calls[0][0]).toEqual({
         gameUid: 'abcde',
-        playerUid: 'bcdef',
         guesses: {
           12345: 'active',
           23456: 'active',
           34567: 'active',
           45678: 'active'
-        }
+        },
+        player: { name: 'Vinny', lockedIn: true },
+        playerUid: 'bcdef'
       });
     });
 
@@ -140,24 +145,107 @@ describe('in game actions', () => {
       };
 
       lockIn({
+        dispatch: () => {},
         state: {
           gameUid: 'abcde',
-          playerUid: 'bcdef',
           localRanks,
-          game: { rankingPlayerUid: '98765' }
+          playerUid: 'bcdef',
+          game: {
+            players: { bcdef: { name: 'Andrew' } },
+            rankingPlayerUid: '98765'
+          }
         }
       });
 
       expect(lockInService).toHaveBeenCalledTimes(1);
       expect(lockInService.mock.calls[0][0]).toEqual({
         gameUid: 'abcde',
-        playerUid: 'bcdef',
         guesses: {
           12345: 0,
           23456: 1,
           34567: 2,
           45678: 3
-        }
+        },
+        player: { name: 'Andrew', lockedIn: true },
+        playerUid: 'bcdef'
+      });
+    });
+
+    it('sets the ranking time the first time the player locks in', () => {
+      const localRanks = {
+        12345: 0,
+        23456: 1,
+        34567: 2,
+        45678: 3
+      };
+
+      lockIn(
+        {
+          dispatch: () => {},
+          state: {
+            gameUid: 'abcde',
+            localRanks,
+            playerUid: 'bcdef',
+            rankingStartTime: 1,
+            game: {
+              players: { bcdef: { name: 'Andrew' } },
+              rankingPlayerUid: '98765'
+            }
+          }
+        },
+        3
+      );
+
+      expect(lockInService).toHaveBeenCalledTimes(1);
+      expect(lockInService.mock.calls[0][0]).toEqual({
+        gameUid: 'abcde',
+        guesses: {
+          12345: 0,
+          23456: 1,
+          34567: 2,
+          45678: 3
+        },
+        player: { name: 'Andrew', lockedIn: true, rankingTimes: [2] },
+        playerUid: 'bcdef'
+      });
+    });
+
+    it('adds new ranking times each time the player locks in', () => {
+      const localRanks = {
+        12345: 0,
+        23456: 1,
+        34567: 2,
+        45678: 3
+      };
+
+      lockIn(
+        {
+          dispatch: () => {},
+          state: {
+            gameUid: 'abcde',
+            localRanks,
+            playerUid: 'bcdef',
+            rankingStartTime: 1,
+            game: {
+              players: { bcdef: { name: 'Andrew', rankingTimes: [1, 2, 3] } },
+              rankingPlayerUid: '98765'
+            }
+          }
+        },
+        5
+      );
+
+      expect(lockInService).toHaveBeenCalledTimes(1);
+      expect(lockInService.mock.calls[0][0]).toEqual({
+        gameUid: 'abcde',
+        guesses: {
+          12345: 0,
+          23456: 1,
+          34567: 2,
+          45678: 3
+        },
+        player: { name: 'Andrew', lockedIn: true, rankingTimes: [1, 2, 3, 4] },
+        playerUid: 'bcdef'
       });
     });
   });
