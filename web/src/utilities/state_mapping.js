@@ -5,7 +5,7 @@ const topicsToArray = topics =>
   Object.keys(topics).map(uid => ({ uid, ...topics[uid] }));
 
 const playersToArray = players =>
-  Object.keys(players).map(uid => ({ uid, ...players[uid] }));
+  Object.keys(players || {}).map(uid => ({ uid, ...players[uid] }));
 
 const availableTopicsToCount = topics =>
   topicsToArray(topics).filter(({ status }) => status === 'available').length;
