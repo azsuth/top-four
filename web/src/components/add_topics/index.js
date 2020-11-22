@@ -18,6 +18,7 @@ import TextInput from 'components/shared/text_input';
 
 import AddTopicsCoachmark from './coachmark';
 import Topic from 'components/add_topics/topic';
+import { logErrorMessage } from '@services/logger';
 
 const AddTopics = ({
   addTopic,
@@ -206,6 +207,10 @@ const withProps = WrappedComponent => {
     const { numRounds, players = [], playerTopics = [] } = props;
 
     const remainingPlayerTopics = 4 * numRounds - playerTopics.length;
+
+    if (players === null) {
+      logErrorMessage('players is null???');
+    }
 
     return (
       <WrappedComponent
