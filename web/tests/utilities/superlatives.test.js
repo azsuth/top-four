@@ -9,7 +9,12 @@ import {
   theLoser,
   theOpenBook,
   theStranger,
-  getTopicGuesses
+  theTortoise,
+  theHare,
+  theDeepThinker,
+  theGoWithYourGut,
+  getTopicGuesses,
+  getTimedPlayers
 } from 'utilities/superlatives';
 
 describe('superlative functions', () => {
@@ -223,6 +228,61 @@ describe('superlative functions', () => {
     });
   });
 
+  describe('timed superlatives', () => {
+    const timedPlayers = [
+      {
+        name: 'Andrew',
+        fastestRankingTime: 5,
+        slowestRankingTime: 3,
+        averageRankingTime: 1.5
+      },
+      {
+        name: 'Emily',
+        fastestRankingTime: 1,
+        slowestRankingTime: 2,
+        averageRankingTime: 2
+      },
+      {
+        name: 'Harrison',
+        fastestRankingTime: 2,
+        slowestRankingTime: 10,
+        averageRankingTime: 6
+      }
+    ];
+
+    describe('theTortoise', () => {
+      it('calculates the slowest average ranker', () => {
+        const superlative = theTortoise(timedPlayers);
+
+        expect(superlative.recipient).toBe('Harrison');
+      });
+    });
+
+    describe('theHare', () => {
+      it('calculates the fastest average ranker', () => {
+        const superlative = theHare(timedPlayers);
+
+        expect(superlative.recipient).toBe('Andrew');
+      });
+    });
+
+    describe('theDeepThinker', () => {
+      it('calculates the player with the slowest rank', () => {
+        const superlative = theDeepThinker(timedPlayers);
+
+        expect(superlative.recipient).toBe('Harrison');
+      });
+    });
+
+    describe('theGoWithYourGut', () => {
+      it('calculates the player with the fastest rank', () => {
+        const superlative = theGoWithYourGut(timedPlayers);
+
+        expect(superlative.recipient).toBe('Emily');
+      });
+    });
+  });
+
   describe('getTopicGuesses', () => {
     const guesses = {
       12345: {
@@ -293,6 +353,33 @@ describe('superlative functions', () => {
         numberIncorrect: 1,
         ranker: '23456'
       });
+    });
+  });
+
+  describe('getTimedPlayers', () => {
+    it('calculates ranking time stats for all players', () => {
+      const players = {
+        abcde: { name: 'Andrew', rankingTimes: [1, 2, 3] },
+        bcdef: { name: 'Emily', rankingTimes: [2, 2, 2, 2] },
+        cdefg: { name: 'Harrison', rankingTimes: [2, 10] }
+      };
+
+      const timedPlayers = getTimedPlayers({ players });
+
+      expect(timedPlayers[0].name).toBe('Andrew');
+      expect(timedPlayers[0].slowestRankingTime).toBe(3);
+      expect(timedPlayers[0].fastestRankingTime).toBe(1);
+      expect(timedPlayers[0].averageRankingTime).toBe(2);
+
+      expect(timedPlayers[1].name).toBe('Emily');
+      expect(timedPlayers[1].slowestRankingTime).toBe(2);
+      expect(timedPlayers[1].fastestRankingTime).toBe(2);
+      expect(timedPlayers[1].averageRankingTime).toBe(2);
+
+      expect(timedPlayers[2].name).toBe('Harrison');
+      expect(timedPlayers[2].slowestRankingTime).toBe(10);
+      expect(timedPlayers[2].fastestRankingTime).toBe(2);
+      expect(timedPlayers[2].averageRankingTime).toBe(6);
     });
   });
 });

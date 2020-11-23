@@ -7,20 +7,35 @@ function generateSuperlatives(gameData) {
     ({ active }) => active
   ).length;
 
-  const allPlayersSuperlatives = [theWinner(gameData), theLoser(gameData)];
+  const superlatives = [theWinner(gameData), theLoser(gameData)];
 
   if (playerCount > 2) {
     const topicGuesses = getTopicGuesses(gameData);
     const rankers = getRankers(topicGuesses);
 
-    return [
-      ...allPlayersSuperlatives,
+    superlatives.push(
       theOpenBook(gameData, { rankers }),
       theStranger(gameData, { rankers })
-    ].filter(superlative => !!superlative);
+    );
   }
 
-  return allPlayersSuperlatives.filter(superlative => !!superlative);
+  const timedPlayers = getTimedPlayers(gameData);
+  superlatives.push(theTortoise(timedPlayers), theHare(timedPlayers));
+
+  return superlatives.filter(superlative => !!superlative);
+}
+
+function getTimedPlayers({ players }) {
+  const timedPlayers = Object.values(players).map(player => ({
+    ...player,
+    slowestRankingTime: Math.max(...player.rankingTimes),
+    fastestRankingTime: Math.min(...player.rankingTimes),
+    averageRankingTime:
+      player.rankingTimes.reduce((sum, rankingTime) => sum + rankingTime) /
+      player.rankingTimes.length
+  }));
+
+  return timedPlayers;
 }
 
 function getTopicGuesses({ guesses, topics }) {
@@ -256,5 +271,70 @@ function theStranger({ players }, { rankers }) {
   };
 }
 
-export { theWinner, theLoser, theOpenBook, theStranger, getTopicGuesses };
+function theTortoise(timedPlayers) {
+  const slowestAveragePlayers = [...timedPlayers].sort(
+    ({ averageRankingTime: a }, { averageRankingTime: b }) => b - a
+  );
+
+  const { name, averageRankingTime } = slowestAveragePlayers[0];
+
+  return {
+    header: 'The Tortoise',
+    subheader: "You're the reason we need a time limit in this game",
+    recipient: name,
+    footer: `On average, you took ${Math.round(
+      averageRankingTime / 1000
+    )} seconds to lock in 😱`
+  };
+}
+
+function theHare(timedPlayers) {
+  const fastestAveragePlayers = [...timedPlayers].sort(
+    ({ averageRankingTime: a }, { averageRankingTime: b }) => a - b
+  );
+
+  const { name, averageRankingTime } = fastestAveragePlayers[0];
+
+  return {
+    header: 'The Hare',
+    subheader: 'They should call you Lightning McQueen!',
+    recipient: name,
+    footer: `On average, you took ${Math.round(
+      averageRankingTime / 1000
+    )} seconds to lock in⚡`
+  };
+}
+
+function theDeepThinker(timedPlayers) {
+  const slowestPlayers = [...timedPlayers].sort(
+    ({ slowestRankingTime: a }, { slowestRankingTime: b }) => b - a
+  );
+
+  return {
+    recipient: slowestPlayers[0].name
+  };
+}
+
+function theGoWithYourGut(timedPlayers) {
+  const fastestPlayers = [...timedPlayers].sort(
+    ({ fastestRankingTime: a }, { fastestRankingTime: b }) => a - b
+  );
+
+  return {
+    recipient: fastestPlayers[0].name
+  };
+}
+
+export {
+  theWinner,
+  theLoser,
+  theOpenBook,
+  theStranger,
+  theTortoise,
+  theHare,
+  theDeepThinker,
+  theGoWithYourGut,
+  getTopicGuesses,
+  getTimedPlayers
+};
 export default generateSuperlatives;
