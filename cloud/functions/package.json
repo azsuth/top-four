@@ -15,7 +15,7 @@
     "moment": "^2.24.0"
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "private": true
 }
