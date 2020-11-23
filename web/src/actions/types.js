@@ -6,3 +6,4 @@ export const CLEAR_STATE = 'clear_state';
 export const SHOW_COACHMARK = 'show_coachmark';
 export const HIDE_COACHMARK = 'hide_coachmark';
 export const SET_THEME = 'set_theme';
+export const SET_RANKING_START_TIME = 'set_ranking_start_time';

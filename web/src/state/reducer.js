@@ -6,7 +6,8 @@ import {
   CLEAR_STATE,
   SHOW_COACHMARK,
   HIDE_COACHMARK,
-  SET_THEME
+  SET_THEME,
+  SET_RANKING_START_TIME
 } from '@actions/types';
 
 import { withReducerLogging } from 'utilities/logging';
@@ -48,6 +49,11 @@ const gameStateReducer = (state, { type, payload }) => {
       return {
         ...state,
         theme: payload
+      };
+    case SET_RANKING_START_TIME:
+      return {
+        ...state,
+        rankingStartTime: payload
       };
     default:
       return state;

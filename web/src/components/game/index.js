@@ -1,7 +1,8 @@
 import { h } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-import { withState } from '@state';
+import { withAction, withState } from '@state';
+import { setRankingStartTime } from '@actions';
 import { toAllPlayersWithScores } from 'utilities/state_mapping';
 import compose from 'utilities/compose';
 import { GAME_STATE } from 'utilities/constants';
@@ -10,9 +11,23 @@ import Info from 'components/game/info';
 import GameTopics from 'components/game/game_topics';
 import withGameState from 'components/game/with_game_state';
 
-const Game = ({ gameState }) => {
+const Game = ({ gameState, setRankingStartTime }) => {
   const [showInfo, setShowInfo] = useState(false);
   const [topicsTop, setTopicsTop] = useState(null);
+  const previousGameState = useRef(gameState && gameState.state);
+
+  useEffect(() => {
+    if (gameState) {
+      if (
+        previousGameState.current === GAME_STATE.BETWEEN_ROUNDS &&
+        gameState.state === GAME_STATE.RANKING
+      ) {
+        setRankingStartTime();
+      }
+    }
+
+    previousGameState.current = gameState && gameState.state;
+  }, [gameState, previousGameState.current]);
 
   if (!gameState) return null;
 
@@ -42,61 +57,17 @@ const withPlayerScoresState = withState(
 );
 const withPlayerUidState = withState('playerUid');
 
-const withProps = WrappedComponent => {
-  return props => {
-    const { playerUid, playerScores } = props;
-
-    const players = playerScores.filter(({ active }) => active);
-
-    let winner;
-    if (players.length > 1 && players[0].score === players[1].score) {
-      winner = `There's a tie!`;
-    } else if (players[0].uid === playerUid) {
-      winner = `You're winning!`;
-    } else {
-      winner = `${players[0].name} is winning!`;
-    }
-
-    return <WrappedComponent {...props} winner={winner} />;
-  };
-};
-
-const withEffect = WrappedComponent => {
-  return props => {
-    const {
-      gameState: { state }
-    } = props;
-
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const mounted = useRef(false);
-
-    useEffect(() => {
-      if (!mounted.current) {
-        mounted.current = true;
-        return;
-      }
-
-      if (state === GAME_STATE.BETWEEN_ROUNDS) {
-        setTimeout(() => {
-          setSnackbarOpen(true);
-        }, 2000);
-      }
-    }, [state]);
-
-    return (
-      <WrappedComponent
-        {...props}
-        closeSnackbar={() => setSnackbarOpen(false)}
-        snackbarOpen={snackbarOpen}
-      />
-    );
-  };
-};
+// actions
+const withSetRankingStartTimeAction = withAction(
+  setRankingStartTime,
+  'setRankingStartTime'
+);
 
 const wrappers = compose(
   withPlayerScoresState,
   withPlayerUidState,
-  withGameState
+  withGameState,
+  withSetRankingStartTimeAction
 );
 
 export { Game };

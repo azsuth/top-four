@@ -5,7 +5,7 @@ import {
   lockInService,
   setPlayerActiveService
 } from '@services';
-import { UPDATE_LOCAL_RANKS } from '@actions/types';
+import { SET_RANKING_START_TIME, UPDATE_LOCAL_RANKS } from '@actions/types';
 import { GAME_STATE } from 'utilities/constants';
 
 const startRound = ({
@@ -74,14 +74,19 @@ const updateLocalRanks = (
   });
 };
 
-const lockIn = ({
-  state: {
-    gameUid,
-    playerUid,
-    localRanks,
-    game: { rankingPlayerUid }
-  }
-}) => {
+const lockIn = (
+  {
+    dispatch,
+    state: {
+      gameUid,
+      localRanks,
+      playerUid,
+      rankingStartTime,
+      game: { players, rankingPlayerUid }
+    }
+  },
+  rankingEndTime = new Date().getTime()
+) => {
   const active = playerUid === rankingPlayerUid;
   const guesses = Object.keys(localRanks).reduce(
     (topicGuesses, topicUid) => ({
@@ -91,7 +96,37 @@ const lockIn = ({
     {}
   );
 
-  lockInService({ gameUid, playerUid, guesses });
+  const player = players[playerUid];
+
+  if (rankingStartTime) {
+    const rankingTime = rankingEndTime - rankingStartTime;
+
+    lockInService({
+      gameUid,
+      guesses,
+      player: {
+        ...player,
+        lockedIn: true,
+        rankingTimes: [...(player.rankingTimes || []), rankingTime]
+      },
+      playerUid
+    });
+  } else {
+    lockInService({
+      gameUid,
+      guesses,
+      player: {
+        ...player,
+        lockedIn: true
+      },
+      playerUid
+    });
+  }
+
+  dispatch({
+    type: SET_RANKING_START_TIME,
+    payload: null
+  });
 };
 
 const revealTopic = (
@@ -138,10 +173,18 @@ const togglePlayerActive = (
   setPlayerActiveService(playerUid, !currentlyActive, gameUid);
 };
 
+const setRankingStartTime = ({ dispatch }) => {
+  dispatch({
+    type: SET_RANKING_START_TIME,
+    payload: new Date().getTime()
+  });
+};
+
 export {
   startRound,
   updateLocalRanks,
   lockIn,
   revealTopic,
-  togglePlayerActive
+  togglePlayerActive,
+  setRankingStartTime
 };
