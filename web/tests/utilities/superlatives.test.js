@@ -361,10 +361,13 @@ describe('superlative functions', () => {
       const players = {
         abcde: { name: 'Andrew', rankingTimes: [1, 2, 3] },
         bcdef: { name: 'Emily', rankingTimes: [2, 2, 2, 2] },
-        cdefg: { name: 'Harrison', rankingTimes: [2, 10] }
+        cdefg: { name: 'Harrison', rankingTimes: [2, 10] },
+        defgh: { name: 'no ranking times' }
       };
 
       const timedPlayers = getTimedPlayers({ players });
+
+      expect(timedPlayers).toHaveLength(3);
 
       expect(timedPlayers[0].name).toBe('Andrew');
       expect(timedPlayers[0].slowestRankingTime).toBe(3);

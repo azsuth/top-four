@@ -204,18 +204,14 @@ const withTopicExampleProp = WrappedComponent => {
 
 const withProps = WrappedComponent => {
   return props => {
-    const { numRounds, players = [], playerTopics = [] } = props;
+    const { numRounds, players, playerTopics } = props;
 
-    const remainingPlayerTopics = 4 * numRounds - playerTopics.length;
-
-    if (players === null) {
-      logErrorMessage('players is null???');
-    }
+    const remainingPlayerTopics = 4 * numRounds - (playerTopics || []).length;
 
     return (
       <WrappedComponent
         {...props}
-        numPlayers={players.length}
+        numPlayers={(players || []).length}
         remainingPlayerTopics={remainingPlayerTopics}
       />
     );
