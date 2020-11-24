@@ -26,14 +26,16 @@ function generateSuperlatives(gameData) {
 }
 
 function getTimedPlayers({ players }) {
-  const timedPlayers = Object.values(players).map(player => ({
-    ...player,
-    slowestRankingTime: Math.max(...player.rankingTimes),
-    fastestRankingTime: Math.min(...player.rankingTimes),
-    averageRankingTime:
-      player.rankingTimes.reduce((sum, rankingTime) => sum + rankingTime) /
-      player.rankingTimes.length
-  }));
+  const timedPlayers = Object.values(players)
+    .filter(({ rankingTimes }) => !!rankingTimes)
+    .map(player => ({
+      ...player,
+      slowestRankingTime: Math.max(...player.rankingTimes),
+      fastestRankingTime: Math.min(...player.rankingTimes),
+      averageRankingTime:
+        player.rankingTimes.reduce((sum, rankingTime) => sum + rankingTime) /
+        player.rankingTimes.length
+    }));
 
   return timedPlayers;
 }
