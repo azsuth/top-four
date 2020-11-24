@@ -20,14 +20,19 @@ const Home = ({ clearState, routes: [toJoin, toCreate], showCoachmark }) => {
   }, []);
 
   const logoClasses = cx('home__logo', { 'home__logo--anim': anim });
-  const actionClasses = cx('home__actions margin-b--base width--66-pct', {
-    'home__actions--anim': anim
-  });
+  const actionClasses = cx(
+    'home__actions margin-b--base width--60-pct',
+    'md:width--30-pct md:max-width--15',
+    'lg:width--30-pct lg:max-width--15',
+    {
+      'home__actions--anim': anim
+    }
+  );
 
   return (
     <div class="home height--100-pct bg-color--primary">
       <div class={logoClasses}>
-        <Logo />
+        <Logo size="unbound" />
       </div>
       <div class={actionClasses}>
         <div class="margin-b--base">

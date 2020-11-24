@@ -1,16 +1,21 @@
 import { h } from 'preact';
 
+import cx from 'utilities/cx';
+
 import { withAction } from '@state';
 import { cycleTheme } from '@actions';
 
 import Button from 'components/shared/button';
 
 const Logo = ({ cycleTheme, size }) => {
-  const height = size === 'small' ? 42 * 0.66 : 42;
+  let height;
+
+  if (size === 'small') height = 42 * 0.66;
+  else if (size !== 'unbound') height = 42;
 
   return (
     <div class="height--100-pct flex justify--center align-items--center">
-      <Button name="logo" onClick={() => cycleTheme()} variant="icon">
+      <Button fullWidth name="logo" onClick={() => cycleTheme()} variant="icon">
         <svg
           height={height}
           viewBox={`0 0 336 42`}
