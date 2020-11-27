@@ -20,7 +20,9 @@ function generateSuperlatives(gameData) {
   }
 
   const timedPlayers = getTimedPlayers(gameData);
-  superlatives.push(theTortoise(timedPlayers), theHare(timedPlayers));
+  if (timedPlayers && timedPlayers.length > 0) {
+    superlatives.push(theTortoise(timedPlayers), theHare(timedPlayers));
+  }
 
   return superlatives.filter(superlative => !!superlative);
 }
