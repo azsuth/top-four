@@ -1,6 +1,7 @@
 import { h, Fragment } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
-import SwipeableViews from 'react-swipeable-views';
+import { useState } from 'preact/hooks';
+
+import cx from 'utilities/cx';
 
 import { withAction } from '@state';
 import { joinGame } from '@actions';
@@ -10,17 +11,6 @@ import Coachmark from 'components/shared/coachmark';
 import Loading from 'components/shared/loading';
 import Logo from 'components/shared/logo';
 import TextInput from 'components/shared/text_input';
-
-function JoinContainer({ children, title }) {
-  return (
-    <div class="join__container container flex direction--column align-items--center flex-grow--1 margin--large padding-t--large padding-h--s padding-b--s">
-      <h1 class="modal-header color--primary-darkest margin-b--large">
-        {title}
-      </h1>
-      {children}
-    </div>
-  );
-}
 
 const Join = ({ joinGame }) => {
   const [name, setName] = useState(null);
@@ -53,12 +43,18 @@ const Join = ({ joinGame }) => {
     setGameId(value.toUpperCase());
   };
 
+  const joinContainerClasses = cx(
+    'join__container container flex direction--column align-items--center flex-grow--1 margin--large padding-t--large padding-h--s padding-b--s',
+    'md:width--70-pct md:max-width--36 md:flex-grow--0',
+    'lg:width--40-pct lg:max-width--36 lg:flex-grow--0'
+  );
+
   return (
-    <div class="join flex direction--column height--100-pct bg-color--primary">
-      <div class="join__logo margin-t--xlarge">
+    <div class="join flex direction--column height--100-pct bg-color--primary md:align-items--center lg:align-items--center">
+      <div class="join__logo margin-t--xlarge md:flex-grow--1 lg:flex-grow--1">
         <Logo size="small" />
       </div>
-      <div class="join__container container flex direction--column align-items--center flex-grow--1 margin--large padding-t--large padding-h--s padding-b--s">
+      <div class={joinContainerClasses}>
         <h1 class="modal-header color--primary-darkest">
           {error && 'Oops!'}
           {!error && loading && 'Joining...'}
@@ -73,7 +69,7 @@ const Join = ({ joinGame }) => {
           <>
             <form
               autoComplete="off"
-              class="flex direction--column flex-grow--1 margin-t--xlarge width--75-pct"
+              class="flex direction--column flex-grow--1 margin-t--xlarge width--75-pct md:max-width--15 lg:max-width--15"
             >
               <div class="margin-b--xlarge">
                 <TextInput
@@ -96,7 +92,7 @@ const Join = ({ joinGame }) => {
               {error && error.msg && (
                 <p class="text-align--center">{error.msg}</p>
               )}
-              <div class="flex direction--column justify--end flex-grow--1 width--100-pct">
+              <div class="flex direction--column justify--end flex-grow--1 margin-t--base width--100-pct">
                 <Button
                   disabled={disabled}
                   fullWidth
@@ -123,6 +119,7 @@ const Join = ({ joinGame }) => {
           </div>
         )}
       </div>
+      <div class="md:flex-grow--1 lg:flex-grow--1" />
     </div>
   );
 };

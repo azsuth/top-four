@@ -23,6 +23,10 @@
       max-width: 15.625em;
     }
 
+    &max-width--36 {
+      max-width: 36.4375em;
+    }
+
     &width--10-pct {
       width: 10%;
     }
@@ -53,6 +57,10 @@
 
     &width--66-pct {
       width: 66.66%;
+    }
+
+    &width--70-pct {
+      width: 70%;
     }
 
     &width--75-pct {
@@ -354,6 +362,10 @@
 
     &align-self--start {
       align-self: flex-start;
+    }
+
+    &flex-grow--0 {
+      flex-grow: 0;
     }
 
     &flex-grow--1 {
