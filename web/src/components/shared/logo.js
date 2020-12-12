@@ -8,14 +8,11 @@ import { cycleTheme } from '@actions';
 import Button from 'components/shared/button';
 
 const Logo = ({ cycleTheme, size }) => {
-  let height;
-
-  if (size === 'small') height = 42 * 0.66;
-  else if (size !== 'unbound') height = 42;
+  const height = size === 'small' ? 42 * 0.66 : 42;
 
   return (
     <div class="height--100-pct flex justify--center align-items--center">
-      <Button fullWidth name="logo" onClick={() => cycleTheme()} variant="icon">
+      <Button name="logo" onClick={() => cycleTheme()} variant="icon">
         <svg
           height={height}
           viewBox={`0 0 336 42`}

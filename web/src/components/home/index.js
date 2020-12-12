@@ -32,7 +32,7 @@ const Home = ({ clearState, routes: [toJoin, toCreate], showCoachmark }) => {
   return (
     <div class="home height--100-pct bg-color--primary">
       <div class={logoClasses}>
-        <Logo size="unbound" />
+        <Logo />
       </div>
       <div class={actionClasses}>
         <div class="margin-b--base">
