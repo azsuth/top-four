@@ -19,6 +19,10 @@ const Name = ({
     'flex-grow--1': !focused && !name
   });
 
+  const handleBlur = () => {
+    setTimeout(onBlur, 200);
+  };
+
   return (
     <div class="name flex-grow--1 width--100-pct flex direction--column align-items--center">
       <h1 class="modal-header color--primary-darkest margin-b--large">
@@ -26,13 +30,13 @@ const Name = ({
       </h1>
       <form
         autoComplete="off"
-        class="flex direction--column flex-grow--1 width--80-pct"
+        class="flex direction--column flex-grow--1 width--80-pct md:max-width--15 lg:max-width--15"
       >
         <div class={inputClasses}>
           <TextInput
             label="Your name"
             name="name"
-            onBlur={onBlur}
+            onBlur={handleBlur}
             onChange={setName}
             onFocus={onFocus}
             placeholder=""

@@ -22,11 +22,13 @@ import Share from 'components/create/share';
 import Rounds from 'components/create/rounds';
 
 function CreateContainer({ children }) {
-  return (
-    <div class="container flex-grow--1 flex direction--column align-items--center margin--large padding-t--large padding-h--base padding-b--s">
-      {children}
-    </div>
+  const createContainerClasses = cx(
+    'container flex-grow--1 flex direction--column align-items--center margin--large padding-t--large padding-h--base padding-b--s',
+    'md:flex-grow--0 md:width--70-pct md:max-width--36',
+    'lg:flex-grow--0 lg:width--40-pct lg:max-width--36'
   );
+
+  return <div class={createContainerClasses}>{children}</div>;
 }
 
 const Create = ({ gameId, createGame, topicPacks }) => {
@@ -54,7 +56,7 @@ const Create = ({ gameId, createGame, topicPacks }) => {
 
   return (
     <div class="create flex direction--column height--100-pct bg-color--primary">
-      <div class="margin-t--xlarge">
+      <div class="margin-t--xlarge md:flex-grow--1 lg:flex-grow--1">
         <Logo size="small" />
       </div>
       <SwipeableViews
@@ -62,8 +64,8 @@ const Create = ({ gameId, createGame, topicPacks }) => {
         disabled={!!gameId || loading}
         index={step}
         onChangeIndex={setStep}
-        slideStyle={{ display: 'flex', flexDirection: 'column' }}
-        style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }}
+        slideClassName="flex direction--column md:align-items--center lg:align-items--center"
+        className="flex direction--column flex-grow--1 md:flex-grow--0 lg:flex-grow--0"
       >
         {false && (
           <CreateContainer>
@@ -101,7 +103,7 @@ const Create = ({ gameId, createGame, topicPacks }) => {
         )}
       </SwipeableViews>
       {!focused && (
-        <div class="flex justify--between margin-h--large margin-b--large">
+        <div class="flex justify--between margin-h--large margin-b--large md:align-self--center md:width--70-pct md:max-width--36 lg:align-self--center lg:width--40-pct lg:max-width--36">
           <div
             class={cx({
               'visibility--hidden': loading || gameId || step === 0
@@ -136,6 +138,7 @@ const Create = ({ gameId, createGame, topicPacks }) => {
           </div>
         </div>
       )}
+      <div class="md:flex-grow--1 lg:flex-grow--1" />
     </div>
   );
 };

@@ -8,7 +8,7 @@ function Creating() {
       <h1 class="modal-header color--primary-darkest margin-b--large">
         Creating game...
       </h1>
-      <div class="margin-t--xlarge">
+      <div class="margin-v--xlarge">
         <Loading />
       </div>
     </div>

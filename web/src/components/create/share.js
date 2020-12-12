@@ -22,7 +22,7 @@ function Share({ gameId, nextButton }) {
         Share this ID with your friends so they can join your game
       </p>
       <div class="flex-grow--1" />
-      <div class="margin-b--large width--75-pct">{nextButton}</div>
+      <div class="margin-v--large width--75-pct">{nextButton}</div>
     </div>
   );
 }
