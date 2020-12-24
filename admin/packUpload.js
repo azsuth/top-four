@@ -19,7 +19,7 @@ if (!fileName || !packName) {
   process.exit(1);
 }
 
-const fileStream = fs.createReadStream(`./packs/${fileName}`);
+const fileStream = fs.createReadStream(`./packs/${fileName}.txt`);
 const rl = readline.createInterface({
   input: fileStream,
   crlfDelay: Infinity
