@@ -157,7 +157,7 @@ function theLoser({ guesses, players, topics }) {
 
   if (losingPlayers.length === 1) {
     const losingPlayer = losingPlayers[0];
-    const totalGuesses = Object.values(guesses[losingPlayer.uid]).filter(
+    const totalGuesses = Object.values(guesses[losingPlayer.uid] || {}).filter(
       guess => guess !== 'active'
     ).length;
     const percentWrong =
