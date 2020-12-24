@@ -15,7 +15,7 @@ deploy:
   - provider: script
     script: bash deploy_production.sh
     on:
-      branch: master
+      branch: main
     skip_cleanup: true
   - provider: script
     script: bash deploy_dev.sh
