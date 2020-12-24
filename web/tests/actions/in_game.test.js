@@ -59,18 +59,12 @@ describe('in game actions', () => {
       expect(updateGameService.mock.calls[0][1]).toBe('98765');
 
       const game = updateGameService.mock.calls[0][0];
-      const gameTopics = Object.keys(game.topics).map(uid => ({
-        uid,
-        ...game.topics[uid]
-      }));
 
       expect(game.rankingPlayerUid).toBe('abcde');
       expect(game.state).toBe('ranking');
-      expect(
-        gameTopics.filter(({ status }) => status === 'active').length
-      ).toBe(4);
       expect(game.players['98765'].lockedIn).toBe(false);
       expect(game.players['87654'].lockedIn).toBe(false);
+      expect(game['topics/89012'].status).toBe('unavailable');
     });
   });
 
@@ -271,10 +265,9 @@ describe('in game actions', () => {
       expect(updateGameService.mock.calls[0][1]).toBe('abcde');
       expect(updateGameService.mock.calls[0][0]).toEqual({
         state: 'ranking',
-        topics: {
-          12345: { rank: 2, status: 'ranked' },
-          23456: { rank: -1, status: 'active' },
-          34567: { rank: 3, status: 'unavailable' }
+        'topics/12345': {
+          rank: 2,
+          status: 'ranked'
         }
       });
     });

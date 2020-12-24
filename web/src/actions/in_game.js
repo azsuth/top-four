@@ -18,7 +18,6 @@ const startRound = ({
   const game = {
     rankingPlayerUid: playerUid,
     state: GAME_STATE.RANKING,
-    topics: { ...topics },
     players: { ...players },
     started: true
   };
@@ -32,7 +31,7 @@ const startRound = ({
     .filter(({ status }) => status === 'ranked')
     .map(({ uid }) => uid)
     .forEach(uid => {
-      game.topics[uid].status = 'unavailable';
+      game[`topics/${uid}`] = { ...topics[uid], status: 'unavailable' };
     });
 
   // mark 4 random topics as active
@@ -44,7 +43,7 @@ const startRound = ({
   )
     .map(({ uid }) => uid)
     .forEach(uid => {
-      game.topics[uid].status = 'active';
+      game[`topics/${uid}`] = { ...topics[uid], status: 'active' };
     });
 
   updateGameService(game, gameUid);
@@ -145,13 +144,10 @@ const revealTopic = (
       .filter(({ status }) => status === 'ranked').length === 3;
 
   const game = {
-    topics: {
-      ...topics,
-      [topicUid]: {
-        ...topics[topicUid],
-        rank: localRanks[topicUid],
-        status: 'ranked'
-      }
+    [`topics/${topicUid}`]: {
+      ...topics[topicUid],
+      rank: localRanks[topicUid],
+      status: 'ranked'
     },
     state: fullyRanked ? GAME_STATE.BETWEEN_ROUNDS : currentState
   };
