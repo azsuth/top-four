@@ -1,8 +1,9 @@
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import sampleSize from 'lodash/sampleSize';
 
 import compose from 'utilities/compose';
+import { isDesktop } from 'utilities/device';
 import withRouter, { toPlayers } from 'utilities/router';
 import {
   topicsToPlayerTopics,
@@ -59,15 +60,15 @@ const AddTopics = ({
   }, [topic]);
 
   return (
-    <div class="add-topics flex direction--column height--100-pct bg-color--primary">
-      <div class="flex-shrink--0 flex align-items--center margin-t--xlarge padding-h--large">
+    <div class="add-topics flex direction--column align-items--center padding-h--large padding-b--large lg:padding-b--7 height--100-pct bg-color--primary">
+      <div class="flex-shrink--0 flex justify--center align-items--center margin-t--xlarge lg:margin-t--4-5 padding-h--large width--100-pct lg:max-width--45-pct">
         <span class="color--white font-weight--bold">{gameId}</span>
-        <span class="flex-grow--1">
-          <Logo size="small" />
+        <span class="flex-grow--1 md:flex-grow--0 lg:flex-grow--0 md:margin-h--xlarge lg:margin-h--xlarge">
+          <Logo size={isDesktop() ? '' : 'small'} />
         </span>
         <AddTopicsCoachmark />
       </div>
-      <div class="container flex direction--column align-items--center flex-grow--1 margin--large padding-v--large padding-b--s overflow--hidden">
+      <div class="container flex direction--column align-items--center flex-grow--1 margin-t--large lg:margin-t--4-25 padding-v--large padding-b--s overflow--hidden width--100-pct lg:max-width--45-pct">
         <h1 class="modal-header color--primary-darkest margin-b--base">
           {remainingPlayerTopics > 1 &&
             `Enter ${remainingPlayerTopics} More Topics`}
@@ -76,10 +77,10 @@ const AddTopics = ({
         </h1>
         <form
           autoComplete="off"
-          class="flex-shrink--0 flex padding-h--base"
+          class="flex-shrink--0 flex justify--center padding-h--base width--100-pct"
           onSubmit={handleAddTopic}
         >
-          <div class="flex direction--column margin-r--s">
+          <div class="flex direction--column margin-r--s md:width--60-pct lg:width--60-pct">
             <TextInput
               disabled={remainingPlayerTopics === 0}
               getRef={topicInputRef}
@@ -107,14 +108,14 @@ const AddTopics = ({
             {error}
           </span>
         )}
-        <div class="flex-grow--1 min-height--huge flex direction--column margin-t--xlarge padding-l--add_topic padding-r--base overflow-y--auto width--100-pct">
+        <div class="flex-grow--1 min-height--huge flex direction--column margin-t--xlarge padding-l--add_topic md:padding-l--none lg:padding-l--none padding-r--base md:padding-r--none lg:padding-r--none overflow-y--auto width--100-pct md:width--66-pct lg:width--66-pct">
           {[...playerTopics].reverse().map((topic, index, arr) => (
-            <div>
+            <>
               <div class="margin-b--base">
                 <Topic topic={topic} />
               </div>
               {index < arr.length - 1 && <hr class="margin-t--none" />}
-            </div>
+            </>
           ))}
         </div>
         <hr class="margin-t--none width--100-pct" />

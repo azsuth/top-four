@@ -4,6 +4,7 @@ import SwipeableViews from 'react-swipeable-views';
 
 import cx from 'utilities/cx';
 import compose from 'utilities/compose';
+import { isDesktop } from 'utilities/device';
 import { WRITE_OUR_OWN_UID, INDIVIDUALS } from 'utilities/constants';
 
 import { withAction, withState } from '@state';
@@ -57,7 +58,7 @@ const Create = ({ gameId, createGame, topicPacks }) => {
   return (
     <div class="create flex direction--column height--100-pct bg-color--primary">
       <div class="margin-t--xlarge md:flex-grow--1 lg:flex-grow--1">
-        <Logo size="small" />
+        <Logo size={isDesktop() ? '' : 'small'} />
       </div>
       <SwipeableViews
         containerStyle={{ flexGrow: 1 }}

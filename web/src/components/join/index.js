@@ -2,6 +2,7 @@ import { h, Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 
 import cx from 'utilities/cx';
+import { isDesktop } from 'utilities/device';
 
 import { withAction } from '@state';
 import { joinGame } from '@actions';
@@ -52,7 +53,7 @@ const Join = ({ joinGame }) => {
   return (
     <div class="join flex direction--column height--100-pct bg-color--primary md:align-items--center lg:align-items--center">
       <div class="join__logo margin-t--xlarge md:flex-grow--1 lg:flex-grow--1">
-        <Logo size="small" />
+        <Logo size={isDesktop() ? '' : 'small'} />
       </div>
       <div class={joinContainerClasses}>
         <h1 class="modal-header color--primary-darkest">
