@@ -26,7 +26,7 @@ const RankableTopics = ({
   };
 
   return (
-    <div class="rankable-topics flex-grow--1 width--100-pct overflow-y--auto">
+    <div class="rankable-topics flex-grow--1 width--100-pct overflow-y--auto md:width--33-pct lg:width--33-pct margin-t--base md:margin-t--4-25 lg:margin-t--4-25">
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -40,7 +40,7 @@ const RankableTopics = ({
                 >
                   {(provided, snapshot) => (
                     <div
-                      class="margin-t--base outline--none"
+                      class="margin-b--base md:margin-b--3 lg:margin-b--3 outline--none"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}

@@ -12,7 +12,7 @@ function GameTopics({ gameState, hideInfo, showInfo, topicsTop }) {
     {
       'game-topics--hidden': showInfo,
       'padding-t--xs': showInfo,
-      'padding-v--large': !showInfo
+      'padding-v--large md:padding-v--xlarge lg:padding-v--xlarge': !showInfo
     }
   );
 

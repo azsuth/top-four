@@ -17,9 +17,9 @@ function Players({ playerScores, playerUid, togglePlayerActive }) {
     : playerScores.filter(({ active }) => active);
 
   return (
-    <div class="players flex-grow--1 container flex direction--column align-items--center margin--base padding--large overflow--hidden">
+    <div class="players flex-grow--1 md:flex-grow--0 lg:flex-grow--0 container flex direction--column align-items--center margin--base padding--large overflow--hidden md:height--50-pct lg:height--50-pct">
       <h1 class="modal-header color--primary-darkest">Scoreboard</h1>
-      <div class="flex-grow--1 width--100-pct margin-t--s overflow-y--auto">
+      <div class="flex-grow--1 width--100-pct margin-v--s overflow-y--auto">
         {players.map(({ uid, name, score, active }, index) => (
           <div class="flex justify--between align-items--center font-weight--bold font-size--base height--2">
             <span>
@@ -42,7 +42,7 @@ function Players({ playerScores, playerUid, togglePlayerActive }) {
           </div>
         ))}
       </div>
-      <div class="margin-t--s width--15">
+      <div class="width--15">
         <Button
           fullWidth
           name={editing ? 'done-edit-players' : 'start-edit-players'}

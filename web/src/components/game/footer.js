@@ -7,12 +7,16 @@ import { startRound, lockIn, endGame } from '@actions';
 import { footerContentForState } from 'components/game/game_state_helpers';
 
 const Footer = ({ gameState, startRound, lockIn, endGame }) => {
-  return footerContentForState({
-    gameState,
-    startRound,
-    lockIn,
-    endGame
-  });
+  return (
+    <div class="width--100-pct md:width--25-pct lg:width--25-pct md:margin-b--8 lg:margin-b--8">
+      {footerContentForState({
+        gameState,
+        startRound,
+        lockIn,
+        endGame
+      })}
+    </div>
+  );
 };
 
 // actions

@@ -1,6 +1,7 @@
 import { h } from 'preact';
 
 import compose from 'utilities/compose';
+import { isDesktop } from 'utilities/device';
 import { toGameTurn, toRemainingTurns } from 'utilities/state_mapping';
 import { withState } from '@state';
 
@@ -23,8 +24,8 @@ function Info({
 }) {
   const handleHeaderRef = el => {
     if (el) {
-      const { height, top } = el.getBoundingClientRect();
-      const newTopicsTop = height * 2 + top;
+      const { top, bottom } = el.getBoundingClientRect();
+      const newTopicsTop = top + bottom;
 
       if (newTopicsTop !== topicsTop) {
         setTopicsTop(newTopicsTop);
@@ -33,16 +34,16 @@ function Info({
   };
 
   return (
-    <div class="info flex direction--column height--100-pct bg-color--primary padding-b--xlarge-x2">
+    <div class="info flex direction--column align-items--center height--100-pct bg-color--primary padding-b--xlarge-x2">
       <div
-        class="flex align-items--center margin-t--xlarge padding-h--large"
+        class="flex justify--center align-items--center margin-v--xlarge md:margin-v--5 lg:margin-v--5 padding-h--large width--100-pct lg:max-width--45-pct"
         ref={handleHeaderRef}
       >
         <span class="color--white font-weight--bold font-size--base">
           {gameId}
         </span>
-        <span class="flex-grow--1 margin-h--xlarge">
-          <Logo size="small" />
+        <span class="flex-grow--1 md:flex-grow--0 lg:flex-grow--0 margin-h--xlarge">
+          <Logo size={isDesktop() ? '' : 'small'} />
         </span>
         {showInfo && (
           <Button name="hide-info" onClick={toggleShowInfo} variant="icon">
@@ -55,16 +56,18 @@ function Info({
           </Button>
         )}
       </div>
-      <div class="flex justify--between align-items--center margin-t--xlarge padding-h--base">
-        <span class="color--white font-weight--bold font-size--base">
-          Turns Played: {gameTurn}
-        </span>
-        <span class="color--white font-weight--bold font-size--base">
-          Turns Remaining: {remainingTurns}
-        </span>
+      <div class="flex direction--column md:justify--center lg:justify--center align-items--stretch height--100-pct width--100-pct md:width--33-pct lg:width--33-pct">
+        <div class="flex justify--between align-items--center padding-h--base">
+          <span class="color--white font-weight--bold font-size--base">
+            Turns Played: {gameTurn}
+          </span>
+          <span class="color--white font-weight--bold font-size--base">
+            Turns Remaining: {remainingTurns}
+          </span>
+        </div>
+        <Players />
+        <Social />
       </div>
-      <Players />
-      <Social />
     </div>
   );
 }

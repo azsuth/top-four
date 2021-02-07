@@ -17,6 +17,14 @@
   min-height: 4.25em;
   transition: all $timing-fast;
 
+  @include tablet {
+    min-height: 5em;
+  }
+
+  @include desktop {
+    min-height: 5em;
+  }
+
   &__reveal-container {
     position: absolute;
     top: 0;
@@ -40,7 +48,7 @@
     }
 
     &--revealable {
-      right: 26%;
+      right: 7em;
     }
   }
 
