@@ -5,8 +5,6 @@ import cx from 'utilities/cx';
 import Coachmark from 'components/shared/coachmark';
 
 function Rounds({ numRounds, setNumRounds }) {
-  // const
-
   const roundClasses = roundNum =>
     cx('border--bottom margin-b--s padding-h--xs padding-b--xxs', {
       'b-color--transparent': roundNum !== numRounds,

@@ -7,7 +7,7 @@ import Social from 'components/shared/social';
 
 function NewGame({ routes: [toRoot] }) {
   return (
-    <div class="container min-height--50-pct flex direction--column justify--between align-items--center margin--base padding--large overflow--hidden">
+    <div class="flex-grow--1 width--100-pct flex direction--column justify--between align-items--center">
       <h1 class="modal-header color--primary-darkest margin-b--large">
         Play again?
       </h1>

@@ -4,7 +4,7 @@ function Superlative({ superlative }) {
   const { header, subheader, recipient, footer } = superlative;
 
   return (
-    <div class="container min-height--50-pct flex direction--column justify--between align-items--center margin--large padding-v--large padding-h--s">
+    <div class="flex-grow--1 width--100-pct flex direction--column justify--between align-items--center">
       <div class="text-align--center">
         <h1 class="modal-header color--primary-darkest margin-b--xs">
           {header}

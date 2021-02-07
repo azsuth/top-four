@@ -5,7 +5,7 @@ import { withState } from '@state';
 
 function FinalScores({ playerScores }) {
   return (
-    <div class="container min-height--50-pct flex direction--column align-items--center margin--large padding-v--large padding-h--s">
+    <div class="flex-grow--1 width--100-pct flex direction--column justify--between align-items--center">
       <h1 class="modal-header color--primary-darkest margin-b--large">
         Final Scores
       </h1>
