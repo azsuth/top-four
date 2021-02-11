@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import cx from 'utilities/cx';
+import { isDesktop } from 'utilities/device';
 import withRouter, { toJoin, toCreate } from 'utilities/router';
 import { withAction } from '@state';
 import { clearState, showCoachmark } from '@actions';
@@ -32,7 +33,7 @@ const Home = ({ clearState, routes: [toJoin, toCreate], showCoachmark }) => {
   return (
     <div class="home height--100-pct bg-color--primary">
       <div class={logoClasses}>
-        <Logo />
+        <Logo size={isDesktop() ? 'large' : 'med'} />
       </div>
       <div class={actionClasses}>
         <div class="margin-b--base">

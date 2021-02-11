@@ -8,7 +8,18 @@ import { cycleTheme } from '@actions';
 import Button from 'components/shared/button';
 
 const Logo = ({ cycleTheme, size }) => {
-  const height = size === 'small' ? 42 * 0.66 : 42;
+  let height;
+  switch (size) {
+    case 'small':
+      height = 25;
+      break;
+    case 'med':
+      height = 38;
+      break;
+    default:
+      height = 46;
+      break;
+  }
 
   return (
     <div class="height--100-pct flex justify--center align-items--center">

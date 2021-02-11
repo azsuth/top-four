@@ -43,7 +43,7 @@ function Info({
           {gameId}
         </span>
         <span class="flex-grow--1 md:flex-grow--0 lg:flex-grow--0 margin-h--xlarge">
-          <Logo size={isDesktop() ? '' : 'small'} />
+          <Logo size={isDesktop() ? 'med' : 'small'} />
         </span>
         {showInfo && (
           <Button name="hide-info" onClick={toggleShowInfo} variant="icon">

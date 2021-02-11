@@ -64,7 +64,7 @@ const AddTopics = ({
       <div class="flex-shrink--0 flex justify--center align-items--center margin-t--xlarge lg:margin-t--4-5 padding-h--large width--100-pct lg:max-width--45-pct">
         <span class="color--white font-weight--bold">{gameId}</span>
         <span class="flex-grow--1 md:flex-grow--0 lg:flex-grow--0 md:margin-h--xlarge lg:margin-h--xlarge">
-          <Logo size={isDesktop() ? '' : 'small'} />
+          <Logo size={isDesktop() ? 'med' : 'small'} />
         </span>
         <AddTopicsCoachmark />
       </div>

@@ -53,7 +53,7 @@ const Join = ({ joinGame }) => {
   return (
     <div class="join flex direction--column height--100-pct bg-color--primary md:align-items--center lg:align-items--center">
       <div class="join__logo margin-t--xlarge md:flex-grow--1 lg:flex-grow--1">
-        <Logo size={isDesktop() ? '' : 'small'} />
+        <Logo size={isDesktop() ? 'med' : 'small'} />
       </div>
       <div class={joinContainerClasses}>
         <h1 class="modal-header color--primary-darkest">
