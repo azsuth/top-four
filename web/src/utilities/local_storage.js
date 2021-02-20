@@ -1,4 +1,6 @@
 const saveState = state => {
+  if (typeof localStorage === 'undefined') return;
+
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem('game_state', serializedState);
@@ -8,6 +10,8 @@ const saveState = state => {
 };
 
 const loadState = () => {
+  if (typeof localStorage === 'undefined') return;
+
   try {
     const serializedState = localStorage.getItem('game_state');
 
