@@ -8,7 +8,7 @@ import { footerContentForState } from 'components/game/game_state_helpers';
 
 const Footer = ({ gameState, startRound, lockIn, endGame }) => {
   return (
-    <div class="width--100-pct md:width--25-pct lg:width--25-pct md:margin-b--8 lg:margin-b--8">
+    <div class="width--100-pct md:width--25-pct lg:width--25-pct">
       {footerContentForState({
         gameState,
         startRound,

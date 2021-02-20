@@ -17,7 +17,7 @@ const ConfirmButton = ({
   const [confirming, setConfirming] = useState(false);
 
   const actionsClasses = cx(
-    'confirm-button width--66-pct flex justify--around align-items--center margin-h--s',
+    'confirm-button width--66-pct md:width--100-pct lg:width--100-pct flex justify--around align-items--center margin-h--s',
     {
       'visibility--hidden': !confirmAction
     }

@@ -60,15 +60,15 @@ const AddTopics = ({
   }, [topic]);
 
   return (
-    <div class="add-topics flex direction--column align-items--center padding-h--large padding-b--large lg:padding-b--7 height--100-pct bg-color--primary">
-      <div class="flex-shrink--0 flex justify--center align-items--center margin-t--xlarge lg:margin-t--4-5 padding-h--large width--100-pct lg:max-width--45-pct">
+    <div class="add-topics flex direction--column align-items--center padding-h--large padding-b--large lg:padding-b--10-vh height--100-pct bg-color--primary">
+      <div class="flex-shrink--0 flex justify--center align-items--center margin-t--xlarge lg:margin-t--none lg:height--10-vh padding-h--large width--100-pct lg:max-width--45-pct">
         <span class="color--white font-weight--bold">{gameId}</span>
         <span class="flex-grow--1 md:flex-grow--0 lg:flex-grow--0 md:margin-h--xlarge lg:margin-h--xlarge">
           <Logo size={isDesktop() ? 'med' : 'small'} />
         </span>
         <AddTopicsCoachmark />
       </div>
-      <div class="container flex direction--column align-items--center flex-grow--1 margin-t--large lg:margin-t--4-25 padding-v--large padding-b--s overflow--hidden width--100-pct lg:max-width--45-pct">
+      <div class="container flex direction--column align-items--center flex-grow--1 margin-t--large lg:margin-t--none padding-v--large padding-b--s overflow--hidden width--100-pct lg:max-width--45-pct">
         <h1 class="modal-header color--primary-darkest margin-b--base">
           {remainingPlayerTopics > 1 &&
             `Enter ${remainingPlayerTopics} More Topics`}

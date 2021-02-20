@@ -36,7 +36,7 @@ function Info({
   return (
     <div class="info flex direction--column align-items--center height--100-pct bg-color--primary padding-b--xlarge-x2">
       <div
-        class="flex justify--center align-items--center margin-v--xlarge md:margin-v--5 lg:margin-v--5 padding-h--large width--100-pct lg:max-width--45-pct"
+        class="flex justify--center align-items--center margin-v--xlarge md:margin-v--5-vh lg:margin-v--5-vh padding-h--large width--100-pct lg:max-width--45-pct"
         ref={handleHeaderRef}
       >
         <span class="color--white font-weight--bold font-size--base">

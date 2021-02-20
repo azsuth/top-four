@@ -109,6 +109,10 @@
       height: 2em;
     }
 
+    &height--10-vh {
+      height: 10vh;
+    }
+
     // margin
 
     &margin--base {
@@ -211,6 +215,10 @@
       margin-top: 5em;
     }
 
+    &margin-t--5-vh {
+      margin-top: 5vh;
+    }
+
     &margin-h--s {
       margin-left: $size-s;
       margin-right: $size-s;
@@ -251,9 +259,14 @@
       margin-bottom: $size-xlarge;
     }
 
-    &margin-v--5 {
-      margin-top: 5em;
-      margin-bottom: 5em;
+    &margin-v--5-vh {
+      margin-top: 5vh;
+      margin-bottom: 5vh;
+    }
+
+    &margin-v--none {
+      margin-top: 0;
+      margin-bottom: 0;
     }
 
     // padding
@@ -294,6 +307,10 @@
       padding-top: $size-large;
     }
 
+    &padding-t--5-vh {
+      padding-top: 5vh;
+    }
+
     &padding-b--xxs {
       padding-bottom: $size-xxs;
     }
@@ -324,6 +341,14 @@
 
     &padding-b--7 {
       padding-bottom: 7em;
+    }
+
+    &padding-b--5-vh {
+      padding-bottom: 5vh;
+    }
+
+    &padding-b--10-vh {
+      padding-bottom: 10vh;
     }
 
     &padding-l--none {
